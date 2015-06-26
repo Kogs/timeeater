@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="239.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<Label alignment="TOP_CENTER" layoutX="176.0048828125" layoutY="14.0" text="Zeit loggen" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+			<font>
+				<Font name="System Bold" size="18.0" />
+			</font>
+		</Label>
+		<ComboBox fx:id="workSelector" editable="true" layoutX="8.0" layoutY="45.5" prefWidth="150.0" promptText="aufgabe" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0" />
+		<Button fx:id="startButton" layoutX="363.1875" layoutY="304.0" mnemonicParsing="false" onAction="#startWork" text="Forschritt starten" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="10.0" />
+		<Button fx:id="stopButton" layoutX="10.1875" layoutY="303.0" mnemonicParsing="false" onAction="#stopWork" text="Fortschritt stoppen" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" />
+		<VBox layoutX="10.0" layoutY="80.0" spacing="5.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="80.0">
+			<children>
+				<Label fx:id="runningSince" layoutX="14.0048828125" layoutY="80.5" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0" />
+				<Label fx:id="runningTime" />
+				<Label fx:id="runningTimeFull" text="Laufzeit gesamt:" />
+				<Label fx:id="runningTimeToday" text="Laufzeit heute:" />
+			</children>
+		</VBox>
+		<Button layoutX="288.1875" layoutY="1.5" mnemonicParsing="false" onAction="#closeLogger" text="X" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+	</children>
+</AnchorPane>
