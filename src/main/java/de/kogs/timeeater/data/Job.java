@@ -4,7 +4,10 @@
 package de.kogs.timeeater.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import de.kogs.timeeater.util.Utils;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -39,6 +42,24 @@ public class Job {
 		}
 		return time;
 	}
+	
+	public long getWorkTime(Date date) {
+		long time = 0;
+		for(LoggedWork work : works){
+			
+			if(Utils.isSameDay(work.getLogDate(), date)){
+				long end;				
+				if(work.getLogEnd() == null){
+					end = System.currentTimeMillis();
+				}else{
+					end = work.getLogEnd();
+				}
+				time += end - work.getLogStart();
+			}
+		}
+		return time;
+	}
+	
 	
 	public String getName() {
 		return name;
@@ -95,6 +116,9 @@ public class Job {
 			return false;
 		return true;
 	}
+
+
+
 	
 	
 	

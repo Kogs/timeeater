@@ -8,6 +8,7 @@ import java.awt.SystemTray;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import de.kogs.timeeater.data.JobManager;
 import de.kogs.timeeater.tray.TimeEaterTray;
 
 /**
@@ -27,8 +28,19 @@ public class TimeEater extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		Platform.setImplicitExit(false);
 		trayIcon = new TimeEaterTray();
-		SystemTray tray = SystemTray.getSystemTray();
-		tray.add(trayIcon);
+		SystemTray.getSystemTray().add(trayIcon);
+	}
+	
+	
+	
+	@Override
+	public void stop() throws Exception {
+		
+		JobManager manager = JobManager.instance();
+		manager.stopWork();
+		manager.save();
+		SystemTray.getSystemTray().remove(trayIcon);
+		super.stop();
 	}
 	
 }

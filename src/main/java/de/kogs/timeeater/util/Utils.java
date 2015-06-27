@@ -1,5 +1,8 @@
 package de.kogs.timeeater.util;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
@@ -14,6 +17,25 @@ public class Utils {
 				TimeUnit.MILLISECONDS.toSeconds(millis)
 						- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS
 								.toMinutes(millis)));
+	}
+	
+	
+	public static boolean isSameDay(Date d1, Date d2){
+		Calendar c = GregorianCalendar.getInstance();
+		c.setTime(d1);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.HOUR, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		
+		Date d1Day = c.getTime();
+		
+		c.setTime(d2);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.HOUR, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		return d1Day.equals(c.getTime());
 	}
 
 }

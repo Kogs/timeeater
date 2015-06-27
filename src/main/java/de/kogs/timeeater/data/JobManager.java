@@ -3,12 +3,23 @@
  */
 package de.kogs.timeeater.data;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -35,7 +46,7 @@ public class JobManager {
 	 * 
 	 */
 	public JobManager() {
-
+		load();
 	}
 
 	public Job getActiveJob() {
@@ -81,19 +92,61 @@ public class JobManager {
 		return kownJobs.values();
 	}
 
-	
-	
-	private void activeJobEvent(){
-		for(ManagerListener listener : listeners){
+	private void activeJobEvent() {
+		for (ManagerListener listener : listeners) {
 			listener.activeJobChanged(activeJob);
 		}
 	}
+
 	public void addListener(ManagerListener listener) {
 		listeners.add(listener);
 	}
 
 	public void removeListener(ManagerListener listener) {
 		listeners.remove(listener);
+	}
+	
+	public void save() {
+		try (XMLEncoder e = new XMLEncoder(new BufferedOutputStream(
+				new FileOutputStream(getSaveFile())))) {
+
+			List<Job> jobs = new ArrayList<>(getKownJobs());
+
+			e.writeObject(jobs);
+
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public void load() {
+		try (XMLDecoder d = new XMLDecoder(new BufferedInputStream(
+				new FileInputStream(getSaveFile())))) {
+
+			List<Job> jobs = (List<Job>) d.readObject();
+			kownJobs = jobs.stream().collect(
+					Collectors.toMap(Job::getName, Function.identity()));
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private File getSaveFile() {
+		//TODO change folder
+		File folder = new File(JobManager.class.getResource("").getFile());
+
+		File file = new File(folder, "save.xml");
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("File: " + file);
+		return file;
 	}
 
 }
