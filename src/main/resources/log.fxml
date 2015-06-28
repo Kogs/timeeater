@@ -23,6 +23,6 @@
 				<Label fx:id="runningTimeToday" text="Laufzeit heute:" />
 			</children>
 		</VBox>
-		<Button layoutX="288.1875" layoutY="1.5" mnemonicParsing="false" onAction="#closeLogger" text="X" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+		<Button layoutX="288.1875" layoutY="1.5" mnemonicParsing="false" onAction="#closeLogger" styleClass="closeButton" text="X" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 	</children>
 </AnchorPane>

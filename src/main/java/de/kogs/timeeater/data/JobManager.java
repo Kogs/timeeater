@@ -21,6 +21,9 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import javafx.application.Platform;
+import de.kogs.timeeater.controller.DialogController;
+
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
  *
@@ -114,6 +117,8 @@ public class JobManager {
 
 			e.writeObject(jobs);
 
+			Platform.runLater(()->new DialogController("Speichern", "Daten wurden gespeichert"));
+			
 		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
@@ -147,6 +152,12 @@ public class JobManager {
 		}
 		System.out.println("File: " + file);
 		return file;
+	}
+
+	public void removeJob(Job j) {
+		kownJobs.remove(j.getName());
+		save();
+
 	}
 
 }

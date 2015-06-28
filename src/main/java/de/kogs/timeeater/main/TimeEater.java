@@ -8,6 +8,7 @@ import java.awt.SystemTray;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import de.kogs.timeeater.controller.DialogController;
 import de.kogs.timeeater.data.JobManager;
 import de.kogs.timeeater.tray.TimeEaterTray;
 
@@ -29,6 +30,7 @@ public class TimeEater extends Application {
 		Platform.setImplicitExit(false);
 		trayIcon = new TimeEaterTray();
 		SystemTray.getSystemTray().add(trayIcon);
+		DialogController dia = new DialogController("Time Eater wurde gestartet", "Hallo " + System.getProperty("user.name"));
 	}
 	
 	

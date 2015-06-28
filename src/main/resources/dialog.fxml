@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<Label fx:id="titleLabel" alignment="CENTER" layoutX="175.0" layoutY="6.0" text="Titel" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+			<font>
+				<Font name="System Bold" size="20.0" />
+			</font>
+		</Label>
+		<Label fx:id="messageLabel" alignment="TOP_CENTER" text="The Mesaage" textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
+			<font>
+				<Font size="15.0" />
+			</font>
+		</Label>
+	</children>
+</AnchorPane>

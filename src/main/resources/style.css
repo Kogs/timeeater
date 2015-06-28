@@ -1,0 +1,51 @@
+.dialog{
+	-fx-background-color: rgb(39.0,39.0,39.0);
+}
+.dialog .label{
+	-fx-text-fill: white;
+}
+
+
+.logger{
+	-fx-background-color: rgb(39.0,39.0,39.0);
+}
+.logger .label{
+		-fx-text-fill: white;
+}
+
+
+
+.logger .button{
+	-fx-background-color: rgb(137.0,205.0,49.0);
+	-fx-background-radius:  0.0;
+}
+.logger .button:hover{
+	-fx-background-color: rgb(157.0,225.0,69.0);
+}
+.logger .button:pressed{
+	-fx-background-color: rgb(105.0,161.0,24.0);
+}
+.logger .closeButton{
+	-fx-background-color: transparent;
+	-fx-text-fill: rgb(137.0,205.0,49.0);
+	-fx-font-weight: bold;
+	-fx-font-size: 16.0;
+}
+.logger .closeButton:hover{
+	-fx-background-color: rgba(196.0,196.0,196.0,0.5);
+}
+
+.logger .combo-box{
+	-fx-background-color: white;
+	-fx-background-radius:  0.0;
+}
+.logger .combo-box .arrow-button{
+	-fx-background-color: rgb(137.0,205.0,49.0);
+	-fx-background-radius:  0.0;
+}
+.logger .combo-box .arrow-button:hover{
+	-fx-background-color: rgb(157.0,225.0,69.0);
+}
+.logger .combo-box .arrow-button:pressed{
+	-fx-background-color: rgb(105.0,161.0,24.0);
+}

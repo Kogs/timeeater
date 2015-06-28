@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -13,8 +16,10 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -74,14 +79,32 @@ public class OverviewController extends Stage implements Initializable {
 
 	private DateFormat weekDayFormat = new SimpleDateFormat("dd.MM.yy");;
 
+	private Date currentDate = null;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		manager = JobManager.instance();
+
+		rangePicker.setOnAction(t -> {
+
+			LocalDate ld = rangePicker.getValue();
+			Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault())
+					.toInstant();
+			Date res = Date.from(instant);
+			showForDate(res);
+		});
 		showForDate(new Date());
 
+		
 	}
 
 	private void showForDate(Date d) {
+		currentDate = d;
+		
+//		Instant instant = Instant.ofEpochMilli(currentDate.getTime());
+//		LocalDate res = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+//		rangePicker.setValue(res);
+		
 		Calendar c = GregorianCalendar.getInstance(Locale.GERMAN);
 		c.setTime(d);
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -100,10 +123,9 @@ public class OverviewController extends Stage implements Initializable {
 		friday = c.getTime();
 		fridayLabel.setText(weekDayFormat.format(friday));
 
-		
 		contentGrid.getChildren().clear();
 		contentGrid.getRowConstraints().clear();
-		
+
 		int i = 0;
 		for (Job job : manager.getKownJobs()) {
 			contentGrid.getRowConstraints().add(new RowConstraints(30));
@@ -119,20 +141,52 @@ public class OverviewController extends Stage implements Initializable {
 							new Label(Utils.millisToString(job
 									.getWorkTime(thursday))),
 							new Label(Utils.millisToString(job
-									.getWorkTime(friday))));
-			
-			contentGrid.getRowConstraints().add(new RowConstraints(2));
+									.getWorkTime(friday))),
+							createJobControls(job));
+
+			contentGrid.getRowConstraints().add(new RowConstraints(1));
 			Pane seperator = new Pane();
 			seperator.setStyle("-fx-background-color: black");
-			contentGrid.add(seperator, 0, i+1, 6, 1);
-			
-			i+=2;
-			
+			contentGrid.add(seperator, 0, i + 1, 7, 1);
+
+			i += 2;
+
 		}
 		contentGrid.addRow(i);
 		RowConstraints lastRow = new RowConstraints();
 		lastRow.setVgrow(Priority.ALWAYS);
 		contentGrid.getRowConstraints().add(i, lastRow);
-		
+
 	}
+
+	private Node createJobControls(Job j) {
+		Button delete = new Button("Löschen");
+		delete.setOnAction((event) -> {
+			manager.removeJob(j);
+			showForDate(currentDate);
+		});
+
+		return delete;
+	}
+	
+	@FXML
+	private void today(){
+		showForDate(new Date());
+	}
+    @FXML
+    private  void weekBack() {
+    	Calendar cal = GregorianCalendar.getInstance();
+    	cal.setTime(currentDate);
+    	cal.add(Calendar.DAY_OF_WEEK, -7);
+    	showForDate(cal.getTime());
+    }
+
+    @FXML
+    private void weekForward() {
+    	Calendar cal = GregorianCalendar.getInstance();
+    	cal.setTime(currentDate);
+    	cal.add(Calendar.DAY_OF_WEEK, 7);
+    	showForDate(cal.getTime());
+    }
+	
 }

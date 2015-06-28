@@ -44,6 +44,8 @@ public class LoggerController extends Stage implements Initializable {
 		try {
 			Scene scene = new Scene((Parent) loader.load());
 			setScene(scene);
+			scene.getStylesheets().add("style.css");
+			scene.getRoot().getStyleClass().add("logger");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

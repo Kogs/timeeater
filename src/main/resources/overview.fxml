@@ -5,18 +5,13 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="rangeLabel" alignment="CENTER" layoutX="249.0" layoutY="14.0" text="Range" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
       <GridPane layoutX="14.0" layoutY="82.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
         <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -92,6 +87,7 @@
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -103,6 +99,22 @@
             </ScrollPane>
          </children>
       </GridPane>
-      <DatePicker fx:id="rangePicker" layoutY="13.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="15.0" />
+      <HBox alignment="CENTER_LEFT" layoutX="-25.0" layoutY="13.0" AnchorPane.leftAnchor="-25.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <DatePicker fx:id="rangePicker" editable="false" layoutX="-25.0" layoutY="13.0" prefHeight="25.0" prefWidth="7.0" AnchorPane.leftAnchor="-25.0" AnchorPane.topAnchor="13.0" />
+            <Button layoutX="25.0" layoutY="13.0" mnemonicParsing="false" onAction="#today" text="Today" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="13.0" />
+            <Region layoutX="643.0" layoutY="10.0" prefWidth="50.0" />
+            <Button mnemonicParsing="false" onAction="#weekBack" text="&lt;" />
+            <Region layoutX="161.0" layoutY="10.0" prefWidth="5.0" />
+            <Label fx:id="rangeLabel" alignment="CENTER" text="Range">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Region layoutX="236.0" layoutY="10.0" prefWidth="5.0" />
+            <Button mnemonicParsing="false" onAction="#weekForward" text="&gt;" />
+            <Region HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
