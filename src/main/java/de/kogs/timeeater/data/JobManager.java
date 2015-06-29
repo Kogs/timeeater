@@ -3,6 +3,9 @@
  */
 package de.kogs.timeeater.data;
 
+import de.kogs.timeeater.controller.DialogController;
+import javafx.application.Platform;
+
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
@@ -20,9 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import javafx.application.Platform;
-import de.kogs.timeeater.controller.DialogController;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -134,16 +134,16 @@ public class JobManager {
 			kownJobs = jobs.stream().collect(
 					Collectors.toMap(Job::getName, Function.identity()));
 
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
+			Platform.runLater(() -> new DialogController("Fehler", "Daten konnten nicht geladen werden"));
 			e.printStackTrace();
 		}
 
 	}
 
 	private File getSaveFile() {
-		//TODO change folder
-		File folder = new File(JobManager.class.getResource("").getFile());
-
+		File folder = new File(System.getProperty("user.dir") + "\\conf\\");
+		folder.mkdirs();
 		File file = new File(folder, "save.xml");
 		try {
 			file.createNewFile();
