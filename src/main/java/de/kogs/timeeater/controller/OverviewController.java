@@ -95,16 +95,16 @@ public class OverviewController extends Stage implements Initializable {
 		});
 		showForDate(new Date());
 
-		
 	}
 
 	private void showForDate(Date d) {
 		currentDate = d;
-		
-//		Instant instant = Instant.ofEpochMilli(currentDate.getTime());
-//		LocalDate res = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
-//		rangePicker.setValue(res);
-		
+
+		// Instant instant = Instant.ofEpochMilli(currentDate.getTime());
+		// LocalDate res = LocalDateTime.ofInstant(instant,
+		// ZoneId.systemDefault()).toLocalDate();
+		// rangePicker.setValue(res);
+
 		Calendar c = GregorianCalendar.getInstance(Locale.GERMAN);
 		c.setTime(d);
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -168,25 +168,55 @@ public class OverviewController extends Stage implements Initializable {
 
 		return delete;
 	}
-	
+
 	@FXML
-	private void today(){
+	private void today() {
 		showForDate(new Date());
 	}
-    @FXML
-    private  void weekBack() {
-    	Calendar cal = GregorianCalendar.getInstance();
-    	cal.setTime(currentDate);
-    	cal.add(Calendar.DAY_OF_WEEK, -7);
-    	showForDate(cal.getTime());
-    }
 
-    @FXML
-    private void weekForward() {
-    	Calendar cal = GregorianCalendar.getInstance();
-    	cal.setTime(currentDate);
-    	cal.add(Calendar.DAY_OF_WEEK, 7);
-    	showForDate(cal.getTime());
-    }
-	
+	@FXML
+	private void weekBack() {
+		Calendar cal = GregorianCalendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.DAY_OF_WEEK, -7);
+		showForDate(cal.getTime());
+	}
+
+	@FXML
+	private void weekForward() {
+		Calendar cal = GregorianCalendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.DAY_OF_WEEK, 7);
+		showForDate(cal.getTime());
+	}
+
+	@FXML
+	private void showMonday() {
+		showDetailsForDate(monday);
+	}
+
+	@FXML
+	private void showTuesday() {
+		showDetailsForDate(tuesday);
+	}
+
+	@FXML
+	private void showWednesday() {
+		showDetailsForDate(wednesday);
+	}
+
+	@FXML
+	private void showThursday() {
+		showDetailsForDate(thursday);
+	}
+
+	@FXML
+	private void showFriday() {
+		showDetailsForDate(friday);
+	}
+
+	private void showDetailsForDate(Date date) {
+		DayOverviewController overView = new DayOverviewController(date);
+	}
+
 }

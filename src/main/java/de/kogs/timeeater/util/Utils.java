@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
+import javafx.util.StringConverter;
+
 public class Utils {
 
 	public static String millisToString(long millis) {
@@ -18,6 +20,20 @@ public class Utils {
 						- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS
 								.toMinutes(millis)));
 	}
+	
+	public final static StringConverter<Number> longToMillisConverter = new StringConverter<Number>() {
+
+		@Override
+		public String toString(Number millis) {
+			return millisToString(millis.longValue());
+		}
+
+		@Override
+		public Number fromString(String string) {
+			//Not needed so far
+			return null;
+		}
+	}; 
 	
 	
 	public static boolean isSameDay(Date d1, Date d2){
