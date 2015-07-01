@@ -16,45 +16,48 @@ import java.util.List;
 public class Job {
 
 	private String name;
-	
+
 	private List<LoggedWork> works = new ArrayList<LoggedWork>();
-	
+
 	private LoggedWork activeWork;
-	
+
 	/**
 	 * 
 	 */
-	public Job () {
-	
+	public Job() {
+
 	}
-	
-	
-	public long getFullWorkTime(){
-		long time = 0;
-		for(LoggedWork work : works){
-			long end;
-			if(work.getLogEnd() == null){
-				end = System.currentTimeMillis();
-			}else{
-				end = work.getLogEnd();
-			}
-			time += end - work.getLogStart();
-		}
-		return time;
+
+	public long getFullWorkTime() {
+		return countWorkTime(works);
 	}
-	
+
 	public long getWorkTime(Date date) {
-		long time = 0;
-		for(LoggedWork work : works){
-			if(Utils.isSameDay(work.getLogDate(), date)){
-				long end;				
-				if(work.getLogEnd() == null){
-					end = System.currentTimeMillis();
-				}else{
-					end = work.getLogEnd();
-				}
-				time += end - work.getLogStart();
+		return countWorkTime(getWorkForDay(date));
+	}
+
+
+	public List<LoggedWork> getWorkForDay(Date date) {
+		List<LoggedWork> work = new ArrayList<>();
+		for (LoggedWork aWork : works) {
+
+			if (Utils.isSameDay(aWork.getLogDate(), date)) {
+				work.add(aWork);
 			}
+		}
+		return work;
+	}
+
+	private static long countWorkTime(List<LoggedWork> work){
+		long time = 0;
+		for (LoggedWork aWork : work) {
+			long end;
+			if (aWork.getLogEnd() == null) {
+				end = System.currentTimeMillis();
+			} else {
+				end = aWork.getLogEnd();
+			}
+			time += end - aWork.getLogStart();
 		}
 		return time;
 	}
@@ -63,15 +66,15 @@ public class Job {
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public List<LoggedWork> getWorks() {
 		return works;
 	}
-	
+
 	public void setWorks(List<LoggedWork> works) {
 		this.works = works;
 	}
@@ -83,12 +86,11 @@ public class Job {
 	public void setActiveWork(LoggedWork activeWork) {
 		this.activeWork = activeWork;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getName();
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -97,7 +99,6 @@ public class Job {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -121,9 +122,4 @@ public class Job {
 		return true;
 	}
 
-
-
-	
-	
-	
 }

@@ -1,5 +1,7 @@
 package de.kogs.timeeater.util;
 
+import javafx.util.StringConverter;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -12,6 +14,7 @@ public class Utils {
 				TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
 	}
 	
+
 	public static boolean isSameDay(Date d1, Date d2) {
 		Calendar cal1 = Calendar.getInstance();
 		Calendar cal2 = Calendar.getInstance();
@@ -21,4 +24,20 @@ public class Utils {
 				&& cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
 	}
 	
+	public final static StringConverter<Number> longToMillisConverter = new StringConverter<Number>() {
+
+		@Override
+		public String toString(Number millis) {
+			return millisToString(millis.longValue());
+		}
+
+		@Override
+		public Number fromString(String string) {
+			//Not needed so far
+			return null;
+		}
+	}; 
+	
+	
+
 }
