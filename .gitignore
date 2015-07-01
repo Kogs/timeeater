@@ -8,3 +8,5 @@ release.properties
 .classpath
 .project
 .settings/
+.pmd
+conf/save.xml

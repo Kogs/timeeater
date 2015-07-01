@@ -3,11 +3,11 @@
  */
 package de.kogs.timeeater.data;
 
+import de.kogs.timeeater.util.Utils;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import de.kogs.timeeater.util.Utils;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -46,7 +46,6 @@ public class Job {
 	public long getWorkTime(Date date) {
 		long time = 0;
 		for(LoggedWork work : works){
-			
 			if(Utils.isSameDay(work.getLogDate(), date)){
 				long end;				
 				if(work.getLogEnd() == null){
@@ -102,18 +101,23 @@ public class Job {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Job other = (Job) obj;
 		if (name == null) {
-			if (other.name != null)
+			if (other.name != null) {
 				return false;
-		} else if (!name.equals(other.name))
+			}
+		} else if (!name.equals(other.name)) {
 			return false;
+		}
 		return true;
 	}
 

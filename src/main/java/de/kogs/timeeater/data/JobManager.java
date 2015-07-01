@@ -88,6 +88,7 @@ public class JobManager {
 			activeJob.setActiveWork(null);
 			activeJob = null;
 			activeJobEvent();
+			save();
 		}
 	}
 
