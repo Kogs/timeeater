@@ -1,24 +1,23 @@
 package de.kogs.timeeater.chart;
 
-import de.kogs.timeeater.data.Job;
-import de.kogs.timeeater.data.LoggedWork;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.chart.Axis;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.ValueAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import de.kogs.timeeater.data.Job;
+import de.kogs.timeeater.data.LoggedWork;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-public class TimeChart<X, Y> extends XYChart<X, Y> {
+public class TimeChart extends XYChart<Number, String> {
 	
 	public static class ExtraData {
 		
@@ -61,18 +60,24 @@ public class TimeChart<X, Y> extends XYChart<X, Y> {
 	}
 	
 	private double blockHeight = 10;
+	private ReloadChartListener reloadChartListener;
 	
-	public TimeChart (@NamedArg("xAxis") Axis<X> xAxis, @NamedArg("yAxis") Axis<Y> yAxis) {
-		this(xAxis, yAxis, FXCollections.<Series<X, Y>>observableArrayList());
+	private Line helpLine = new Line();
+	private Node chartBackground;
+	
+	public TimeChart (@NamedArg("xAxis") Axis<Number> xAxis, @NamedArg("yAxis") Axis<String> yAxis, ReloadChartListener  reloadChartListener) {
+		this(xAxis, yAxis, FXCollections.<Series<Number, String>>observableArrayList(),reloadChartListener);
 	}
 	
-	public TimeChart (@NamedArg("xAxis") Axis<X> xAxis, @NamedArg("yAxis") Axis<Y> yAxis,
-			@NamedArg("data") ObservableList<Series<X, Y>> data) {
+	public TimeChart (@NamedArg("xAxis") Axis<Number> xAxis, @NamedArg("yAxis") Axis<String> yAxis,
+			@NamedArg("data") ObservableList<Series<Number, String>> data, ReloadChartListener  reloadChartListener) {
 		super(xAxis, yAxis);
-		if (!(xAxis instanceof ValueAxis && yAxis instanceof CategoryAxis)) {
-			throw new IllegalArgumentException("Axis type incorrect, X and Y should both be NumberAxis");
-		}
+		this.reloadChartListener = reloadChartListener;
 		setData(data);
+		chartBackground = lookup(".chart-plot-background");
+		helpLine.setVisible(false);
+		helpLine.setMouseTransparent(true);
+		getPlotChildren().add(helpLine);
 	}
 	
 	private static double getLength(Object obj) {
@@ -84,11 +89,11 @@ public class TimeChart<X, Y> extends XYChart<X, Y> {
 		
 		for (int seriesIndex = 0; seriesIndex < getData().size(); seriesIndex++) {
 			
-			Series<X, Y> series = getData().get(seriesIndex);
+			Series<Number, String> series = getData().get(seriesIndex);
 			
-			Iterator<Data<X, Y>> iter = getDisplayedDataIterator(series);
+			Iterator<Data<Number, String>> iter = getDisplayedDataIterator(series);
 			while (iter.hasNext()) {
-				Data<X, Y> item = iter.next();
+				Data<Number, String> item = iter.next();
 				double x = getXAxis().getDisplayPosition(item.getXValue());
 				double y = getYAxis().getDisplayPosition(item.getYValue());
 				if (Double.isNaN(x) || Double.isNaN(y)) {
@@ -108,8 +113,8 @@ public class TimeChart<X, Y> extends XYChart<X, Y> {
 						}
 						ellipse.setWidth(getLength(item.getExtraValue())
 								* ((getXAxis() instanceof NumberAxis) ? Math.abs(((NumberAxis) getXAxis()).getScale()) : 1));
-						ellipse.setHeight(getBlockHeight()
-								* ((getYAxis() instanceof NumberAxis) ? Math.abs(((NumberAxis) getYAxis()).getScale()) : 1));
+						ellipse.setHeight(getBlockHeight());
+//								* ((getYAxis() instanceof NumberAxis) ? Math.abs(((NumberAxis) getYAxis()).getScale()) : 1));
 						y -= getBlockHeight() / 2.0;
 						
 						// Note: workaround for RT-7689 - saw this in ProgressControlSkin
@@ -138,34 +143,34 @@ public class TimeChart<X, Y> extends XYChart<X, Y> {
 	}
 	
 	@Override
-	protected void dataItemAdded(Series<X, Y> series, int itemIndex, Data<X, Y> item) {
+	protected void dataItemAdded(Series<Number, String> series, int itemIndex, Data<Number, String> item) {
 		Node block = createContainer(series, getData().indexOf(series), item, itemIndex);
 		getPlotChildren().add(block);
 	}
 	
 	@Override
-	protected void dataItemRemoved(final Data<X, Y> item, final Series<X, Y> series) {
+	protected void dataItemRemoved(final Data<Number, String> item, final Series<Number, String> series) {
 		final Node block = item.getNode();
 		getPlotChildren().remove(block);
 		removeDataItemFromDisplay(series, item);
 	}
 	
 	@Override
-	protected void dataItemChanged(Data<X, Y> item) {
+	protected void dataItemChanged(Data<Number, String> item) {
 	}
 	
 	@Override
-	protected void seriesAdded(Series<X, Y> series, int seriesIndex) {
+	protected void seriesAdded(Series<Number, String> series, int seriesIndex) {
 		for (int j = 0; j < series.getData().size(); j++) {
-			Data<X, Y> item = series.getData().get(j);
+			Data<Number, String> item = series.getData().get(j);
 			Node container = createContainer(series, seriesIndex, item, j);
 			getPlotChildren().add(container);
 		}
 	}
 	
 	@Override
-	protected void seriesRemoved(final Series<X, Y> series) {
-		for (XYChart.Data<X, Y> d : series.getData()) {
+	protected void seriesRemoved(final Series<Number, String> series) {
+		for (XYChart.Data<Number, String> d : series.getData()) {
 			final Node container = d.getNode();
 			getPlotChildren().remove(container);
 		}
@@ -173,12 +178,12 @@ public class TimeChart<X, Y> extends XYChart<X, Y> {
 		
 	}
 	
-	private Node createContainer(Series<X, Y> series, int seriesIndex, final Data<X, Y> item, int itemIndex) {
+	private Node createContainer(Series<Number,String> series, int seriesIndex, final Data<Number, String> item, int itemIndex) {
 		Node container = item.getNode();
 		
 		if (container == null) {
 			ExtraData extraData = (ExtraData) item.getExtraValue();
-			container = new ChartBar(extraData.getJob(), extraData.getWork());
+			container = new ChartBar(extraData.getJob(), extraData.getWork(),this,reloadChartListener,item);
 			item.setNode(container);
 		}
 		return container;
@@ -186,19 +191,19 @@ public class TimeChart<X, Y> extends XYChart<X, Y> {
 	
 	@Override
 	protected void updateAxisRange() {
-		final Axis<X> xa = getXAxis();
-		final Axis<Y> ya = getYAxis();
-		List<X> xData = null;
-		List<Y> yData = null;
+		final Axis<Number> xa = getXAxis();
+		final Axis<String> ya = getYAxis();
+		List<Number> xData = null;
+		List<String> yData = null;
 		if (xa.isAutoRanging()) {
-			xData = new ArrayList<X>();
+			xData = new ArrayList<Number>();
 		}
 		if (ya.isAutoRanging()) {
-			yData = new ArrayList<Y>();
+			yData = new ArrayList<String>();
 		}
 		if (xData != null || yData != null) {
-			for (Series<X, Y> series : getData()) {
-				for (Data<X, Y> data : series.getData()) {
+			for (Series<Number, String> series : getData()) {
+				for (Data<Number, String> data : series.getData()) {
 					if (xData != null) {
 						xData.add(data.getXValue());
 						xData.add(xa.toRealValue(xa.toNumericValue(data.getXValue()) + getLength(data.getExtraValue())));
@@ -216,5 +221,26 @@ public class TimeChart<X, Y> extends XYChart<X, Y> {
 			}
 		}
 	}
+	
+	public void showHelpLine(Number xValue){
+		helpLine.setVisible(true);
+		helpLine.toFront();
+		
+		double xDisplayPosition = getXAxis().getDisplayPosition(xValue);
+		
+		helpLine.setStartX(xDisplayPosition);
+		helpLine.setEndX(xDisplayPosition);
+		
+		helpLine.setStartY(0);
+		helpLine.setEndY(getChartBackground().getBoundsInParent().getHeight());
+	}
+	public void hideHelpLine(){
+		helpLine.setVisible(false);
+	}
+
+	public Node getChartBackground() {
+		return chartBackground;
+	}
+
 	
 }

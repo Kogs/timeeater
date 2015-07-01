@@ -26,6 +26,9 @@ public class LoggedWork {
 	}
 	
 	public Long getLogEnd() {
+		if(logEnd == null){
+			return System.currentTimeMillis();
+		}
 		return logEnd;
 	}
 	

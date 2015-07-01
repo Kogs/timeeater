@@ -3,11 +3,11 @@
  */
 package de.kogs.timeeater.data;
 
-import de.kogs.timeeater.util.Utils;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import de.kogs.timeeater.util.Utils;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -36,7 +36,6 @@ public class Job {
 		return countWorkTime(getWorkForDay(date));
 	}
 
-
 	public List<LoggedWork> getWorkForDay(Date date) {
 		List<LoggedWork> work = new ArrayList<>();
 		for (LoggedWork aWork : works) {
@@ -48,7 +47,7 @@ public class Job {
 		return work;
 	}
 
-	private static long countWorkTime(List<LoggedWork> work){
+	private static long countWorkTime(List<LoggedWork> work) {
 		long time = 0;
 		for (LoggedWork aWork : work) {
 			long end;
@@ -61,8 +60,41 @@ public class Job {
 		}
 		return time;
 	}
-	
-	
+
+	public LoggedWork getNextWork(LoggedWork work) {
+		List<LoggedWork> workForDay = getWorkForDay(work.getLogDate());
+
+		LoggedWork nextWork = null;
+
+		for (LoggedWork loggedWork : workForDay) {
+			if (loggedWork.getLogStart() > work.getLogEnd()) {
+				if (nextWork == null
+						|| (loggedWork.getLogStart() - work.getLogEnd()) < (nextWork
+								.getLogStart() - work.getLogEnd())) {
+					nextWork = loggedWork;
+				}
+			}
+		}
+		return nextWork;
+	}
+
+	public LoggedWork getPreviousWork(LoggedWork work) {
+		List<LoggedWork> workForDay = getWorkForDay(work.getLogDate());
+
+		LoggedWork prevWork = null;
+
+		for (LoggedWork loggedWork : workForDay) {
+			if (loggedWork.getLogEnd() < work.getLogStart()) {
+				if (prevWork == null
+						|| (loggedWork.getLogEnd() - work.getLogStart()) > (prevWork
+								.getLogEnd() - work.getLogStart())) {
+					prevWork = loggedWork;
+				}
+			}
+		}
+		return prevWork;
+	}
+
 	public String getName() {
 		return name;
 	}

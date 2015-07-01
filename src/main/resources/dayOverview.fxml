@@ -6,15 +6,15 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="TOP_CENTER" layoutX="265.0" layoutY="6.0" text="Montag 20.1.2087" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <Label fx:id="dateLabel" alignment="TOP_CENTER" layoutX="265.0" layoutY="6.0" text="Montag 20.1.2087" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Button layoutX="534.0" layoutY="361.0" mnemonicParsing="false" text="Speichern" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
       <AnchorPane fx:id="chartContainer" layoutX="14.0" layoutY="49.0" prefHeight="307.0" prefWidth="580.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
+      <ComboBox fx:id="jobSelector" layoutX="10.0" layoutY="365.0" prefWidth="150.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+      <Button layoutX="160.0" layoutY="365.0" mnemonicParsing="false" onAction="#addWork" text="Hinzufügen" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="160.0" />
    </children>
 </AnchorPane>
