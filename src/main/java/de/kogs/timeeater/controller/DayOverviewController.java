@@ -61,6 +61,7 @@ public class DayOverviewController extends Stage implements Initializable {
 		
 		try {
 			Scene scene = new Scene((Parent) loader.load());
+			scene.getStylesheets().add("style.css");
 			setScene(scene);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -91,8 +92,12 @@ public class DayOverviewController extends Stage implements Initializable {
 			Series<Number, String> jobSeries = new Series<>();
 			chart.getData().add(jobSeries);
 			for (LoggedWork work : job.getWorkForDay(day)) {
+				long end = System.currentTimeMillis();
+				if (work.getLogEnd() != null) {
+					end = work.getLogEnd();
+				}
 				Data<Number, String> aData = new Data<Number, String>(work.getLogStart(), job.getName(),
-						new ExtraData(work.getLogEnd() - work.getLogStart(), "blue"));
+						new ExtraData(end - work.getLogStart(), job, work));
 						
 				jobSeries.getData().add(aData);
 			}
@@ -124,7 +129,7 @@ public class DayOverviewController extends Stage implements Initializable {
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		cal.set(Calendar.HOUR_OF_DAY, 20);
+		cal.set(Calendar.HOUR_OF_DAY, 19);
 		
 		return cal.getTime().getTime();
 	}

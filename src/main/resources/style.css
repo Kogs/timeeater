@@ -49,3 +49,10 @@
 .logger .combo-box .arrow-button:pressed{
 	-fx-background-color: rgb(105.0,161.0,24.0);
 }
+
+.time-bar{
+	-fx-background-color: rgb(068,061,103);
+}
+.time-bar:hover{
+	-fx-background-color: rgb(112,151,191);
+}
