@@ -3,7 +3,17 @@
  */
 package de.kogs.timeeater.controller;
 
-import de.kogs.timeeater.data.Job;
+import java.io.IOException;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,15 +30,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
+import de.kogs.timeeater.data.Job;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -117,45 +119,78 @@ public class JobOverviewController extends Stage implements Initializable {
 		lastWorkChart.getData().clear();
 		
 		if (yearRadio.isSelected()) {
-			
+			lastYear();
 		} else if (monthRadio.isSelected()) {
-		
+			lastMonth();
 		} else if (weekRadio.isSelected()) {
 			lastWeek();
 		}
 	}
 	
+	
+	private void lastYear(){
+		Series<String, Number> months = new Series<String, Number>();
+		
+		Calendar c = GregorianCalendar.getInstance(Locale.GERMAN);
+		c.setTime(new Date());
+		DateFormat format = new SimpleDateFormat("MMMM");
+		
+		for(int i= 0; i<12;i++){
+			c.set(Calendar.DAY_OF_MONTH, 1);
+			Date startDate = c.getTime();
+			c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+			Date endDate = c.getTime();
+			months.getData().add(0,new Data<String,Number>(format.format(startDate),job.getWorkTimeInRange(startDate, endDate)));
+			c.add(Calendar.MONTH, -1);
+		}
+		
+		lastWorkChart.getData().setAll(months);
+	}
+	
+	private void lastMonth(){
+		Series<String, Number> weeks = new Series<String, Number>();
+		
+		Calendar c = GregorianCalendar.getInstance(Locale.GERMAN);
+		c.setTime(new Date());
+		DateFormat format = new SimpleDateFormat("dd.MM");
+		
+		for(int i=0;i < 4; i++){
+			c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			Date weekStartDate = c.getTime();
+			c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+			Date weekEndDate = c.getTime();
+			
+			
+			weeks.getData().add(0,new Data<String,Number>(format.format(weekStartDate) +"-" + format.format(weekEndDate),job.getWorkTimeInRange(weekStartDate,weekEndDate)));
+			c.add(Calendar.DAY_OF_WEEK, -7);
+		}
+		
+		
+
+		lastWorkChart.getData().setAll(weeks);
+		
+	}
+	
+	
 
 	private void lastWeek() {
-		
 		Series<String, Number> days = new Series<String, Number>();
 		
 		Calendar c = GregorianCalendar.getInstance(Locale.GERMAN);
 		c.setTime(new Date());
-		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-		Data<String, Number> monday = new Data<>("Montag", job.getWorkTime(c.getTime()));
-		days.getData().add(monday);
-
-
-		c.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
-		Data<String, Number> tuesday = new Data<>("Dienstag", job.getWorkTime(c.getTime()));
-		days.getData().add(tuesday);
+		DateFormat dayName = new SimpleDateFormat("EEEE");
 		
-		c.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
-		Data<String, Number> wednesday = new Data<>("Mittwoch", job.getWorkTime(c.getTime()));
-		days.getData().add(wednesday);
-		
-		c.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
-		Data<String, Number> thursday = new Data<>("Donnerstag", job.getWorkTime(c.getTime()));
-		days.getData().add(thursday);
-		
-		c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
-		Data<String, Number> friday = new Data<>("Freitag", job.getWorkTime(c.getTime()));
-		days.getData().add(friday);
+		for(int i = 0; i < 5;i++){
+			while(c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY ){
+				c.add(Calendar.DAY_OF_WEEK,-1);
+			}
+			days.getData().add(0,new Data<>(dayName.format(c.getTime()),job.getWorkTime(c.getTime())));
+			c.add(Calendar.DAY_OF_WEEK,-1);
+		}
 		
 		lastWorkChart.getData().setAll(days);
 		
 	}
-	
+
 
 }

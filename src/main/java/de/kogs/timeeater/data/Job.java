@@ -39,7 +39,6 @@ public class Job {
 	public List<LoggedWork> getWorkForDay(Date date) {
 		List<LoggedWork> work = new ArrayList<>();
 		for (LoggedWork aWork : works) {
-
 			if (Utils.isSameDay(aWork.getLogDate(), date)) {
 				work.add(aWork);
 			}
@@ -78,6 +77,19 @@ public class Job {
 		return nextWork;
 	}
 
+
+	public List<LoggedWork> getWorkInRange(Date startDate , Date endDate){
+		List<LoggedWork> work = new ArrayList<>();
+		for (LoggedWork aWork : works) {
+			if (Utils.isInRange(aWork.getLogDate(), startDate,endDate)) {
+				work.add(aWork);
+			}
+		}
+		return work;
+	}
+	public Long getWorkTimeInRange(Date startDate,Date endDate){
+		return countWorkTime(getWorkInRange(startDate, endDate));
+	}
 	public LoggedWork getPreviousWork(LoggedWork work) {
 		List<LoggedWork> workForDay = getWorkForDay(work.getLogDate());
 
@@ -153,5 +165,7 @@ public class Job {
 		}
 		return true;
 	}
+
+	
 
 }
