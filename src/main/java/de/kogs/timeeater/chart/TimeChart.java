@@ -7,15 +7,18 @@ import java.util.List;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.chart.Axis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import de.kogs.timeeater.data.Job;
 import de.kogs.timeeater.data.LoggedWork;
+import de.kogs.timeeater.util.Utils;
 
 public class TimeChart extends XYChart<Number, String> {
 	
@@ -63,6 +66,7 @@ public class TimeChart extends XYChart<Number, String> {
 	private ReloadChartListener reloadChartListener;
 	
 	private Line helpLine = new Line();
+	private Tooltip helpLineToolTip = new Tooltip();
 	private Node chartBackground;
 	
 	public TimeChart (@NamedArg("xAxis") Axis<Number> xAxis, @NamedArg("yAxis") Axis<String> yAxis, ReloadChartListener  reloadChartListener) {
@@ -233,9 +237,15 @@ public class TimeChart extends XYChart<Number, String> {
 		
 		helpLine.setStartY(0);
 		helpLine.setEndY(getChartBackground().getBoundsInParent().getHeight());
+		
+		Bounds localToScreen = helpLine.localToScreen(helpLine.getBoundsInLocal());
+		helpLineToolTip.setText(Utils.timeToString(xValue.longValue()));
+		helpLineToolTip.show(helpLine, localToScreen.getMaxX(), localToScreen.getMaxY());
+		 
 	}
 	public void hideHelpLine(){
 		helpLine.setVisible(false);
+		helpLineToolTip.hide();
 	}
 
 	public Node getChartBackground() {

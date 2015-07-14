@@ -104,14 +104,20 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 		AnchorPane.setRightAnchor(chart, 0d);
 		chartContainer.getChildren().add(chart);
 
-		jobSelector.getItems().addAll(JobManager.instance().getKownJobs());
-		loadData();
+		reload();
 	}
 
 	@Override
 	public void reload() {
 		loadData();
-		JobManager.instance().save();
+		reloadJobSelector();
+	}
+	private void reloadJobSelector(){
+		for(Job job :JobManager.instance().getKownJobs()){
+			if(job.getWorkForDay(day).isEmpty()){
+				jobSelector.getItems().add(job);
+			}
+		}
 	}
 	
 	private void loadData() {
@@ -147,8 +153,14 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 	private void addWork() {
 		Job selectedJob = jobSelector.getSelectionModel().getSelectedItem();
 		if (selectedJob != null) {
-
+			LoggedWork work = new LoggedWork();
+			work.setLogDate(new Date(getFirstTimeOfDay()));
+			work.setLogStart(getFirstTimeOfDay());
+			work.setLogEnd(getFirstTimeOfDay() + TimeUnit.MINUTES.toMillis(30));
+			selectedJob.getWorks().add(work);
 		}
+		JobManager.instance().save();
+		reload();
 	}
 
 	private long getFirstTimeOfDay() {
