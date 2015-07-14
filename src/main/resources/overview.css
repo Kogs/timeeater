@@ -1,0 +1,17 @@
+
+.overview .dayButton{
+
+}
+
+.overview .dayButton:hover{
+	-fx-background-color: rgba(0,0,0,0.1);
+}
+.overview .dayButton:pressed{
+	-fx-background-color: rgba(0,0,0,0.2);
+}
+.overview .seperator{
+	-fx-background-color: black;
+}
+.overview .hyperlink{
+	-fx-border-width: 0px;
+}

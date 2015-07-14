@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="658.0" styleClass="overview" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane layoutX="14.0" layoutY="82.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
         <columnConstraints>
@@ -23,7 +23,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <VBox alignment="CENTER" onMouseClicked="#showMonday" GridPane.columnIndex="1">
+            <VBox alignment="CENTER" onMouseClicked="#showMonday" styleClass="dayButton" GridPane.columnIndex="1">
                <children>
                   <Label text="Montag">
                      <font>
@@ -41,7 +41,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <VBox alignment="CENTER" onMouseClicked="#showTuesday" GridPane.columnIndex="2">
+            <VBox alignment="CENTER" onMouseClicked="#showTuesday" styleClass="dayButton" GridPane.columnIndex="2">
                <children>
                   <Label text="Dienstag">
                      <font>
@@ -54,7 +54,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </VBox>
-            <VBox alignment="CENTER" onMouseClicked="#showWednesday" GridPane.columnIndex="3">
+            <VBox alignment="CENTER" onMouseClicked="#showWednesday" styleClass="dayButton" GridPane.columnIndex="3">
                <children>
                   <Label text="Mittwoch">
                      <font>
@@ -67,7 +67,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </VBox>
-            <VBox alignment="CENTER" GridPane.columnIndex="4">
+            <VBox alignment="CENTER" styleClass="dayButton" GridPane.columnIndex="4">
                <children>
                   <Label onMouseClicked="#showThursday" text="Donnerstag">
                      <font>
@@ -80,7 +80,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </VBox>
-            <VBox alignment="CENTER" GridPane.columnIndex="5">
+            <VBox alignment="CENTER" styleClass="dayButton" GridPane.columnIndex="5">
                <children>
                   <Label onMouseClicked="#showFriday" text="Freitag">
                      <font>

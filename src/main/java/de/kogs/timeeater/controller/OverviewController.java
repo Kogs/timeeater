@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -41,6 +42,8 @@ public class OverviewController extends Stage implements Initializable {
 		
 		try {
 			Scene scene = new Scene((Parent) loader.load());
+			scene.getStylesheets().add("style.css");
+			scene.getStylesheets().add("overview.css");
 			setScene(scene);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -127,14 +130,19 @@ public class OverviewController extends Stage implements Initializable {
 		int i = 0;
 		for (Job job : manager.getKownJobs()) {
 			contentGrid.getRowConstraints().add(new RowConstraints(30));
-			contentGrid.addRow(i, new Label(job.getName()), new Label(millisToString(job.getWorkTime(monday))),
+			Hyperlink jobLabel = new Hyperlink(job.getName());
+			jobLabel.setOnAction((e) -> {
+				new JobOverviewController(job);
+			});
+
+			contentGrid.addRow(i, jobLabel, new Label(millisToString(job.getWorkTime(monday))),
 					new Label(millisToString(job.getWorkTime(tuesday))), new Label(millisToString(job.getWorkTime(wednesday))),
 					new Label(millisToString(job.getWorkTime(thursday))), new Label(millisToString(job.getWorkTime(friday))),
 					createJobControls(job));
 					
 			contentGrid.getRowConstraints().add(new RowConstraints(1));
 			Pane seperator = new Pane();
-			seperator.setStyle("-fx-background-color: black");
+			seperator.getStyleClass().add("seperator");
 			contentGrid.add(seperator, 0, i + 1, 7, 1);
 			
 			i += 2;

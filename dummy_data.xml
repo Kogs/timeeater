@@ -1,0 +1,1394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_45" class="java.beans.XMLDecoder">
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="de.kogs.timeeater.data.Job" id="Job0">
+    <void property="name">
+     <string>SPBL-1027</string>
+    </void>
+    <void property="works">
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435672042850</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435674563191</long>
+       </void>
+       <void property="logStart">
+        <long>1435672042850</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435754472640</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435754980401</long>
+       </void>
+       <void property="logStart">
+        <long>1435754472640</long>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="de.kogs.timeeater.data.Job" id="Job1">
+    <void property="name">
+     <string>SPBL-1016</string>
+    </void>
+    <void property="works">
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435743720434</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435744385378</long>
+       </void>
+       <void property="logStart">
+        <long>1435743720434</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435749735471</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435752926648</long>
+       </void>
+       <void property="logStart">
+        <long>1435749735471</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435759230289</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435765394965</long>
+       </void>
+       <void property="logStart">
+        <long>1435759230289</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435824691709</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435825929254</long>
+       </void>
+       <void property="logStart">
+        <long>1435824691709</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435828532840</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435828534192</long>
+       </void>
+       <void property="logStart">
+        <long>1435827574135</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435828539097</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435831319787</long>
+       </void>
+       <void property="logStart">
+        <long>1435828539097</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435919138524</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435919887832</long>
+       </void>
+       <void property="logStart">
+        <long>1435919138524</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436187965015</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436188313064</long>
+       </void>
+       <void property="logStart">
+        <long>1436187965015</long>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="de.kogs.timeeater.data.Job" id="Job2">
+    <void property="name">
+     <string>SPBL-1028</string>
+    </void>
+    <void property="works">
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435582696152</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435588905146</long>
+       </void>
+       <void property="logStart">
+        <long>1435582696152</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435644734472</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435644739773</long>
+       </void>
+       <void property="logStart">
+        <long>1435644734472</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435644799207</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435660295137</long>
+       </void>
+       <void property="logStart">
+        <long>1435644799207</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435662670274</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435670590635</long>
+       </void>
+       <void property="logStart">
+        <long>1435662670274</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435674568367</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435676050852</long>
+       </void>
+       <void property="logStart">
+        <long>1435674568367</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435734742045</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435743713866</long>
+       </void>
+       <void property="logStart">
+        <long>1435734742045</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435754985169</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435755466268</long>
+       </void>
+       <void property="logStart">
+        <long>1435754985169</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435756548540</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435756563915</long>
+       </void>
+       <void property="logStart">
+        <long>1435756548540</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435756702621</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435757005456</long>
+       </void>
+       <void property="logStart">
+        <long>1435756702621</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436188317224</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436193322543</long>
+       </void>
+       <void property="logStart">
+        <long>1436188317224</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436339922377</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436350265493</long>
+       </void>
+       <void property="logStart">
+        <long>1436339922377</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436354811223</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436355205822</long>
+       </void>
+       <void property="logStart">
+        <long>1436354811223</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436874232658</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436879159079</long>
+       </void>
+       <void property="logStart">
+        <long>1436874232658</long>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="de.kogs.timeeater.data.Job" id="Job3">
+    <void property="name">
+     <string>Protokollfunktion-Konzept</string>
+    </void>
+    <void property="works">
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436435318538</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436435334969</long>
+       </void>
+       <void property="logStart">
+        <long>1436432424040</long>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="de.kogs.timeeater.data.Job" id="Job4">
+    <void property="name">
+     <string>metting</string>
+    </void>
+    <void property="works">
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435564416616</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435564418583</long>
+       </void>
+       <void property="logStart">
+        <long>1435564416616</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435577340658</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435582488001</long>
+       </void>
+       <void property="logStart">
+        <long>1435577340658</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435660299201</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435662665370</long>
+       </void>
+       <void property="logStart">
+        <long>1435660299201</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436772837229</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436777621245</long>
+       </void>
+       <void property="logStart">
+        <long>1436772837229</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436785329130</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436792550160</long>
+       </void>
+       <void property="logStart">
+        <long>1436785329130</long>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="de.kogs.timeeater.data.Job" id="Job5">
+    <void property="name">
+     <string>bug-fixing</string>
+    </void>
+    <void property="works">
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435559410062</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435564305273</long>
+       </void>
+       <void property="logStart">
+        <long>1435559410063</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435566532426</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435566594478</long>
+       </void>
+       <void property="logStart">
+        <long>1435566532426</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435568084004</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435573546255</long>
+       </void>
+       <void property="logStart">
+        <long>1435568084004</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435755469652</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435756544004</long>
+       </void>
+       <void property="logStart">
+        <long>1435755469652</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435757008448</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435759225313</long>
+       </void>
+       <void property="logStart">
+        <long>1435757008448</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435818600816</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435818727102</long>
+       </void>
+       <void property="logStart">
+        <long>1435818600816</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435820905984</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435824688669</long>
+       </void>
+       <void property="logStart">
+        <long>1435820905984</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435831323091</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435833441784</long>
+       </void>
+       <void property="logStart">
+        <long>1435831323091</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435836480930</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435836817816</long>
+       </void>
+       <void property="logStart">
+        <long>1435836480930</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435921488715</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435937405372</long>
+       </void>
+       <void property="logStart">
+        <long>1435921488715</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436163044351</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436168717624</long>
+       </void>
+       <void property="logStart">
+        <long>1436163044351</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436193325293</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436194414139</long>
+       </void>
+       <void property="logStart">
+        <long>1436193325293</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436250171505</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436263158027</long>
+       </void>
+       <void property="logStart">
+        <long>1436248960323</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436264805100</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436282429437</long>
+       </void>
+       <void property="logStart">
+        <long>1436264805100</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436422869567</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436432297872</long>
+       </void>
+       <void property="logStart">
+        <long>1436422869567</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436435338345</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436437647761</long>
+       </void>
+       <void property="logStart">
+        <long>1436435338345</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436440779705</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436440925739</long>
+       </void>
+       <void property="logStart">
+        <long>1436440779705</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436519537239</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436523406283</long>
+       </void>
+       <void property="logStart">
+        <long>1436519537239</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436525838617</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436537416557</long>
+       </void>
+       <void property="logStart">
+        <long>1436525838617</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436777626705</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436778809759</long>
+       </void>
+       <void property="logStart">
+        <long>1436777626705</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436780015029</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436781848007</long>
+       </void>
+       <void property="logStart">
+        <long>1436780015029</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436784272448</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436785325210</long>
+       </void>
+       <void property="logStart">
+        <long>1436784272448</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436792554287</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436799942801</long>
+       </void>
+       <void property="logStart">
+        <long>1436792554287</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436857770259</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436870053662</long>
+       </void>
+       <void property="logStart">
+        <long>1436857770259</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436879162383</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436885157191</long>
+       </void>
+       <void property="logStart">
+        <long>1436879162383</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436888284380</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436888407334</long>
+       </void>
+       <void property="logStart">
+        <long>1436888284380</long>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="de.kogs.timeeater.data.Job" id="Job6">
+    <void property="name">
+     <string>Schulung</string>
+    </void>
+    <void property="works">
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436871650525</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436874208861</long>
+       </void>
+       <void property="logStart">
+        <long>1436871650525</long>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="de.kogs.timeeater.data.Job" id="Job7">
+    <void property="name">
+     <string>mittag</string>
+    </void>
+    <void property="works">
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435573550575</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435576854328</long>
+       </void>
+       <void property="logStart">
+        <long>1435573550575</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435744390171</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435748757939</long>
+       </void>
+       <void property="logStart">
+        <long>1435744390171</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435836345881</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435834976492</long>
+       </void>
+       <void property="logStart">
+        <long>1435833455939</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435919952493</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435920936585</long>
+       </void>
+       <void property="logStart">
+        <long>1435919952493</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436177989809</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436181892682</long>
+       </void>
+       <void property="logStart">
+        <long>1436177989809</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436263165820</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436264089068</long>
+       </void>
+       <void property="logStart">
+        <long>1436263165820</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436350269053</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436354207707</long>
+       </void>
+       <void property="logStart">
+        <long>1436350269053</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436437657091</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436439753191</long>
+       </void>
+       <void property="logStart">
+        <long>1436437657091</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436523410066</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436525121951</long>
+       </void>
+       <void property="logStart">
+        <long>1436523410066</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436870062560</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436871645749</long>
+       </void>
+       <void property="logStart">
+        <long>1436870062560</long>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="de.kogs.timeeater.data.Job" id="Job8">
+    <void property="name">
+     <string>Papierkorb</string>
+    </void>
+    <void property="works">
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435836359208</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435836731707</long>
+       </void>
+       <void property="logStart">
+        <long>1435835063414</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435836829520</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435850269597</long>
+       </void>
+       <void property="logStart">
+        <long>1435836829520</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435906611339</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435919133956</long>
+       </void>
+       <void property="logStart">
+        <long>1435906611339</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436168721201</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436177946267</long>
+       </void>
+       <void property="logStart">
+        <long>1436168721201</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436182832815</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436187961903</long>
+       </void>
+       <void property="logStart">
+        <long>1436182832815</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436440930748</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436455366602</long>
+       </void>
+       <void property="logStart">
+        <long>1436440930748</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436511634612</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436519533783</long>
+       </void>
+       <void property="logStart">
+        <long>1436511634612</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436778818894</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436780011484</long>
+       </void>
+       <void property="logStart">
+        <long>1436778818894</long>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="de.kogs.timeeater.data.Job" id="Job9">
+    <void property="name">
+     <string>SPBL-1011</string>
+    </void>
+    <void property="works">
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435566599269</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435568079181</long>
+       </void>
+       <void property="logStart">
+        <long>1435566599269</long>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="de.kogs.timeeater.data.Job" id="Job10">
+    <void property="name">
+     <string>allgemein</string>
+    </void>
+    <void property="works">
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435670595379</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435672010128</long>
+       </void>
+       <void property="logStart">
+        <long>1435670595379</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435748762019</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435749730616</long>
+       </void>
+       <void property="logStart">
+        <long>1435748762019</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435752929689</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435754453112</long>
+       </void>
+       <void property="logStart">
+        <long>1435752929689</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435756598305</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435756686965</long>
+       </void>
+       <void property="logStart">
+        <long>1435756598305</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435765401908</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435766078902</long>
+       </void>
+       <void property="logStart">
+        <long>1435765401908</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435818762986</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435820902143</long>
+       </void>
+       <void property="logStart">
+        <long>1435818762986</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435825937535</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435827574135</long>
+       </void>
+       <void property="logStart">
+        <long>1435825937535</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1435921345419</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1435921482795</long>
+       </void>
+       <void property="logStart">
+        <long>1435921345419</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436537479778</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436538946613</long>
+       </void>
+       <void property="logStart">
+        <long>1436537479778</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436770622066</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436772825325</long>
+       </void>
+       <void property="logStart">
+        <long>1436770622066</long>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="de.kogs.timeeater.data.LoggedWork">
+       <void property="logDate">
+        <object class="java.util.Date">
+         <long>1436885191801</long>
+        </object>
+       </void>
+       <void property="logEnd">
+        <long>1436888279292</long>
+       </void>
+       <void property="logStart">
+        <long>1436885191801</long>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>
