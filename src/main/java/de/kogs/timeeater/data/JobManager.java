@@ -96,6 +96,13 @@ public class JobManager {
 		return kownJobs.values();
 	}
 
+	public Job getJob(String name) {
+		if (kownJobs.containsKey(name)) {
+			return kownJobs.get(name);
+		}
+		return null;
+	}
+	
 	private void activeJobEvent() {
 		for (ManagerListener listener : listeners) {
 			listener.activeJobChanged(activeJob);

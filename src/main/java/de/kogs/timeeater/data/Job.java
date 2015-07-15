@@ -3,11 +3,11 @@
  */
 package de.kogs.timeeater.data;
 
+import de.kogs.timeeater.util.Utils;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import de.kogs.timeeater.util.Utils;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -17,6 +17,8 @@ public class Job {
 
 	private String name;
 
+	private String description;
+	
 	private List<LoggedWork> works = new ArrayList<LoggedWork>();
 
 	private LoggedWork activeWork;
@@ -164,6 +166,14 @@ public class Job {
 			return false;
 		}
 		return true;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	

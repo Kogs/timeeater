@@ -57,3 +57,26 @@
 	-fx-background-color: rgb(112,151,191);
 }
 
+
+.jobOverview .text-field:viewing{
+	-fx-background-color: transparent;
+	-fx-padding: 0;
+	-fx-font-size: 16px;
+	-fx-font-weight: bold;
+	-fx-cursor: normal;
+}
+
+
+.jobOverview .text-area:viewing{
+	-fx-background-color: transparent;
+	-fx-cursor: normal;
+}
+.jobOverview .editButton{
+	-fx-content-display:  graphic-only; 
+	-fx-graphic: url('images/ic_mode_edit_black_18dp_1x.png');
+}
+.jobOverview .saveButton{
+	-fx-content-display:  graphic-only;
+	-fx-graphic: url('images/ic_save_black_18dp_1x.png');
+}
+

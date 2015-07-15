@@ -2,10 +2,14 @@ package de.kogs.timeeater.controller;
 
 import de.kogs.timeeater.data.Job;
 import de.kogs.timeeater.data.JobManager;
+import de.kogs.timeeater.data.hooks.HookManager;
+import de.kogs.timeeater.data.hooks.QuickLinkHook;
 import de.kogs.timeeater.util.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,10 +17,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -95,17 +103,17 @@ public class OverviewController extends Stage implements Initializable {
 			showForDate(res);
 		});
 		showForDate(new Date());
-
+		
 	}
 	
 	private void showForDate(Date d) {
 		currentDate = d;
-
+		
 		// Instant instant = Instant.ofEpochMilli(currentDate.getTime());
 		// LocalDate res = LocalDateTime.ofInstant(instant,
 		// ZoneId.systemDefault()).toLocalDate();
 		// rangePicker.setValue(res);
-
+		
 		Calendar c = GregorianCalendar.getInstance(Locale.GERMAN);
 		c.setTime(d);
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -130,12 +138,36 @@ public class OverviewController extends Stage implements Initializable {
 		int i = 0;
 		for (Job job : manager.getKownJobs()) {
 			contentGrid.getRowConstraints().add(new RowConstraints(30));
-			Hyperlink jobLabel = new Hyperlink(job.getName());
-			jobLabel.setOnAction((e) -> {
-				new JobOverviewController(job);
-			});
-
-			contentGrid.addRow(i, jobLabel, new Label(millisToString(job.getWorkTime(monday))),
+			
+			Labeled jobLabel;
+			QuickLinkHook hook = HookManager.instance().getHookForJob(job, QuickLinkHook.class);
+			if (hook != null) {
+				Hyperlink jobLink = new Hyperlink(job.getName());
+				jobLink.setOnAction((e) -> {
+					hook.action();
+					
+				});
+				jobLabel = jobLink;
+			} else {
+				jobLabel = new Label(job.getName());
+				
+			}
+			
+			ImageView overviewImage = new ImageView();
+			overviewImage.setPickOnBounds(true);
+			overviewImage.getStyleClass().add("jobButton");
+			
+			overviewImage.setOnMouseClicked((e) -> new JobOverviewController(job));
+			
+			StackPane labelStack = new StackPane(jobLabel);
+			HBox labelBox = new HBox(overviewImage, labelStack);
+			
+			labelBox.setPadding(new Insets(0, 10, 0, 10));
+			
+			labelBox.setAlignment(Pos.CENTER_LEFT);
+			HBox.setHgrow(labelStack, Priority.ALWAYS);
+			
+			contentGrid.addRow(i, labelBox, new Label(millisToString(job.getWorkTime(monday))),
 					new Label(millisToString(job.getWorkTime(tuesday))), new Label(millisToString(job.getWorkTime(wednesday))),
 					new Label(millisToString(job.getWorkTime(thursday))), new Label(millisToString(job.getWorkTime(friday))),
 					createJobControls(job));
@@ -171,12 +203,12 @@ public class OverviewController extends Stage implements Initializable {
 		
 		return delete;
 	}
-
+	
 	@FXML
 	private void today() {
 		showForDate(new Date());
 	}
-
+	
 	@FXML
 	private void weekBack() {
 		Calendar cal = GregorianCalendar.getInstance();
@@ -184,7 +216,7 @@ public class OverviewController extends Stage implements Initializable {
 		cal.add(Calendar.DAY_OF_WEEK, -7);
 		showForDate(cal.getTime());
 	}
-
+	
 	@FXML
 	private void weekForward() {
 		Calendar cal = GregorianCalendar.getInstance();
@@ -192,36 +224,34 @@ public class OverviewController extends Stage implements Initializable {
 		cal.add(Calendar.DAY_OF_WEEK, 7);
 		showForDate(cal.getTime());
 	}
-
-
+	
 	@FXML
 	private void showMonday() {
 		showDetailsForDate(monday);
 	}
-
+	
 	@FXML
 	private void showTuesday() {
 		showDetailsForDate(tuesday);
 	}
-
+	
 	@FXML
 	private void showWednesday() {
 		showDetailsForDate(wednesday);
 	}
-
+	
 	@FXML
 	private void showThursday() {
 		showDetailsForDate(thursday);
 	}
-
+	
 	@FXML
 	private void showFriday() {
 		showDetailsForDate(friday);
 	}
-
+	
 	private void showDetailsForDate(Date date) {
 		DayOverviewController overView = new DayOverviewController(date);
 	}
-
-
+	
 }

@@ -15,3 +15,13 @@
 .overview .hyperlink{
 	-fx-border-width: 0px;
 }
+
+.overview .jobButton{
+	-fx-cursor: hand;
+	-fx-image: url('images/ic_info_outline_black_18dp_1x.png');
+}
+
+.overview .jobButton:hover{
+	-fx-image: url('images/ic_info_black_18dp_1x.png');
+}
+
