@@ -4,6 +4,8 @@
 package de.kogs.timeeater.data;
 
 import de.kogs.timeeater.controller.DialogController;
+import de.kogs.timeeater.data.hooks.HookManager;
+import de.kogs.timeeater.data.hooks.ScheduledJob;
 import javafx.application.Platform;
 
 import java.beans.XMLDecoder;
@@ -21,6 +23,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -39,10 +44,22 @@ public class JobManager {
 		return instance;
 	}
 
+	public static HookManager hookInstance() {
+		return HookManager.instance(instance);
+	}
+	
 	private List<ManagerListener> listeners = new ArrayList<ManagerListener>();
 
 	private Job activeJob;
 
+	private ScheduledExecutorService scheduledJobs = Executors.newScheduledThreadPool(1, (r) -> {
+		Thread t = new Thread(r);
+		t.setDaemon(true);
+		t.setName("ScheduledJobs Check Thread");
+		return t;
+	});
+	private Job jobActiveBeforScheduled;
+	
 	private Map<String, Job> kownJobs = new HashMap<>();
 
 	/**
@@ -50,7 +67,11 @@ public class JobManager {
 	 */
 	public JobManager() {
 		load();
+		scheduledJobs.schedule(() -> {
+			checkScheduledJobs();
+		} , 1, TimeUnit.MINUTES);
 	}
+
 
 	public Job getActiveJob() {
 		return activeJob;
@@ -60,11 +81,16 @@ public class JobManager {
 		if (kownJobs.containsKey(jobName)) {
 			startWorkOnJob(kownJobs.get(jobName));
 		} else {
-			Job newJob = new Job();
-			newJob.setName(jobName);
-			kownJobs.put(jobName, newJob);
-			startWorkOnJob(newJob);
+			startWorkOnJob(createJob(jobName));
 		}
+	}
+	
+	private Job createJob(String name) {
+		Job newJob = new Job();
+		newJob.setName(name);
+		kownJobs.put(name, newJob);
+		hookInstance().applyDefaults(newJob);
+		return newJob;
 	}
 
 	private void startWorkOnJob(Job job) {
@@ -92,6 +118,28 @@ public class JobManager {
 		}
 	}
 
+	private void checkScheduledJobs() {
+		HookManager hookManager = hookInstance();
+		System.out.println("Check Scheduled Jobs");
+		List<ScheduledJob> scheduledHooks = hookManager.getHooks(ScheduledJob.class);
+		for (ScheduledJob scheduledJob : scheduledHooks) {
+			if (scheduledJob.action()) {
+				jobActiveBeforScheduled = activeJob;
+				// Todo ask
+				stopWork();
+				startWorkOnJob(scheduledJob.getJob());
+			} else {
+				if (scheduledJob.getJob().equals(activeJob)) {
+					stopWork();
+					if (jobActiveBeforScheduled != null) {
+						startWorkOnJob(jobActiveBeforScheduled);
+					}
+				}
+			}
+			
+		}
+	}
+	
 	public Collection<Job> getKownJobs() {
 		return kownJobs.values();
 	}
@@ -131,10 +179,12 @@ public class JobManager {
 
 			e.printStackTrace();
 		}
+		hookInstance().save();
 
 	}
 
 	public void load() {
+		
 		try (XMLDecoder d = new XMLDecoder(new BufferedInputStream(
 				new FileInputStream(getSaveFile())))) {
 
@@ -142,11 +192,17 @@ public class JobManager {
 			kownJobs = jobs.stream().collect(
 					Collectors.toMap(Job::getName, Function.identity()));
 
+			HookManager hookManager = hookInstance();
+			for (Job job : jobs) {
+				hookManager.applyDefaults(job);
+			}
+			hookInstance().save();
+			
 		} catch (Exception e) {
 			Platform.runLater(() -> new DialogController("Fehler", "Daten konnten nicht geladen werden"));
 			e.printStackTrace();
 		}
-
+		
 	}
 
 	private File getSaveFile() {

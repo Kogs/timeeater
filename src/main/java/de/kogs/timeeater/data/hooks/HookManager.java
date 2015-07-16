@@ -26,21 +26,32 @@ import java.util.Map;
 public class HookManager {
 	
 	private static HookManager instance;
+	private JobManager jobManager;
 	
-	public static HookManager instance() {
+	public static HookManager instance(JobManager jobManager) {
 		if (instance == null) {
-			instance = new HookManager();
+			instance = new HookManager(jobManager);
 		}
 		return instance;
 	}
 	
+	
+
 	private List<Hook> hooks = new ArrayList<>();
+	private List<DefaultHook> defaults = new ArrayList<>();
 	
 	public static void main(String[] args) {
-		instance();
+//		HookManager manager = instance();
+//		DefaultHook defHook = new DefaultHook();
+//		defHook.setHookClass(QuickLinkHook.class.getName());
+//		defHook.setRegex("^(SPBL|FDAQA)*");
+//		defHook.getProperties().put("link", "https://issues.proemion.com/browse/");
+//		manager.defaults.add(defHook);
+//		manager.save();
 	}
 	
-	public HookManager () {
+	public HookManager (JobManager jobManager) {
+		this.jobManager = jobManager;
 		load();
 	}
 	
@@ -65,6 +76,16 @@ public class HookManager {
 		return null;
 	}
 	
+	public <X extends Hook> List<X> getHooks(Class<X> clazz) {
+		List<X> hooksForClass = new ArrayList<>();
+		for (Hook h : hooks) {
+			if (clazz.isInstance(h)) {
+				hooksForClass.add((X) h);
+			}
+		}
+		return hooksForClass;
+	}
+	
 	public void save() {
 		try (FileWriter writer = new FileWriter(getSaveFile())) {
 			JSONArray hooksJson = new JSONArray();
@@ -77,8 +98,21 @@ public class HookManager {
 				
 				hooksJson.add(hookJson);
 			}
+			
+			JSONArray defaultsJson = new JSONArray();
+			for (DefaultHook defaultHook : defaults) {
+				JSONObject defaultJson = new JSONObject();
+				defaultJson.put("class", defaultHook.getHookClass());
+				defaultJson.put("properties", defaultHook.getProperties());
+				defaultJson.put("regex", defaultHook.getRegex());
+				
+				defaultsJson.add(defaultJson);
+			}
+			
 			JSONObject obj = new JSONObject();
 			obj.put("hooks", hooksJson);
+			obj.put("defaults", defaultsJson);
+			
 			writer.write(obj.toJSONString());
 			
 		} catch (FileNotFoundException e) {
@@ -97,7 +131,7 @@ public class HookManager {
 			
 			JSONArray hooksJson = (JSONArray) obj.get("hooks");
 			
-			JobManager manager = JobManager.instance();
+
 			
 			for (int i = 0; i < hooksJson.size(); i++) {
 				JSONObject hookJson = (JSONObject) hooksJson.get(i);
@@ -105,7 +139,7 @@ public class HookManager {
 				try {
 					Class clazz = Class.forName((String) hookJson.get("class"));
 					Hook h = (Hook) clazz.newInstance();
-					Job job = manager.getJob((String) hookJson.get("job"));
+					Job job = jobManager.getJob((String) hookJson.get("job"));
 					if (job != null) {
 						h.setJob(job);
 						h.getProperties().putAll((Map<String, String>) hookJson.get("properties"));
@@ -119,9 +153,28 @@ public class HookManager {
 					e.printStackTrace();
 				}
 			}
+			
+			
+			JSONArray defaultsJson = (JSONArray)obj.get("defaults");
+			
+			for(int i = 0; i < defaultsJson.size(); i++){
+				JSONObject defaultJson = (JSONObject) defaultsJson.get(i);
+				DefaultHook defaultHook = new DefaultHook();
+				defaultHook.setHookClass((String) defaultJson.get("class"));
+				defaultHook.getProperties().putAll((Map<String, String>) defaultJson.get("properties"));
+				defaultHook.setRegex((String) defaultJson.get("regex"));
+				defaults.add(defaultHook);
+			}
+			
+			
+			
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
+		
 	}
 	
 	private File getSaveFile() {
@@ -135,6 +188,21 @@ public class HookManager {
 		}
 		System.out.println("File: " + file);
 		return file;
+	}
+	
+	/**
+	 * @param h
+	 */
+	public void addHook(Hook h) {
+		hooks.add(h);
+	}
+	
+
+	public void applyDefaults(Job job) {
+		System.out.println("ApplyDefaults: " + job.getName());
+		for (DefaultHook defaultHook : defaults) {
+			defaultHook.applyIfMatch(job);
+		}
 	}
 	
 }

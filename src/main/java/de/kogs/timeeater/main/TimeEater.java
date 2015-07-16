@@ -3,14 +3,14 @@
  */
 package de.kogs.timeeater.main;
 
-import java.awt.SystemTray;
-
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.stage.Stage;
 import de.kogs.timeeater.controller.DialogController;
 import de.kogs.timeeater.data.JobManager;
 import de.kogs.timeeater.tray.TimeEaterTray;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.stage.Stage;
+
+import java.awt.SystemTray;
 
 /**
  */
@@ -41,6 +41,7 @@ public class TimeEater extends Application {
 		JobManager manager = JobManager.instance();
 		manager.stopWork();
 		manager.save();
+		
 		SystemTray.getSystemTray().remove(trayIcon);
 		super.stop();
 	}
