@@ -3,10 +3,10 @@
  */
 package de.kogs.timeeater.controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import de.kogs.timeeater.data.Job;
+import de.kogs.timeeater.data.JobManager;
+import de.kogs.timeeater.data.LoggedWork;
+import de.kogs.timeeater.util.Utils;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,10 +21,12 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import de.kogs.timeeater.data.Job;
-import de.kogs.timeeater.data.JobManager;
-import de.kogs.timeeater.data.LoggedWork;
-import de.kogs.timeeater.util.Utils;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.ResourceBundle;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -89,7 +91,14 @@ public class LoggerController extends Stage implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		manager = JobManager.instance();
-		workSelector.getItems().addAll(manager.getKownJobs());
+		
+		Date lastWeek = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(lastWeek);
+		cal.add(Calendar.DAY_OF_MONTH, -7);
+		
+		workSelector.getItems().addAll(manager.getJobsForRange(cal.getTime(), new Date()));
+
 
 		refreshLabels = new PauseTransition(Duration.seconds(1));
 		refreshLabels.setOnFinished((event) -> {

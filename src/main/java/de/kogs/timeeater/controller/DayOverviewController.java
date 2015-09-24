@@ -1,14 +1,12 @@
 package de.kogs.timeeater.controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
-
+import de.kogs.timeeater.chart.ReloadChartListener;
+import de.kogs.timeeater.chart.TimeChart;
+import de.kogs.timeeater.chart.TimeChart.ExtraData;
+import de.kogs.timeeater.data.Job;
+import de.kogs.timeeater.data.JobManager;
+import de.kogs.timeeater.data.LoggedWork;
+import de.kogs.timeeater.util.Utils;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,13 +22,15 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-import de.kogs.timeeater.chart.ReloadChartListener;
-import de.kogs.timeeater.chart.TimeChart;
-import de.kogs.timeeater.chart.TimeChart.ExtraData;
-import de.kogs.timeeater.data.Job;
-import de.kogs.timeeater.data.JobManager;
-import de.kogs.timeeater.data.LoggedWork;
-import de.kogs.timeeater.util.Utils;
+
+import java.io.IOException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class DayOverviewController extends Stage implements Initializable, ReloadChartListener {
 
@@ -58,7 +58,7 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 
 	@FXML
 	private ComboBox<Job> jobSelector;
-
+	
 	private CategoryAxis yAxis;
 
 	private NumberAxis xAxis;
@@ -113,6 +113,7 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 		reloadJobSelector();
 	}
 	private void reloadJobSelector(){
+		jobSelector.getItems().clear();
 		for(Job job :JobManager.instance().getKownJobs()){
 			if(job.getWorkForDay(day).isEmpty()){
 				jobSelector.getItems().add(job);

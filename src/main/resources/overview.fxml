@@ -129,7 +129,7 @@
             </Label>
             <Region layoutX="236.0" layoutY="10.0" prefWidth="5.0" />
             <Button mnemonicParsing="false" onAction="#weekForward" text="&gt;" />
-            <Region HBox.hgrow="ALWAYS" />
+            <Region HBox.hgrow="ALWAYS" /><CheckBox fx:id="showActive" mnemonicParsing="false" text="Zeige nur aktive" />
          </children>
       </HBox>
    </children>

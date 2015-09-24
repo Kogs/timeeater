@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -34,6 +35,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -67,6 +69,9 @@ public class OverviewController extends Stage implements Initializable {
 	@FXML
 	private Label rangeLabel;
 	
+	@FXML
+	private CheckBox showActive;
+	
 	private JobManager manager;
 	
 	@FXML
@@ -80,6 +85,7 @@ public class OverviewController extends Stage implements Initializable {
 	@FXML
 	private Label fridayLabel;
 	
+
 	private Date monday;
 	private Date tuesday;
 	private Date wednesday;
@@ -101,6 +107,7 @@ public class OverviewController extends Stage implements Initializable {
 			Date res = Date.from(instant);
 			showForDate(res);
 		});
+		showActive.selectedProperty().addListener((obs) -> showForDate(currentDate));
 		showForDate(new Date());
 		
 	}
@@ -135,7 +142,10 @@ public class OverviewController extends Stage implements Initializable {
 		contentGrid.getRowConstraints().clear();
 		
 		int i = 0;
-		for (Job job : manager.getKownJobs()) {
+
+		
+		Collection<Job> jobs = showActive.isSelected() ? manager.getJobsForRange(monday, friday) : manager.getKownJobs();
+		for (Job job : jobs) {
 			contentGrid.getRowConstraints().add(new RowConstraints(30));
 			
 			Labeled jobLabel;

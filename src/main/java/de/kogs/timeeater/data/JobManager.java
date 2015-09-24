@@ -17,6 +17,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -28,6 +30,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -144,6 +147,26 @@ public class JobManager {
 		return kownJobs.values();
 	}
 
+	public Collection<Job> getJobsForDay(Date day) {
+		List<Job> jobsForDay = new ArrayList<>();
+		for (Job job : getKownJobs()) {
+			if (!job.getWorkForDay(day).isEmpty()) {
+				jobsForDay.add(job);
+			}
+		}
+		return jobsForDay;
+	}
+	
+	public Collection<Job> getJobsForRange(Date start, Date end) {
+		List<Job> jobsForDay = new ArrayList<>();
+		for (Job job : getKownJobs()) {
+			if (!job.getWorkInRange(start, end).isEmpty()) {
+				jobsForDay.add(job);
+			}
+		}
+		return jobsForDay;
+	}
+	
 	public Job getJob(String name) {
 		if (kownJobs.containsKey(name)) {
 			return kownJobs.get(name);
@@ -166,6 +189,7 @@ public class JobManager {
 	}
 	
 	public void save() {
+		backup();
 		try (XMLEncoder e = new XMLEncoder(new BufferedOutputStream(
 				new FileOutputStream(getSaveFile())))) {
 
@@ -180,9 +204,32 @@ public class JobManager {
 			e.printStackTrace();
 		}
 		hookInstance().save();
-
 	}
 
+	private void backup() {
+		
+		File backupFile = getBackupFile();
+		if (backupFile.exists()) {
+			Platform.runLater(() -> new DialogController("Fehler", "Backup Datei existiert bereits"));
+			return;
+		}
+		
+		try (GZIPOutputStream output = new GZIPOutputStream(new FileOutputStream(backupFile));
+				FileInputStream input = new FileInputStream(getSaveFile())) {
+				
+			byte[] buffer = new byte[1024]; // Adjust if you want
+			int bytesRead;
+			while ((bytesRead = input.read(buffer)) != -1) {
+				output.write(buffer, 0, bytesRead);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	
 	public void load() {
 		
 		try (XMLDecoder d = new XMLDecoder(new BufferedInputStream(
@@ -218,6 +265,18 @@ public class JobManager {
 		return file;
 	}
 
+	private File getBackupFile() {
+		File folder = new File(System.getProperty("user.dir") + "\\backup\\");
+		folder.mkdirs();
+		DateFormat format = new SimpleDateFormat("yyyy.MM.dd_HH");
+		
+		String fileName = "save_" + format.format(new Date()) + ".backup";
+		File file = new File(folder, fileName);
+		System.out.println("File: " + file);
+		return file;
+		
+	}
+	
 	public void removeJob(Job j) {
 		kownJobs.remove(j.getName());
 		save();
