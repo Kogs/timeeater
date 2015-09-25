@@ -157,7 +157,15 @@ public class JobManager {
 		return jobsForDay;
 	}
 	
-	public Collection<Job> getJobsForRange(Date start, Date end) {
+	public long getTimeForDay(Date day) {
+		long time = 0;
+		for (Job job : getKownJobs()) {
+			time += job.getWorkTime(day);
+		}
+		return time;
+	}
+	
+	public List<Job> getJobsForRange(Date start, Date end) {
 		List<Job> jobsForDay = new ArrayList<>();
 		for (Job job : getKownJobs()) {
 			if (!job.getWorkInRange(start, end).isEmpty()) {

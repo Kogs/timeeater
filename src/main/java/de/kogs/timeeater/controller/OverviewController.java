@@ -85,7 +85,17 @@ public class OverviewController extends Stage implements Initializable {
 	@FXML
 	private Label fridayLabel;
 	
-
+	@FXML
+	private Label summaryMonday;
+	@FXML
+	private Label summaryTuesday;
+	@FXML
+	private Label summaryWednesday;
+	@FXML
+	private Label summaryThursday;
+	@FXML
+	private Label summaryFriday;
+	
 	private Date monday;
 	private Date tuesday;
 	private Date wednesday;
@@ -125,24 +135,28 @@ public class OverviewController extends Stage implements Initializable {
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		monday = c.getTime();
 		mondayLabel.setText(weekDayFormat.format(monday));
+		summaryMonday.setText(millisToString(manager.getTimeForDay(monday)));
 		c.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
 		tuesday = c.getTime();
 		tuesdayLabel.setText(weekDayFormat.format(tuesday));
+		summaryTuesday.setText(millisToString(manager.getTimeForDay(tuesday)));
 		c.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
 		wednesday = c.getTime();
 		wednesdayLabel.setText(weekDayFormat.format(wednesday));
+		summaryWednesday.setText(millisToString(manager.getTimeForDay(wednesday)));
 		c.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
 		thursday = c.getTime();
 		thursdayLabel.setText(weekDayFormat.format(thursday));
+		summaryThursday.setText(millisToString(manager.getTimeForDay(thursday)));
 		c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
 		friday = c.getTime();
 		fridayLabel.setText(weekDayFormat.format(friday));
+		summaryFriday.setText(millisToString(manager.getTimeForDay(friday)));
 		
 		contentGrid.getChildren().clear();
 		contentGrid.getRowConstraints().clear();
 		
 		int i = 0;
-
 		
 		Collection<Job> jobs = showActive.isSelected() ? manager.getJobsForRange(monday, friday) : manager.getKownJobs();
 		for (Job job : jobs) {
@@ -204,13 +218,18 @@ public class OverviewController extends Stage implements Initializable {
 	}
 	
 	private Node createJobControls(Job j) {
-		Button delete = new Button("Löschen");
-		delete.setOnAction((event) -> {
-			manager.removeJob(j);
-			showForDate(currentDate);
-		});
+		Button delete = new Button("NoAction");
+//		delete.setOnAction((event) -> {
+//			manager.removeJob(j);
+//			showForDate(currentDate);
+//		});
 		
 		return delete;
+	}
+	
+	@FXML
+	private void refresh() {
+		showForDate(currentDate);
 	}
 	
 	@FXML

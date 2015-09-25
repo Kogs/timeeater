@@ -3,6 +3,7 @@
  */
 package de.kogs.timeeater.data;
 
+import de.kogs.timeeater.data.comparator.WorkComparator;
 import de.kogs.timeeater.util.Utils;
 
 import java.util.ArrayList;
@@ -30,6 +31,11 @@ public class Job {
 
 	}
 
+	public LoggedWork getLastWork() {
+		works.sort(new WorkComparator());
+		return works.get(works.size() - 1);
+	}
+	
 	public long getFullWorkTime() {
 		return countWorkTime(works);
 	}

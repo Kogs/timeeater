@@ -7,130 +7,164 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="658.0" styleClass="overview" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <GridPane layoutX="14.0" layoutY="82.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
-        <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" valignment="CENTER" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-        </rowConstraints>
-         <children>
-            <VBox alignment="CENTER" onMouseClicked="#showMonday" styleClass="dayButton" GridPane.columnIndex="1">
-               <children>
-                  <Label text="Montag">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="mondayLabel" text="datum" GridPane.columnIndex="1" />
-               </children>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </VBox>
-            <Label text="Aufgabe">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <VBox alignment="CENTER" onMouseClicked="#showTuesday" styleClass="dayButton" GridPane.columnIndex="2">
-               <children>
-                  <Label text="Dienstag">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="tuesdayLabel" text="datum" GridPane.columnIndex="2" />
-               </children>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </VBox>
-            <VBox alignment="CENTER" onMouseClicked="#showWednesday" styleClass="dayButton" GridPane.columnIndex="3">
-               <children>
-                  <Label text="Mittwoch">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="wednesdayLabel" text="datum" GridPane.columnIndex="3" />
-               </children>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </VBox>
-            <VBox alignment="CENTER" styleClass="dayButton" GridPane.columnIndex="4">
-               <children>
-                  <Label onMouseClicked="#showThursday" text="Donnerstag">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="thursdayLabel" text="datum" GridPane.columnIndex="4" />
-               </children>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </VBox>
-            <VBox alignment="CENTER" styleClass="dayButton" GridPane.columnIndex="5">
-               <children>
-                  <Label onMouseClicked="#showFriday" text="Freitag">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="fridayLabel" text="datum" GridPane.columnIndex="5" />
-               </children>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </VBox>
-            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
-               <content>
-                  <GridPane fx:id="contentGrid" gridLinesVisible="true">
-                    <columnConstraints>
-                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                    </rowConstraints>
-                  </GridPane>
-               </content>
-            </ScrollPane>
-         </children>
-      </GridPane>
-      <HBox alignment="CENTER_LEFT" layoutX="-25.0" layoutY="13.0" AnchorPane.leftAnchor="-25.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
-         <children>
-            <DatePicker fx:id="rangePicker" editable="false" layoutX="-25.0" layoutY="13.0" prefHeight="25.0" prefWidth="7.0" AnchorPane.leftAnchor="-25.0" AnchorPane.topAnchor="13.0" />
-            <Button layoutX="25.0" layoutY="13.0" mnemonicParsing="false" onAction="#today" text="Today" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="13.0" />
-            <Region layoutX="643.0" layoutY="10.0" prefWidth="50.0" />
-            <Button mnemonicParsing="false" onAction="#weekBack" text="&lt;" />
-            <Region layoutX="161.0" layoutY="10.0" prefWidth="5.0" />
-            <Label fx:id="rangeLabel" alignment="CENTER" text="Range">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
-            <Region layoutX="236.0" layoutY="10.0" prefWidth="5.0" />
-            <Button mnemonicParsing="false" onAction="#weekForward" text="&gt;" />
-            <Region HBox.hgrow="ALWAYS" /><CheckBox fx:id="showActive" mnemonicParsing="false" text="Zeige nur aktive" />
-         </children>
-      </HBox>
-   </children>
+	<children>
+		<GridPane layoutX="14.0" layoutY="82.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+			<columnConstraints>
+				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" valignment="CENTER" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+			</rowConstraints>
+			<children>
+				<VBox alignment="CENTER" onMouseClicked="#showMonday" styleClass="dayButton" GridPane.columnIndex="1">
+					<children>
+						<Label text="Montag">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+						<Label fx:id="mondayLabel" text="datum" GridPane.columnIndex="1" />
+					</children>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</VBox>
+				<Label text="Aufgabe">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Label>
+				<VBox alignment="CENTER" onMouseClicked="#showTuesday" styleClass="dayButton" GridPane.columnIndex="2">
+					<children>
+						<Label text="Dienstag">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+						<Label fx:id="tuesdayLabel" text="datum" GridPane.columnIndex="2" />
+					</children>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</VBox>
+				<VBox alignment="CENTER" onMouseClicked="#showWednesday" styleClass="dayButton" GridPane.columnIndex="3">
+					<children>
+						<Label text="Mittwoch">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+						<Label fx:id="wednesdayLabel" text="datum" GridPane.columnIndex="3" />
+					</children>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</VBox>
+				<VBox alignment="CENTER" onMouseClicked="#showThursday" styleClass="dayButton" GridPane.columnIndex="4">
+					<children>
+						<Label text="Donnerstag">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+						<Label fx:id="thursdayLabel" text="datum" GridPane.columnIndex="4" />
+					</children>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</VBox>
+				<VBox alignment="CENTER" onMouseClicked="#showFriday" styleClass="dayButton" GridPane.columnIndex="5">
+					<children>
+						<Label text="Freitag">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+						<Label fx:id="fridayLabel" text="datum" GridPane.columnIndex="5" />
+					</children>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</VBox>
+				<ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
+					<content>
+						<GridPane fx:id="contentGrid" gridLinesVisible="true">
+							<columnConstraints>
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+							</rowConstraints>
+						</GridPane>
+					</content>
+				</ScrollPane>
+
+				<Label text="Summary" GridPane.columnIndex="0" GridPane.rowIndex="2">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Label>
+				<Label fx:id="summaryMonday" GridPane.columnIndex="1" GridPane.rowIndex="2">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Label>
+				<Label fx:id="summaryTuesday" GridPane.columnIndex="2" GridPane.rowIndex="2">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Label>
+				<Label fx:id="summaryWednesday" GridPane.columnIndex="3" GridPane.rowIndex="2">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Label>
+				<Label fx:id="summaryThursday" GridPane.columnIndex="4" GridPane.rowIndex="2">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Label>
+				<Label fx:id="summaryFriday" GridPane.columnIndex="5" GridPane.rowIndex="2">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Label>
+
+			</children>
+		</GridPane>
+		<HBox alignment="CENTER_LEFT" layoutX="-25.0" layoutY="13.0" AnchorPane.leftAnchor="-25.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+			<children>
+				<DatePicker fx:id="rangePicker" editable="false" layoutX="-25.0" layoutY="13.0" prefHeight="25.0" prefWidth="7.0" AnchorPane.leftAnchor="-25.0" AnchorPane.topAnchor="13.0" />
+				<Button layoutX="25.0" layoutY="13.0" mnemonicParsing="false" onAction="#today" text="Today" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="13.0" />
+				<Region layoutX="643.0" layoutY="10.0" prefWidth="50.0" />
+				<Button mnemonicParsing="false" onAction="#weekBack" text="&lt;" />
+				<Region layoutX="161.0" layoutY="10.0" prefWidth="5.0" />
+				<Label fx:id="rangeLabel" alignment="CENTER" text="Range">
+					<font>
+						<Font name="System Bold" size="20.0" />
+					</font>
+				</Label>
+				<Region layoutX="236.0" layoutY="10.0" prefWidth="5.0" />
+				<Button mnemonicParsing="false" onAction="#weekForward" text="&gt;" /><Region minWidth="30.0" /><Button mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+				<Region HBox.hgrow="ALWAYS" />
+				<CheckBox fx:id="showActive" mnemonicParsing="false" text="Zeige nur aktive" selected="true" />
+			</children>
+		</HBox>
+	</children>
 </AnchorPane>

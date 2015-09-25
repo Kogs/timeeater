@@ -6,6 +6,7 @@ package de.kogs.timeeater.controller;
 import de.kogs.timeeater.data.Job;
 import de.kogs.timeeater.data.JobManager;
 import de.kogs.timeeater.data.LoggedWork;
+import de.kogs.timeeater.data.comparator.LastWorkComparator;
 import de.kogs.timeeater.util.Utils;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
@@ -25,7 +26,9 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -97,7 +100,11 @@ public class LoggerController extends Stage implements Initializable {
 		cal.setTime(lastWeek);
 		cal.add(Calendar.DAY_OF_MONTH, -7);
 		
-		workSelector.getItems().addAll(manager.getJobsForRange(cal.getTime(), new Date()));
+		List<Job> jobsForLast7Days = manager.getJobsForRange(cal.getTime(), new Date());
+		
+		Collections.sort(jobsForLast7Days, new LastWorkComparator());
+		
+		workSelector.getItems().addAll(jobsForLast7Days);
 
 
 		refreshLabels = new PauseTransition(Duration.seconds(1));
