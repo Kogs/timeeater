@@ -25,6 +25,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -100,11 +101,11 @@ public class LoggerController extends Stage implements Initializable {
 		cal.setTime(lastWeek);
 		cal.add(Calendar.DAY_OF_MONTH, -7);
 		
-		List<Job> jobsForLast7Days = manager.getJobsForRange(cal.getTime(), new Date());
+		List<Job> allJobs = new ArrayList<>(manager.getKownJobs());
 		
-		Collections.sort(jobsForLast7Days, new LastWorkComparator());
+		Collections.sort(allJobs, new LastWorkComparator());
 		
-		workSelector.getItems().addAll(jobsForLast7Days);
+		workSelector.getItems().addAll(allJobs.subList(0, allJobs.size() > 10 ? 10 : allJobs.size()));
 
 
 		refreshLabels = new PauseTransition(Duration.seconds(1));

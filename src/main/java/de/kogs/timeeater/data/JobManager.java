@@ -3,15 +3,15 @@
  */
 package de.kogs.timeeater.data;
 
+import org.codehaus.jackson.map.ObjectMapper;
+
 import de.kogs.timeeater.controller.DialogController;
 import de.kogs.timeeater.data.hooks.HookManager;
 import de.kogs.timeeater.data.hooks.ScheduledJob;
 import javafx.application.Platform;
 
 import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -198,19 +199,15 @@ public class JobManager {
 	
 	public void save() {
 		backup();
-		try (XMLEncoder e = new XMLEncoder(new BufferedOutputStream(
-				new FileOutputStream(getSaveFile())))) {
-
-			List<Job> jobs = new ArrayList<>(getKownJobs());
-
-			e.writeObject(jobs);
-
-			Platform.runLater(()->new DialogController("Speichern", "Daten wurden gespeichert"));
-			
-		} catch (FileNotFoundException e) {
-
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			mapper.writeValue(getSaveFileJson(), new ArrayList<>(getKownJobs()));
+			Platform.runLater(() -> new DialogController("Speichern", "Daten wurden gespeichert"));
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		hookInstance().save();
 	}
 
@@ -218,12 +215,12 @@ public class JobManager {
 		
 		File backupFile = getBackupFile();
 		if (backupFile.exists()) {
-			Platform.runLater(() -> new DialogController("Fehler", "Backup Datei existiert bereits"));
+//			Platform.runLater(() -> new DialogController("Fehler", "Backup Datei existiert bereits"));
 			return;
 		}
 		
 		try (GZIPOutputStream output = new GZIPOutputStream(new FileOutputStream(backupFile));
-				FileInputStream input = new FileInputStream(getSaveFile())) {
+				FileInputStream input = new FileInputStream(getSaveFileJson())) {
 				
 			byte[] buffer = new byte[1024]; // Adjust if you want
 			int bytesRead;
@@ -240,30 +237,58 @@ public class JobManager {
 	
 	public void load() {
 		
-		try (XMLDecoder d = new XMLDecoder(new BufferedInputStream(
-				new FileInputStream(getSaveFile())))) {
+		if (getSaveFile().exists()) {
+			// read old xml save file
+			// and save to new json File
+			try (XMLDecoder d = new XMLDecoder(new BufferedInputStream(new FileInputStream(getSaveFile())))) {
 
-			List<Job> jobs = (List<Job>) d.readObject();
-			kownJobs = jobs.stream().collect(
-					Collectors.toMap(Job::getName, Function.identity()));
-
-			HookManager hookManager = hookInstance();
-			for (Job job : jobs) {
-				hookManager.applyDefaults(job);
+				List<Job> jobs = (List<Job>) d.readObject();
+				kownJobs = jobs.stream().collect(Collectors.toMap(Job::getName, Function.identity()));
+				save();
+				kownJobs.clear();
+				getSaveFile().delete();
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
 			}
-			hookInstance().save();
+		}
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+			Job[] jobsArray = mapper.readValue(getSaveFileJson(), Job[].class);
+			List<Job> jobs = Arrays.asList(jobsArray);
 			
-		} catch (Exception e) {
+			kownJobs = jobs.stream().collect(Collectors.toMap(Job::getName, Function.identity()));
+			
+			// HOOKMANAGER DISABLED FIXME
+//			HookManager hookManager = hookInstance();
+//			for (Job job : jobs) {
+//				hookManager.applyDefaults(job);
+//			}
+//			hookInstance().save();
+			
+		} catch (IOException e) {
 			Platform.runLater(() -> new DialogController("Fehler", "Daten konnten nicht geladen werden"));
 			e.printStackTrace();
 		}
 		
+
 	}
 
 	private File getSaveFile() {
 		File folder = new File(System.getProperty("user.dir") + "\\conf\\");
 		folder.mkdirs();
 		File file = new File(folder, "save.xml");
+		System.out.println("File: " + file);
+		return file;
+	}
+
+	private File getSaveFileJson() {
+		File folder = new File(System.getProperty("user.dir") + "\\conf\\");
+		folder.mkdirs();
+		File file = new File(folder, "save.json");
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
@@ -272,7 +297,7 @@ public class JobManager {
 		System.out.println("File: " + file);
 		return file;
 	}
-
+	
 	private File getBackupFile() {
 		File folder = new File(System.getProperty("user.dir") + "\\backup\\");
 		folder.mkdirs();

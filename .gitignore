@@ -10,3 +10,4 @@ release.properties
 .settings/
 .pmd
 conf/save.xml
+conf/save.json

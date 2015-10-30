@@ -21,13 +21,13 @@ public class LastWorkComparator implements Comparator<Job> {
 	@Override
 	public int compare(Job o1, Job o2) {
 		if (o1 == null || o1.getLastWork() == null) {
-			return -1;
-		}
-		if (o2 == null || o2.getLastWork() == null) {
 			return 1;
 		}
+		if (o2 == null || o2.getLastWork() == null) {
+			return -1;
+		}
 		
-		return workComparator.compare(o1.getLastWork(), o2.getLastWork());
+		return -workComparator.compare(o1.getLastWork(), o2.getLastWork());
 	}
 	
 }

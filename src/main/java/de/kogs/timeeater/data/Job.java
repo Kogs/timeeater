@@ -3,6 +3,8 @@
  */
 package de.kogs.timeeater.data;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import de.kogs.timeeater.data.comparator.WorkComparator;
 import de.kogs.timeeater.util.Utils;
 
@@ -16,7 +18,7 @@ import java.util.List;
  */
 public class Job {
 
-	private String name;
+	public String name;
 
 	private String description;
 	
@@ -30,20 +32,24 @@ public class Job {
 	public Job() {
 
 	}
-
+	
+	@JsonIgnore
 	public LoggedWork getLastWork() {
 		works.sort(new WorkComparator());
 		return works.get(works.size() - 1);
 	}
 	
+	@JsonIgnore
 	public long getFullWorkTime() {
 		return countWorkTime(works);
 	}
-
+	
+	@JsonIgnore
 	public long getWorkTime(Date date) {
 		return countWorkTime(getWorkForDay(date));
 	}
-
+	
+	@JsonIgnore
 	public List<LoggedWork> getWorkForDay(Date date) {
 		List<LoggedWork> work = new ArrayList<>();
 		for (LoggedWork aWork : works) {
@@ -67,7 +73,8 @@ public class Job {
 		}
 		return time;
 	}
-
+	
+	@JsonIgnore
 	public LoggedWork getNextWork(LoggedWork work) {
 		List<LoggedWork> workForDay = getWorkForDay(work.getLogDate());
 
@@ -85,7 +92,7 @@ public class Job {
 		return nextWork;
 	}
 
-
+	@JsonIgnore
 	public List<LoggedWork> getWorkInRange(Date startDate , Date endDate){
 		List<LoggedWork> work = new ArrayList<>();
 		for (LoggedWork aWork : works) {
@@ -95,9 +102,13 @@ public class Job {
 		}
 		return work;
 	}
+	
+	@JsonIgnore
 	public Long getWorkTimeInRange(Date startDate,Date endDate){
 		return countWorkTime(getWorkInRange(startDate, endDate));
 	}
+	
+	@JsonIgnore
 	public LoggedWork getPreviousWork(LoggedWork work) {
 		List<LoggedWork> workForDay = getWorkForDay(work.getLogDate());
 
@@ -138,12 +149,14 @@ public class Job {
 	public void setActiveWork(LoggedWork activeWork) {
 		this.activeWork = activeWork;
 	}
-
+	
+	@JsonIgnore
 	@Override
 	public String toString() {
 		return getName();
 	}
-
+	
+	@JsonIgnore
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -151,7 +164,8 @@ public class Job {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
-
+	
+	@JsonIgnore
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
