@@ -3,6 +3,15 @@
  */
 package de.kogs.timeeater.tray;
 
+import de.kogs.timeeater.controller.LoggerController;
+import de.kogs.timeeater.controller.OverviewController;
+import de.kogs.timeeater.controller.QuickLinkController;
+import de.kogs.timeeater.data.Job;
+import de.kogs.timeeater.data.JobManager;
+import de.kogs.timeeater.data.ManagerListener;
+import javafx.application.Platform;
+
+import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.TrayIcon;
@@ -10,15 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-import javafx.application.Platform;
-
 import javax.imageio.ImageIO;
-
-import de.kogs.timeeater.controller.LoggerController;
-import de.kogs.timeeater.controller.OverviewController;
-import de.kogs.timeeater.data.Job;
-import de.kogs.timeeater.data.JobManager;
-import de.kogs.timeeater.data.ManagerListener;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -57,6 +58,12 @@ public class TimeEaterTray extends TrayIcon implements ManagerListener {
 		final PopupMenu popup = new PopupMenu();
 		MenuItem aboutItem = new MenuItem("About");
 
+		Menu hooks = new Menu("Hooks");
+		
+		MenuItem quickLinks = new MenuItem("QuickLinks");
+		hooks.add(quickLinks);
+		quickLinks.addActionListener(e -> Platform.runLater(() -> new QuickLinkController()));
+		
 		MenuItem overview = new MenuItem("Overview");
 		overview.addActionListener(e -> Platform.runLater(()->new OverviewController()));
 
@@ -69,6 +76,7 @@ public class TimeEaterTray extends TrayIcon implements ManagerListener {
 		// Add components to pop-up menu
 		popup.add(aboutItem);
 		popup.addSeparator();
+		popup.add(hooks);
 		popup.add(overview);
 		popup.addSeparator();
 		popup.add(save);

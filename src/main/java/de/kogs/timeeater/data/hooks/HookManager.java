@@ -18,7 +18,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -34,11 +34,8 @@ public class HookManager {
 		}
 		return instance;
 	}
-	
-	
 
-	private List<Hook> hooks = new ArrayList<>();
-	private List<DefaultHook> defaults = new ArrayList<>();
+	private List<QuickLink> quickLinks = new ArrayList<>();
 	
 	public static void main(String[] args) {
 //		HookManager manager = instance();
@@ -55,66 +52,36 @@ public class HookManager {
 		load();
 	}
 	
-	public List<Hook> getHooksForJob(Job job) {
-		List<Hook> hooksForJob = new ArrayList<>();
-		for (Hook h : hooks) {
-			if (h.getJob().equals(job)) {
-				hooksForJob.add(h);
-			}
-		}
-		return hooksForJob;
-	}
+
 	
-	public <X extends Hook> X getHookForJob(Job job, Class<X> clazz) {
-		for (Hook h : hooks) {
-			if (h.getJob().equals(job)) {
-				if (clazz.isInstance(h)) {
-					return (X) h;
-				}
+	public QuickLink getQuickLinkForJob(Job job) {
+		for (QuickLink link : quickLinks) {
+			System.out.println("Link: " + link + " job: " + job);
+			if (Pattern.matches(link.getPattern(), job.getName())) {
+				System.out.println("Matches");
+				return link;
 			}
+			
 		}
 		return null;
 	}
 	
-	public <X extends Hook> List<X> getHooks(Class<X> clazz) {
-		List<X> hooksForClass = new ArrayList<>();
-		for (Hook h : hooks) {
-			if (clazz.isInstance(h)) {
-				hooksForClass.add((X) h);
-			}
-		}
-		return hooksForClass;
-	}
 	
 	public void save() {
 		try (FileWriter writer = new FileWriter(getSaveFile())) {
-			JSONArray hooksJson = new JSONArray();
-			for (Hook hook : hooks) {
-				JSONObject hookJson = new JSONObject();
-				hookJson.put("class", hook.getClass().getName());
-				hookJson.put("job", hook.getJob().getName());
-				
-				hookJson.put("properties", hook.getProperties());
-				
-				hooksJson.add(hookJson);
-			}
 			
-			JSONArray defaultsJson = new JSONArray();
-			for (DefaultHook defaultHook : defaults) {
-				JSONObject defaultJson = new JSONObject();
-				defaultJson.put("class", defaultHook.getHookClass());
-				defaultJson.put("properties", defaultHook.getProperties());
-				defaultJson.put("regex", defaultHook.getRegex());
-				
-				defaultsJson.add(defaultJson);
+			JSONArray quickLinksJson = new JSONArray();
+			for (QuickLink link : quickLinks) {
+				JSONObject linkJson = new JSONObject();
+				linkJson.put("pattern", link.getPattern());
+				linkJson.put("url", link.getUrl());
+				quickLinksJson.add(linkJson);
 			}
-			
+
 			JSONObject obj = new JSONObject();
-			obj.put("hooks", hooksJson);
-			obj.put("defaults", defaultsJson);
+			obj.put("quickLinks", quickLinksJson);
 			
 			writer.write(obj.toJSONString());
-			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e1) {
@@ -129,58 +96,25 @@ public class HookManager {
 			
 			JSONObject obj = (JSONObject) parser.parse(reader);
 			
-			JSONArray hooksJson = (JSONArray) obj.get("hooks");
-			
-
-			
-			for (int i = 0; i < hooksJson.size(); i++) {
-				JSONObject hookJson = (JSONObject) hooksJson.get(i);
-				
-				try {
-					Class clazz = Class.forName((String) hookJson.get("class"));
-					Hook h = (Hook) clazz.newInstance();
-					Job job = jobManager.getJob((String) hookJson.get("job"));
-					if (job != null) {
-						h.setJob(job);
-						h.getProperties().putAll((Map<String, String>) hookJson.get("properties"));
-						hooks.add(h);
-					}
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				}
+			JSONArray quickLinksJson = (JSONArray) obj.get("quickLinks");
+		
+			quickLinks.clear();
+			for (int i = 0; i < quickLinksJson.size(); i++) {
+				JSONObject linkJson = (JSONObject) quickLinksJson.get(i);
+				QuickLink link = new QuickLink();
+				link.setPattern((String)linkJson.get("pattern"));
+				link.setUrl((String) linkJson.get("url"));
+				quickLinks.add(link);
 			}
-			
-			
-			JSONArray defaultsJson = (JSONArray)obj.get("defaults");
-			
-			for(int i = 0; i < defaultsJson.size(); i++){
-				JSONObject defaultJson = (JSONObject) defaultsJson.get(i);
-				DefaultHook defaultHook = new DefaultHook();
-				defaultHook.setHookClass((String) defaultJson.get("class"));
-				defaultHook.getProperties().putAll((Map<String, String>) defaultJson.get("properties"));
-				defaultHook.setRegex((String) defaultJson.get("regex"));
-				defaults.add(defaultHook);
-			}
-			
-			
-			
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
 	}
 	
 	private File getSaveFile() {
 		File folder = new File(System.getProperty("user.dir") + "\\conf\\");
 		folder.mkdirs();
-		File file = new File(folder, "hooks.json");
+		File file = new File(folder, "newHooks.json");
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
@@ -189,20 +123,9 @@ public class HookManager {
 		System.out.println("File: " + file);
 		return file;
 	}
-	
-	/**
-	 * @param h
-	 */
-	public void addHook(Hook h) {
-		hooks.add(h);
-	}
-	
 
-	public void applyDefaults(Job job) {
-		System.out.println("ApplyDefaults: " + job.getName());
-		for (DefaultHook defaultHook : defaults) {
-			defaultHook.applyIfMatch(job);
-		}
+	public List<QuickLink> getQuickLinks() {
+		return quickLinks;
 	}
 	
 }

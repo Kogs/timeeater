@@ -7,7 +7,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import de.kogs.timeeater.controller.DialogController;
 import de.kogs.timeeater.data.hooks.HookManager;
-import de.kogs.timeeater.data.hooks.ScheduledJob;
 import javafx.application.Platform;
 
 import java.beans.XMLDecoder;
@@ -26,9 +25,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
@@ -56,13 +52,7 @@ public class JobManager {
 
 	private Job activeJob;
 
-	private ScheduledExecutorService scheduledJobs = Executors.newScheduledThreadPool(1, (r) -> {
-		Thread t = new Thread(r);
-		t.setDaemon(true);
-		t.setName("ScheduledJobs Check Thread");
-		return t;
-	});
-	private Job jobActiveBeforScheduled;
+
 	
 	private Map<String, Job> kownJobs = new HashMap<>();
 
@@ -71,9 +61,6 @@ public class JobManager {
 	 */
 	public JobManager() {
 		load();
-		scheduledJobs.schedule(() -> {
-			checkScheduledJobs();
-		} , 1, TimeUnit.MINUTES);
 	}
 
 
@@ -93,7 +80,6 @@ public class JobManager {
 		Job newJob = new Job();
 		newJob.setName(name);
 		kownJobs.put(name, newJob);
-		hookInstance().applyDefaults(newJob);
 		return newJob;
 	}
 
@@ -122,28 +108,7 @@ public class JobManager {
 		}
 	}
 
-	private void checkScheduledJobs() {
-		HookManager hookManager = hookInstance();
-		System.out.println("Check Scheduled Jobs");
-		List<ScheduledJob> scheduledHooks = hookManager.getHooks(ScheduledJob.class);
-		for (ScheduledJob scheduledJob : scheduledHooks) {
-			if (scheduledJob.action()) {
-				jobActiveBeforScheduled = activeJob;
-				// Todo ask
-				stopWork();
-				startWorkOnJob(scheduledJob.getJob());
-			} else {
-				if (scheduledJob.getJob().equals(activeJob)) {
-					stopWork();
-					if (jobActiveBeforScheduled != null) {
-						startWorkOnJob(jobActiveBeforScheduled);
-					}
-				}
-			}
-			
-		}
-	}
-	
+
 	public Collection<Job> getKownJobs() {
 		return kownJobs.values();
 	}

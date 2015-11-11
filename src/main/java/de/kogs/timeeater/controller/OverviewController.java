@@ -2,7 +2,7 @@ package de.kogs.timeeater.controller;
 
 import de.kogs.timeeater.data.Job;
 import de.kogs.timeeater.data.JobManager;
-import de.kogs.timeeater.data.hooks.QuickLinkHook;
+import de.kogs.timeeater.data.hooks.QuickLink;
 import de.kogs.timeeater.util.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -163,17 +163,17 @@ public class OverviewController extends Stage implements Initializable {
 			contentGrid.getRowConstraints().add(new RowConstraints(30));
 			
 			Labeled jobLabel;
-			QuickLinkHook hook = JobManager.hookInstance().getHookForJob(job, QuickLinkHook.class);
-			if (hook != null) {
+			
+			QuickLink link = JobManager.hookInstance().getQuickLinkForJob(job);
+			
+			if (link != null) {
 				Hyperlink jobLink = new Hyperlink(job.getName());
 				jobLink.setOnAction((e) -> {
-					hook.action();
-					
+					link.fireForJob(job);
 				});
 				jobLabel = jobLink;
 			} else {
 				jobLabel = new Label(job.getName());
-				
 			}
 			
 			ImageView overviewImage = new ImageView();

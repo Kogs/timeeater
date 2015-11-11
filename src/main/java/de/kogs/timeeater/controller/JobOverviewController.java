@@ -4,18 +4,12 @@
 package de.kogs.timeeater.controller;
 
 
-import org.reflections.Reflections;
-
 import de.kogs.timeeater.data.Job;
 import de.kogs.timeeater.data.JobManager;
-import de.kogs.timeeater.data.hooks.Hook;
-import de.kogs.timeeater.data.hooks.Hook.HookConfigGui;
-import de.kogs.timeeater.data.hooks.HookConfig;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -24,15 +18,11 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -45,7 +35,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -86,7 +75,7 @@ public class JobOverviewController extends Stage implements Initializable {
 	private Button editButton;
 	
 	@FXML
-	private ListView<Hook> hooksListView;
+	private ListView<Object> hooksListView;
 	
 	private Job job;
 	
@@ -167,85 +156,85 @@ public class JobOverviewController extends Stage implements Initializable {
 		JobManager.instance().save();
 	}
 	
-	private Hook currentEditingHook;
+
 	
 	@FXML
 	private void addHook() {
-		Popup popup = new Popup();
-		
-		ComboBox<Class<? extends Hook>> hookSelector = new ComboBox<>();
-		hookSelector.setConverter(new StringConverter<Class<? extends Hook>>() {
-			
-			@Override
-			public String toString(Class<? extends Hook> object) {
-				return object.getSimpleName();
-			}
-			
-			@Override
-			public Class<? extends Hook> fromString(String string) {
-				try {
-					return (Class<? extends Hook>) Class.forName("de.kogs.timeeater.data.hooks." + string);
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-		});
-		
-		Reflections reflections = new Reflections("de.kogs.timeeater.data.hooks");
-		
-
-		Set<Class<? extends Hook>> classes = reflections.getSubTypesOf(Hook.class);
-		// TODO filer already setted Hooks
-		for (Class<? extends Hook> hookClass : classes) {
-			HookConfig config = hookClass.getAnnotation(HookConfig.class);
-			boolean allowMultiple = config != null ? !config.singleton() : true;
-			if (!allowMultiple) {
-				if (JobManager.hookInstance().getHookForJob(job, hookClass) == null) {
-					hookSelector.getItems().add(hookClass);
-				}
-				
-			} else {
-				hookSelector.getItems().add(hookClass);
-			}
-		}
-
-		
-		StackPane hookPane = new StackPane();
-		Button ok = new Button("Ok");
-		ok.setOnAction((e)->{
-			currentEditingHook.getGuiContent().submit();
-			hooksListView.getItems().add(currentEditingHook);
-			JobManager.hookInstance().addHook(currentEditingHook);
-			popup.hide();
-			ok.disableProperty().unbind();
-		});
-		VBox root = new VBox(hookSelector, hookPane,ok);
-		
-		root.setFillWidth(true);
-		
-		root.setStyle("-fx-background-color: gray");
-		
-		hookSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
-			try {
-				currentEditingHook = newV.newInstance();
-				currentEditingHook.setJob(job);
-				HookConfigGui guiContent = currentEditingHook.getGuiContent();
-				hookPane.getChildren().setAll(guiContent.getGui());
-				ok.disableProperty().bind(guiContent.submitSupportedBinding().not());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-		
-		popup.getContent().add(root);
-		
-		Bounds bounds = hooksListView.localToScreen(hooksListView.getBoundsInLocal());
-		
-		popup.setAutoHide(true);
-		
-		popup.show(this, bounds.getMinX(), bounds.getMaxY());
-		hookSelector.getSelectionModel().select(0);
+//		Popup popup = new Popup();
+//		
+//		ComboBox<Class<? extends Hook>> hookSelector = new ComboBox<>();
+//		hookSelector.setConverter(new StringConverter<Class<? extends Hook>>() {
+//			
+//			@Override
+//			public String toString(Class<? extends Hook> object) {
+//				return object.getSimpleName();
+//			}
+//			
+//			@Override
+//			public Class<? extends Hook> fromString(String string) {
+//				try {
+//					return (Class<? extends Hook>) Class.forName("de.kogs.timeeater.data.hooks." + string);
+//				} catch (ClassNotFoundException e) {
+//					e.printStackTrace();
+//				}
+//				return null;
+//			}
+//		});
+//		
+//		Reflections reflections = new Reflections("de.kogs.timeeater.data.hooks");
+//		
+//
+//		Set<Class<? extends Hook>> classes = reflections.getSubTypesOf(Hook.class);
+//		// TODO filer already setted Hooks
+//		for (Class<? extends Hook> hookClass : classes) {
+//			HookConfig config = hookClass.getAnnotation(HookConfig.class);
+//			boolean allowMultiple = config != null ? !config.singleton() : true;
+//			if (!allowMultiple) {
+//				if (JobManager.hookInstance().getHookForJob(job, hookClass) == null) {
+//					hookSelector.getItems().add(hookClass);
+//				}
+//				
+//			} else {
+//				hookSelector.getItems().add(hookClass);
+//			}
+//		}
+//
+//		
+//		StackPane hookPane = new StackPane();
+//		Button ok = new Button("Ok");
+//		ok.setOnAction((e)->{
+//			currentEditingHook.getGuiContent().submit();
+//			hooksListView.getItems().add(currentEditingHook);
+//			JobManager.hookInstance().addHook(currentEditingHook);
+//			popup.hide();
+//			ok.disableProperty().unbind();
+//		});
+//		VBox root = new VBox(hookSelector, hookPane,ok);
+//		
+//		root.setFillWidth(true);
+//		
+//		root.setStyle("-fx-background-color: gray");
+//		
+//		hookSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+//			try {
+//				currentEditingHook = newV.newInstance();
+//				currentEditingHook.setJob(job);
+//				HookConfigGui guiContent = currentEditingHook.getGuiContent();
+//				hookPane.getChildren().setAll(guiContent.getGui());
+//				ok.disableProperty().bind(guiContent.submitSupportedBinding().not());
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		});
+//		
+//		popup.getContent().add(root);
+//		
+//		Bounds bounds = hooksListView.localToScreen(hooksListView.getBoundsInLocal());
+//		
+//		popup.setAutoHide(true);
+//		
+//		popup.show(this, bounds.getMinX(), bounds.getMaxY());
+//		hookSelector.getSelectionModel().select(0);
 
 	}
 	
