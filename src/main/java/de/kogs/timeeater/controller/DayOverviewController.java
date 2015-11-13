@@ -3,8 +3,8 @@ package de.kogs.timeeater.controller;
 import de.kogs.timeeater.chart.ReloadChartListener;
 import de.kogs.timeeater.chart.TimeChart;
 import de.kogs.timeeater.chart.TimeChart.ExtraData;
-import de.kogs.timeeater.data.Job;
-import de.kogs.timeeater.data.JobManager;
+import de.kogs.timeeater.data.JobProvider;
+import de.kogs.timeeater.data.JobVo;
 import de.kogs.timeeater.data.LoggedWork;
 import de.kogs.timeeater.util.Utils;
 import javafx.collections.FXCollections;
@@ -57,7 +57,7 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 	private Label dateLabel;
 
 	@FXML
-	private ComboBox<Job> jobSelector;
+	private ComboBox<JobVo> jobSelector;
 	
 	private CategoryAxis yAxis;
 
@@ -114,7 +114,7 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 	}
 	private void reloadJobSelector(){
 		jobSelector.getItems().clear();
-		for(Job job :JobManager.instance().getKownJobs()){
+		for (JobVo job : JobProvider.getProvider().getKownJobs()) {
 			if(job.getWorkForDay(day).isEmpty()){
 				jobSelector.getItems().add(job);
 			}
@@ -122,16 +122,17 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 	}
 	
 	private void loadData() {
-		JobManager manager = JobManager.instance();
+		JobProvider provider = JobProvider.getProvider();
+		;
 
 		yAxis.getCategories().clear();
 		chart.getData().clear();
 		
-		for (Job job : manager.getKownJobs()) {
+		for (JobVo job : provider.getKownJobs()) {
 			yAxis.getCategories().add(job.getName());
 		}
 
-		for (Job job : manager.getKownJobs()) {
+		for (JobVo job : provider.getKownJobs()) {
 
 			Series<Number, String> jobSeries = new Series<>();
 			chart.getData().add(jobSeries);
@@ -152,7 +153,7 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 
 	@FXML
 	private void addWork() {
-		Job selectedJob = jobSelector.getSelectionModel().getSelectedItem();
+		JobVo selectedJob = jobSelector.getSelectionModel().getSelectedItem();
 		if (selectedJob != null) {
 			LoggedWork work = new LoggedWork();
 			work.setLogDate(new Date(getFirstTimeOfDay()));
@@ -160,7 +161,7 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 			work.setLogEnd(getFirstTimeOfDay() + TimeUnit.MINUTES.toMillis(30));
 			selectedJob.getWorks().add(work);
 		}
-		JobManager.instance().save();
+		JobProvider.getProvider().save();
 		reload();
 	}
 

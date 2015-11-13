@@ -1,7 +1,8 @@
 package de.kogs.timeeater.controller;
 
-import de.kogs.timeeater.data.Job;
-import de.kogs.timeeater.data.JobManager;
+import de.kogs.timeeater.data.JobProvider;
+import de.kogs.timeeater.data.JobVo;
+import de.kogs.timeeater.data.hooks.HookManager;
 import de.kogs.timeeater.data.hooks.QuickLink;
 import de.kogs.timeeater.util.Utils;
 import javafx.fxml.FXML;
@@ -72,7 +73,7 @@ public class OverviewController extends Stage implements Initializable {
 	@FXML
 	private CheckBox showActive;
 	
-	private JobManager manager;
+	private JobProvider provider;
 	
 	@FXML
 	private Label mondayLabel;
@@ -108,7 +109,7 @@ public class OverviewController extends Stage implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		manager = JobManager.instance();
+		provider = JobProvider.getProvider();
 		
 		rangePicker.setOnAction(t -> {
 			
@@ -135,36 +136,37 @@ public class OverviewController extends Stage implements Initializable {
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		monday = c.getTime();
 		mondayLabel.setText(weekDayFormat.format(monday));
-		summaryMonday.setText(millisToString(manager.getTimeForDay(monday)));
+		summaryMonday.setText(millisToString(provider.getTimeForDay(monday)));
 		c.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
 		tuesday = c.getTime();
 		tuesdayLabel.setText(weekDayFormat.format(tuesday));
-		summaryTuesday.setText(millisToString(manager.getTimeForDay(tuesday)));
+		summaryTuesday.setText(millisToString(provider.getTimeForDay(tuesday)));
 		c.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
 		wednesday = c.getTime();
 		wednesdayLabel.setText(weekDayFormat.format(wednesday));
-		summaryWednesday.setText(millisToString(manager.getTimeForDay(wednesday)));
+		summaryWednesday.setText(millisToString(provider.getTimeForDay(wednesday)));
 		c.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
 		thursday = c.getTime();
 		thursdayLabel.setText(weekDayFormat.format(thursday));
-		summaryThursday.setText(millisToString(manager.getTimeForDay(thursday)));
+		summaryThursday.setText(millisToString(provider.getTimeForDay(thursday)));
 		c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
 		friday = c.getTime();
 		fridayLabel.setText(weekDayFormat.format(friday));
-		summaryFriday.setText(millisToString(manager.getTimeForDay(friday)));
+		summaryFriday.setText(millisToString(provider.getTimeForDay(friday)));
 		
 		contentGrid.getChildren().clear();
 		contentGrid.getRowConstraints().clear();
 		
 		int i = 0;
 		
-		Collection<Job> jobs = showActive.isSelected() ? manager.getJobsForRange(monday, friday) : manager.getKownJobs();
-		for (Job job : jobs) {
+		Collection<JobVo> jobs = showActive.isSelected() ? provider.getJobsForRange(monday, friday) : provider
+				.getKownJobs();
+		for (JobVo job : jobs) {
 			contentGrid.getRowConstraints().add(new RowConstraints(30));
 			
 			Labeled jobLabel;
 			
-			QuickLink link = JobManager.hookInstance().getQuickLinkForJob(job);
+			QuickLink link = HookManager.instance().getQuickLinkForJob(job);
 			
 			if (link != null) {
 				Hyperlink jobLink = new Hyperlink(job.getName());
@@ -217,7 +219,7 @@ public class OverviewController extends Stage implements Initializable {
 		return Utils.millisToString(millis);
 	}
 	
-	private Node createJobControls(Job j) {
+	private Node createJobControls(JobVo j) {
 		Button delete = new Button("NoAction");
 //		delete.setOnAction((event) -> {
 //			manager.removeJob(j);

@@ -4,7 +4,9 @@
 package de.kogs.timeeater.main;
 
 import de.kogs.timeeater.controller.DialogController;
-import de.kogs.timeeater.data.JobManager;
+import de.kogs.timeeater.controller.StartController;
+import de.kogs.timeeater.data.JobProvider;
+import de.kogs.timeeater.db.SessionHandler;
 import de.kogs.timeeater.tray.TimeEaterTray;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -28,22 +30,32 @@ public class TimeEater extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Platform.setImplicitExit(false);
-		trayIcon = new TimeEaterTray();
-		SystemTray.getSystemTray().add(trayIcon);
-		DialogController dia = new DialogController("Time Eater wurde gestartet", "Hallo " + System.getProperty("user.name"));
+		
+		StartController startController = new StartController(() -> {
+			try {
+				trayIcon = new TimeEaterTray();
+				SystemTray.getSystemTray().add(trayIcon);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			DialogController dia = new DialogController("Time Eater wurde gestartet", "Hallo "
+					+ (SessionHandler.isLogedIn ? SessionHandler.logedInUser.getName() : System.getProperty("user.name")));
+		});
 	}
-	
-	
 	
 	@Override
 	public void stop() throws Exception {
 		
-		JobManager manager = JobManager.instance();
+		JobProvider manager = JobProvider.getProvider();
 		manager.stopWork();
 		manager.save();
 		
-		SystemTray.getSystemTray().remove(trayIcon);
+		if (trayIcon != null) {
+			SystemTray.getSystemTray().remove(trayIcon);
+		}
 		super.stop();
+		System.exit(0);
 	}
 	
 }

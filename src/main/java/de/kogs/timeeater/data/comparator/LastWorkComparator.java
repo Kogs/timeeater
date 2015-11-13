@@ -3,7 +3,7 @@
  */
 package de.kogs.timeeater.data.comparator;
 
-import de.kogs.timeeater.data.Job;
+import de.kogs.timeeater.data.JobVo;
 
 import java.util.Comparator;
 
@@ -11,7 +11,7 @@ import java.util.Comparator;
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
  *
  */
-public class LastWorkComparator implements Comparator<Job> {
+public class LastWorkComparator implements Comparator<JobVo> {
 
 	private WorkComparator workComparator = new WorkComparator();
 	
@@ -19,7 +19,7 @@ public class LastWorkComparator implements Comparator<Job> {
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public int compare(Job o1, Job o2) {
+	public int compare(JobVo o1, JobVo o2) {
 		if (o1 == null || o1.getLastWork() == null) {
 			return 1;
 		}

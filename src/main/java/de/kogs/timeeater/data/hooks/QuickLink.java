@@ -3,7 +3,7 @@
  */
 package de.kogs.timeeater.data.hooks;
 
-import de.kogs.timeeater.data.Job;
+import de.kogs.timeeater.data.JobVo;
 
 import java.awt.Desktop;
 import java.net.MalformedURLException;
@@ -43,7 +43,7 @@ public class QuickLink {
 		this.url = url;
 	}
 	
-	public void fireForJob(Job job) {
+	public void fireForJob(JobVo job) {
 		try {
 			openWebpage(new URL(getLink(), job.getName()));
 		} catch (MalformedURLException e) {

@@ -16,7 +16,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import de.kogs.timeeater.data.Job;
+import de.kogs.timeeater.data.JobVo;
 import de.kogs.timeeater.data.LoggedWork;
 import de.kogs.timeeater.util.Utils;
 
@@ -26,9 +26,9 @@ public class TimeChart extends XYChart<Number, String> {
 		
 		public long length;
 		private LoggedWork work;
-		private Job job;
+		private JobVo job;
 		
-		public ExtraData (long lengthMs, Job job, LoggedWork work) {
+		public ExtraData (long lengthMs, JobVo job, LoggedWork work) {
 			super();
 			this.length = lengthMs;
 			this.job = job;
@@ -52,11 +52,11 @@ public class TimeChart extends XYChart<Number, String> {
 			this.work = work;
 		}
 		
-		public Job getJob() {
+		public JobVo getJob() {
 			return job;
 		}
 		
-		public void setJob(Job job) {
+		public void setJob(JobVo job) {
 			this.job = job;
 		}
 		

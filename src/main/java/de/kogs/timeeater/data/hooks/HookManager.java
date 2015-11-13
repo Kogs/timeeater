@@ -8,8 +8,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import de.kogs.timeeater.data.Job;
-import de.kogs.timeeater.data.JobManager;
+import de.kogs.timeeater.data.JobVo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,11 +25,11 @@ import java.util.regex.Pattern;
 public class HookManager {
 	
 	private static HookManager instance;
-	private JobManager jobManager;
+
 	
-	public static HookManager instance(JobManager jobManager) {
+	public static HookManager instance() {
 		if (instance == null) {
-			instance = new HookManager(jobManager);
+			instance = new HookManager();
 		}
 		return instance;
 	}
@@ -47,14 +46,13 @@ public class HookManager {
 //		manager.save();
 	}
 	
-	public HookManager (JobManager jobManager) {
-		this.jobManager = jobManager;
+	public HookManager () {
 		load();
 	}
 	
 
 	
-	public QuickLink getQuickLinkForJob(Job job) {
+	public QuickLink getQuickLinkForJob(JobVo job) {
 		for (QuickLink link : quickLinks) {
 			System.out.println("Link: " + link + " job: " + job);
 			if (Pattern.matches(link.getPattern(), job.getName())) {

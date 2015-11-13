@@ -16,7 +16,7 @@ import java.util.List;
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
  *
  */
-public class Job {
+public class JobVo {
 
 	public String name;
 
@@ -29,7 +29,7 @@ public class Job {
 	/**
 	 * 
 	 */
-	public Job() {
+	public JobVo() {
 
 	}
 	
@@ -177,7 +177,7 @@ public class Job {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		Job other = (Job) obj;
+		JobVo other = (JobVo) obj;
 		if (name == null) {
 			if (other.name != null) {
 				return false;

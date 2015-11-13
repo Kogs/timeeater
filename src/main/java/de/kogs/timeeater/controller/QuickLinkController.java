@@ -3,7 +3,7 @@
  */
 package de.kogs.timeeater.controller;
 
-import de.kogs.timeeater.data.JobManager;
+import de.kogs.timeeater.data.hooks.HookManager;
 import de.kogs.timeeater.data.hooks.QuickLink;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,15 +66,15 @@ public class QuickLinkController extends Stage implements Initializable {
 	}
 	
 	private void updateTable() {
-		table.getItems().setAll(JobManager.hookInstance().getQuickLinks());
+		table.getItems().setAll(HookManager.instance().getQuickLinks());
 	}
 	
 	@FXML
 	public void add() {
 		QuickLink link = editOrCreate(null);
 		if (link != null) {
-			JobManager.hookInstance().getQuickLinks().add(link);
-			JobManager.hookInstance().save();
+			HookManager.instance().getQuickLinks().add(link);
+			HookManager.instance().save();
 			updateTable();
 		}
 	}
@@ -85,7 +85,7 @@ public class QuickLinkController extends Stage implements Initializable {
 		if (selectedItem != null) {
 			QuickLink link = editOrCreate(selectedItem);
 			if (link != null) {
-				JobManager.hookInstance().save();
+				HookManager.instance().save();
 				updateTable();
 			}
 		}
@@ -121,8 +121,8 @@ public class QuickLinkController extends Stage implements Initializable {
 		if (selectedItem != null) {
 			int option = JOptionPane.showConfirmDialog(null, "Sure to delete", "Delete", JOptionPane.OK_CANCEL_OPTION);
 			if (option == JOptionPane.OK_OPTION) {
-				JobManager.hookInstance().getQuickLinks().remove(selectedItem);
-				JobManager.hookInstance().save();
+				HookManager.instance().getQuickLinks().remove(selectedItem);
+				HookManager.instance().save();
 				updateTable();
 			}
 		}

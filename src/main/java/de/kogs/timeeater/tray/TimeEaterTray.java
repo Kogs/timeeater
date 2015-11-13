@@ -6,8 +6,8 @@ package de.kogs.timeeater.tray;
 import de.kogs.timeeater.controller.LoggerController;
 import de.kogs.timeeater.controller.OverviewController;
 import de.kogs.timeeater.controller.QuickLinkController;
-import de.kogs.timeeater.data.Job;
-import de.kogs.timeeater.data.JobManager;
+import de.kogs.timeeater.data.JobProvider;
+import de.kogs.timeeater.data.JobVo;
 import de.kogs.timeeater.data.ManagerListener;
 import javafx.application.Platform;
 
@@ -50,7 +50,7 @@ public class TimeEaterTray extends TrayIcon implements ManagerListener {
 		});
 		createPopup();
 
-		JobManager.instance().addListener(this);
+		JobProvider.getProvider().addListener(this);
 		setToolTip("Keine Vorgang aktiv");
 	}
 
@@ -68,7 +68,7 @@ public class TimeEaterTray extends TrayIcon implements ManagerListener {
 		overview.addActionListener(e -> Platform.runLater(()->new OverviewController()));
 
 		MenuItem save = new MenuItem("Speichern");
-		save.addActionListener(e -> JobManager.instance().save());
+		save.addActionListener(e -> JobProvider.getProvider().save());
 
 		MenuItem exitItem = new MenuItem("Beenden");
 		exitItem.addActionListener(e -> Platform.runLater(() -> Platform.exit()));
@@ -100,7 +100,7 @@ public class TimeEaterTray extends TrayIcon implements ManagerListener {
 	}
 
 	@Override
-	public void activeJobChanged(Job activeJob) {
+	public void activeJobChanged(JobVo activeJob) {
 		if (activeJob != null) {
 			setToolTip("Vorgang aktiv: " + activeJob.getName());
 		} else {

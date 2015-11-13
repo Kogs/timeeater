@@ -5,6 +5,12 @@
 	<artifactId>Timeeater</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Time Eater</name>
+	
+	<properties>
+		<spring.framework.version>4.1.4.RELEASE</spring.framework.version>
+		<spring-data-jpa.version>1.7.1.RELEASE</spring-data-jpa.version>
+	</properties>
+		
 	<build>
 		<plugins>
 			<plugin>
@@ -31,6 +37,20 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.spring.platform</groupId>
+				<artifactId>platform-bom</artifactId>
+				<version>1.1.2.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
@@ -47,5 +67,36 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1205-jdbc42</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+
+		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.3.8.Final</version>
+		</dependency>
+		 
+		<!-- Spring Data JPA -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>1.7.2.RELEASE</version>
+		</dependency>
+			
 	</dependencies>
 </project>

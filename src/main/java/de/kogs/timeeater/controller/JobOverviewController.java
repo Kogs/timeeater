@@ -4,8 +4,8 @@
 package de.kogs.timeeater.controller;
 
 
-import de.kogs.timeeater.data.Job;
-import de.kogs.timeeater.data.JobManager;
+import de.kogs.timeeater.data.JobProvider;
+import de.kogs.timeeater.data.JobVo;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -77,9 +77,9 @@ public class JobOverviewController extends Stage implements Initializable {
 	@FXML
 	private ListView<Object> hooksListView;
 	
-	private Job job;
+	private JobVo job;
 	
-	public JobOverviewController (Job job) {
+	public JobOverviewController (JobVo job) {
 		this.job = job;
 		setTitle("Job Overview Window");
 		
@@ -153,7 +153,7 @@ public class JobOverviewController extends Stage implements Initializable {
 		
 		job.setName(jobName.getText());
 		job.setDescription(descriptionArea.getText());
-		JobManager.instance().save();
+		JobProvider.getProvider().save();
 	}
 	
 

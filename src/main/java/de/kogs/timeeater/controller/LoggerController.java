@@ -3,8 +3,8 @@
  */
 package de.kogs.timeeater.controller;
 
-import de.kogs.timeeater.data.Job;
-import de.kogs.timeeater.data.JobManager;
+import de.kogs.timeeater.data.JobProvider;
+import de.kogs.timeeater.data.JobVo;
 import de.kogs.timeeater.data.LoggedWork;
 import de.kogs.timeeater.data.comparator.LastWorkComparator;
 import de.kogs.timeeater.util.Utils;
@@ -86,22 +86,22 @@ public class LoggerController extends Stage implements Initializable {
 	private Button stopButton;
 
 	@FXML
-	private ComboBox<Job> workSelector;
+	private ComboBox<JobVo> workSelector;
 
-	private JobManager manager;
+	private JobProvider provider;
 
 	private PauseTransition refreshLabels;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		manager = JobManager.instance();
+		provider = JobProvider.getProvider();
 		
 		Date lastWeek = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(lastWeek);
 		cal.add(Calendar.DAY_OF_MONTH, -7);
 		
-		List<Job> allJobs = new ArrayList<>(manager.getKownJobs());
+		List<JobVo> allJobs = new ArrayList<>(provider.getKownJobs());
 		
 		Collections.sort(allJobs, new LastWorkComparator());
 		
@@ -114,11 +114,10 @@ public class LoggerController extends Stage implements Initializable {
 			refreshLabels.play();
 		});
 
-		boolean workActive = manager.getActiveJob() != null
-				&& manager.getActiveJob().getActiveWork() != null;
+		boolean workActive = provider.getActiveJob() != null && provider.getActiveJob().getActiveWork() != null;
 
 		if (workActive) {
-			workSelector.getSelectionModel().select(manager.getActiveJob());
+			workSelector.getSelectionModel().select(provider.getActiveJob());
 			updateLabels();
 			refreshLabels.play();
 		} else {
@@ -133,7 +132,7 @@ public class LoggerController extends Stage implements Initializable {
 	}
 
 	private void updateLabels() {
-		Job activeJob = manager.getActiveJob();
+		JobVo activeJob = provider.getActiveJob();
 		if (activeJob != null && activeJob.getActiveWork() != null) {
 
 			LoggedWork activeWork = activeJob.getActiveWork();
@@ -149,13 +148,13 @@ public class LoggerController extends Stage implements Initializable {
 
 	@FXML
 	private void startWork() {
-		manager.startWorkOnJob(workSelector.getEditor().getText());
+		provider.startWorkOnJob(workSelector.getEditor().getText());
 		closeLogger();
 	}
 
 	@FXML
 	private void stopWork() {
-		manager.stopWork();
+		provider.stopWork();
 		closeLogger();
 	}
 

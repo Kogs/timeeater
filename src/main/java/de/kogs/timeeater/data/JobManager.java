@@ -6,7 +6,6 @@ package de.kogs.timeeater.data;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import de.kogs.timeeater.controller.DialogController;
-import de.kogs.timeeater.data.hooks.HookManager;
 import javafx.application.Platform;
 
 import java.beans.XMLDecoder;
@@ -33,41 +32,28 @@ import java.util.zip.GZIPOutputStream;
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
  *
  */
-public class JobManager {
+public class JobManager extends JobProvider {
 
-	private static JobManager instance;
-
-	public static JobManager instance() {
-		if (instance == null) {
-			instance = new JobManager();
-		}
-		return instance;
-	}
-
-	public static HookManager hookInstance() {
-		return HookManager.instance(instance);
-	}
 	
-	private List<ManagerListener> listeners = new ArrayList<ManagerListener>();
 
-	private Job activeJob;
+	private JobVo activeJob;
 
 
 	
-	private Map<String, Job> kownJobs = new HashMap<>();
+	private Map<String, JobVo> kownJobs = new HashMap<>();
 
-	/**
-	 * 
-	 */
+
 	public JobManager() {
 		load();
 	}
 
 
-	public Job getActiveJob() {
+	@Override
+	public JobVo getActiveJob() {
 		return activeJob;
 	}
 
+	@Override
 	public void startWorkOnJob(String jobName) {
 		if (kownJobs.containsKey(jobName)) {
 			startWorkOnJob(kownJobs.get(jobName));
@@ -76,14 +62,15 @@ public class JobManager {
 		}
 	}
 	
-	private Job createJob(String name) {
-		Job newJob = new Job();
+	private JobVo createJob(String name) {
+		JobVo newJob = new JobVo();
 		newJob.setName(name);
 		kownJobs.put(name, newJob);
 		return newJob;
 	}
 
-	private void startWorkOnJob(Job job) {
+	@Override
+	public void startWorkOnJob(JobVo job) {
 		if (activeJob == null || activeJob.getActiveWork() == null) {
 			activeJob = job;
 			LoggedWork work = new LoggedWork();
@@ -95,6 +82,7 @@ public class JobManager {
 		}
 	}
 
+	@Override
 	public void stopWork() {
 		if (activeJob != null && activeJob.getActiveWork() != null) {
 			LoggedWork activeWork = activeJob.getActiveWork();
@@ -109,13 +97,15 @@ public class JobManager {
 	}
 
 
-	public Collection<Job> getKownJobs() {
+	@Override
+	public Collection<JobVo> getKownJobs() {
 		return kownJobs.values();
 	}
 
-	public Collection<Job> getJobsForDay(Date day) {
-		List<Job> jobsForDay = new ArrayList<>();
-		for (Job job : getKownJobs()) {
+	@Override
+	public Collection<JobVo> getJobsForDay(Date day) {
+		List<JobVo> jobsForDay = new ArrayList<>();
+		for (JobVo job : getKownJobs()) {
 			if (!job.getWorkForDay(day).isEmpty()) {
 				jobsForDay.add(job);
 			}
@@ -123,17 +113,19 @@ public class JobManager {
 		return jobsForDay;
 	}
 	
+	@Override
 	public long getTimeForDay(Date day) {
 		long time = 0;
-		for (Job job : getKownJobs()) {
+		for (JobVo job : getKownJobs()) {
 			time += job.getWorkTime(day);
 		}
 		return time;
 	}
 	
-	public List<Job> getJobsForRange(Date start, Date end) {
-		List<Job> jobsForDay = new ArrayList<>();
-		for (Job job : getKownJobs()) {
+	@Override
+	public List<JobVo> getJobsForRange(Date start, Date end) {
+		List<JobVo> jobsForDay = new ArrayList<>();
+		for (JobVo job : getKownJobs()) {
 			if (!job.getWorkInRange(start, end).isEmpty()) {
 				jobsForDay.add(job);
 			}
@@ -141,27 +133,17 @@ public class JobManager {
 		return jobsForDay;
 	}
 	
-	public Job getJob(String name) {
+	@Override
+	public JobVo getJob(String name) {
 		if (kownJobs.containsKey(name)) {
 			return kownJobs.get(name);
 		}
 		return null;
 	}
 	
-	private void activeJobEvent() {
-		for (ManagerListener listener : listeners) {
-			listener.activeJobChanged(activeJob);
-		}
-	}
 
-	public void addListener(ManagerListener listener) {
-		listeners.add(listener);
-	}
-
-	public void removeListener(ManagerListener listener) {
-		listeners.remove(listener);
-	}
 	
+	@Override
 	public void save() {
 		backup();
 		
@@ -173,7 +155,7 @@ public class JobManager {
 			e.printStackTrace();
 		}
 		
-		hookInstance().save();
+//		hookInstance().save();
 	}
 
 	private void backup() {
@@ -207,8 +189,8 @@ public class JobManager {
 			// and save to new json File
 			try (XMLDecoder d = new XMLDecoder(new BufferedInputStream(new FileInputStream(getSaveFile())))) {
 
-				List<Job> jobs = (List<Job>) d.readObject();
-				kownJobs = jobs.stream().collect(Collectors.toMap(Job::getName, Function.identity()));
+				List<JobVo> jobs = (List<JobVo>) d.readObject();
+				kownJobs = jobs.stream().collect(Collectors.toMap(JobVo::getName, Function.identity()));
 				save();
 				kownJobs.clear();
 				getSaveFile().delete();
@@ -222,10 +204,10 @@ public class JobManager {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		try {
-			Job[] jobsArray = mapper.readValue(getSaveFileJson(), Job[].class);
-			List<Job> jobs = Arrays.asList(jobsArray);
+			JobVo[] jobsArray = mapper.readValue(getSaveFileJson(), JobVo[].class);
+			List<JobVo> jobs = Arrays.asList(jobsArray);
 			
-			kownJobs = jobs.stream().collect(Collectors.toMap(Job::getName, Function.identity()));
+			kownJobs = jobs.stream().collect(Collectors.toMap(JobVo::getName, Function.identity()));
 			
 			// HOOKMANAGER DISABLED FIXME
 //			HookManager hookManager = hookInstance();
@@ -275,7 +257,8 @@ public class JobManager {
 		
 	}
 	
-	public void removeJob(Job j) {
+	@Override
+	public void removeJob(JobVo j) {
 		kownJobs.remove(j.getName());
 		save();
 
