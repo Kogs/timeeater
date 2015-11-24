@@ -23,7 +23,9 @@ public class JiraHook {
 	
 	private String issuesPattern;
 	private JiraRestClient restClient;
+	private HttpClient httpClient;
 	
+
 	public static void main(String[] args) throws URISyntaxException {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("User:");
@@ -32,25 +34,22 @@ public class JiraHook {
 		System.out.println("PW:");
 		String pw = new String(scanner.nextLine());
 		
-		new JiraHook(userName, pw);
+		new JiraHook("https://issues.proemion.com/", userName, pw);
 	}
 	
 	/**
 	 * @throws URISyntaxException
 	 */
-	public JiraHook (String user, String password) throws URISyntaxException {
+	public JiraHook (String serverURL, String user, String password) throws URISyntaxException {
 		AsynchronousJiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
 		
-		URI serverURI = new URI("https://proemion.atlassian.net/");
+		URI serverURI = new URI(serverURL);
 		
-		HttpClient httpClient = new AsynchronousHttpClientFactory().createClient(serverURI,
+		httpClient = new AsynchronousHttpClientFactory().createClient(serverURI,
 				new BasicHttpAuthenticationHandler(user, password));
-		
 		restClient = factory.createWithBasicHttpAuthentication(serverURI, user, password);
 		
-
 		System.out.println(getIssue("FDAQA-1060").getAssignee());
-		
 	}
 	
 	private Issue getIssue(String issueName) {

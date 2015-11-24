@@ -6,7 +6,6 @@ package de.kogs.timeeater.main;
 import de.kogs.timeeater.controller.DialogController;
 import de.kogs.timeeater.controller.StartController;
 import de.kogs.timeeater.data.JobProvider;
-import de.kogs.timeeater.db.SessionHandler;
 import de.kogs.timeeater.tray.TimeEaterTray;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -39,8 +38,8 @@ public class TimeEater extends Application {
 				e.printStackTrace();
 			}
 			
-			DialogController dia = new DialogController("Time Eater wurde gestartet", "Hallo "
-					+ (SessionHandler.isLogedIn ? SessionHandler.logedInUser.getName() : System.getProperty("user.name")));
+			DialogController dia = new DialogController("Time Eater wurde gestartet",
+					"Hallo " + System.getProperty("user.name"));
 		});
 	}
 	
