@@ -1,7 +1,7 @@
-.dialog{
+.popupDialog{
 	-fx-background-color: rgb(39.0,39.0,39.0);
 }
-.dialog .label{
+.popupDialog .label{
 	-fx-text-fill: white;
 }
 

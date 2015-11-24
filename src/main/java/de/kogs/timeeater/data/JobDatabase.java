@@ -5,6 +5,13 @@ package de.kogs.timeeater.data;
 
 import org.springframework.context.support.AbstractApplicationContext;
 
+import de.kogs.timeeater.db.SessionHandler;
+import de.kogs.timeeater.db.dao.JobDAO;
+import de.kogs.timeeater.db.dao.WorkDAO;
+import de.kogs.timeeater.db.entites.Job;
+import de.kogs.timeeater.db.entites.Work;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -17,8 +24,16 @@ public class JobDatabase extends JobProvider {
 
 	private AbstractApplicationContext context;
 	
+	private JobDAO jobDAO;
+	
+	private WorkDAO workDAO;
+	
+	private Job activeJob;
+
 	public JobDatabase (AbstractApplicationContext context) {
 		this.context = context;
+		jobDAO = context.getBean(JobDAO.class);
+		workDAO = context.getBean(WorkDAO.class);
 	}
 	
 	/* (non-Javadoc)
@@ -26,7 +41,7 @@ public class JobDatabase extends JobProvider {
 	 */
 	@Override
 	public JobVo getActiveJob() {
-		return null;
+		return toVO(activeJob);
 	}
 	
 	/* (non-Javadoc)
@@ -34,13 +49,40 @@ public class JobDatabase extends JobProvider {
 	 */
 	@Override
 	public void startWorkOnJob(String jobName) {
+		Job job = jobDAO.findOneByUserAndName(SessionHandler.logedInUser.getId(), jobName);
+		if (job == null) {
+			job = createJob(jobName);
+		}
+		startWorkOnJob(job);
 	}
 	
-	/* (non-Javadoc)
-	 * @see de.kogs.timeeater.data.JobProvider#startWorkOnJob(de.kogs.timeeater.data.JobVo)
-	 */
-	@Override
-	public void startWorkOnJob(JobVo job) {
+	private Job createJob(String jobName) {
+		Job job = new Job();
+		job.setName(jobName);
+		job.setUserID(SessionHandler.logedInUser.getId());
+		job = jobDAO.save(job);
+		return job;
+	}
+	
+	private Work createWork(Job job) {
+		Work work = new Work();
+		work.setJobId(job.getId());
+		work.setStart(System.currentTimeMillis());
+		work = workDAO.save(work);
+		return work;
+	}
+	
+	public void startWorkOnJob(Job job) {
+		if (activeJob == null || activeJob.getActiveWorkID() == null) {
+			activeJob = job;
+			
+			Work work = createWork(job);
+//			
+//			activeJob.setActiveWork(work);
+//			activeJob.getWorks().add(work);
+			
+			activeJobEvent();
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -55,7 +97,7 @@ public class JobDatabase extends JobProvider {
 	 */
 	@Override
 	public Collection<JobVo> getKownJobs() {
-		return null;
+		return toVO(jobDAO.findAllByUser(SessionHandler.logedInUser.getId()));
 	}
 	
 	/* (non-Javadoc)
@@ -104,4 +146,43 @@ public class JobDatabase extends JobProvider {
 	public void save() {
 	}
 	
+	private Job fromVO(JobVo jobVo) {
+		return null;
+	}
+	
+	private Collection<JobVo> toVO(Collection<Job> jobs) {
+		List<JobVo> vos = new ArrayList<>(jobs.size());
+		for (Job job : jobs) {
+			vos.add(toVO(job));
+		}
+		return vos;
+	}
+	
+	private JobVo toVO(Job job) {
+		if (job == null) {
+			return null;
+		}
+		JobVo vo = new JobVo();
+		vo.name = job.getName();
+		vo.setDescription(job.getDescription());
+		
+		if (job.getActiveWorkID() != null) {
+			vo.setActiveWork(toVO(workDAO.findOne(job.getActiveWorkID())));
+		}
+		
+//		vo.getWorks().addAll(workDAO.)
+		
+		return vo;
+	}
+	
+	private LoggedWork toVO(Work work) {
+		
+		LoggedWork vo = new LoggedWork();
+		vo.setLogEnd(work.getEnd());
+		vo.setLogStart(work.getStart());
+		vo.setLogDate(new Date(work.getStart()));
+		return vo;
+	}
+	
+
 }

@@ -6,6 +6,7 @@ package de.kogs.timeeater.controller;
 
 import de.kogs.timeeater.data.JobProvider;
 import de.kogs.timeeater.data.JobVo;
+import de.kogs.timeeater.util.Utils;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +19,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -75,7 +76,19 @@ public class JobOverviewController extends Stage implements Initializable {
 	private Button editButton;
 	
 	@FXML
-	private ListView<Object> hooksListView;
+	private Label lastActive;
+	
+	@FXML
+	private Label timeFull;
+	
+	@FXML
+	private Label timeToday;
+	
+	@FXML
+	private Label averangeTime;
+	
+	@FXML
+	private Label countWork;
 	
 	private JobVo job;
 	
@@ -126,6 +139,16 @@ public class JobOverviewController extends Stage implements Initializable {
 			loadLastWorkChart();
 		});
 		loadLastWorkChart();
+		
+		lastActive.setText("Zuletzt Aktiv: " + job.getLastWork().getLogDate());
+		long fullWorkTime = job.getFullWorkTime();
+		timeFull.setText("Laufzeit gesamt: " + Utils.millisToString(fullWorkTime));
+		timeToday.setText("Laufzeit heute: " + Utils.millisToString(job.getWorkTime(new Date())));
+		
+		long averagenTime = fullWorkTime / job.getWorks().size();
+		
+		averangeTime.setText("Durschnittliche Zeit: " + Utils.millisToString(averagenTime));
+		countWork.setText("Anzahl Aktiv: " + job.getWorks().size());
 	}
 	
 	@FXML

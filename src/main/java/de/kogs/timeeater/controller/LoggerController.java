@@ -8,7 +8,12 @@ import de.kogs.timeeater.data.JobVo;
 import de.kogs.timeeater.data.LoggedWork;
 import de.kogs.timeeater.data.comparator.LastWorkComparator;
 import de.kogs.timeeater.util.Utils;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,16 +39,16 @@ import java.util.ResourceBundle;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
- *
  */
 public class LoggerController extends Stage implements Initializable {
-
+	
 	/**
 	 * 
 	 */
-	public LoggerController() {
+	public LoggerController () {
 		setTitle("Logger Window");
 		initStyle(StageStyle.UNDECORATED);
+		
 		FXMLLoader loader = new FXMLLoader();
 		loader.setController(this);
 		loader.setLocation(LoggerController.class.getResource("/log.fxml"));
@@ -55,43 +60,67 @@ public class LoggerController extends Stage implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-
+		
+		Rectangle2D visialBounds = Screen.getPrimary().getVisualBounds();
+		Rectangle2D bounds = Screen.getPrimary().getBounds();
+		
+		DoubleProperty stageXProperty = new SimpleDoubleProperty(0);
+		stageXProperty.addListener((obs, old, newV) -> {
+			setX(newV.doubleValue());
+		});
+		DoubleProperty stageYProperty = new SimpleDoubleProperty(0);
+		stageYProperty.addListener((obs, old, newV) -> {
+			setY(newV.doubleValue());
+		});
+		
 		show();
-		setX(bounds.getMaxX() - getWidth());
-		setY(bounds.getMaxY() - getHeight());
-
+		
+		setX(visialBounds.getMaxX() - getWidth());
+		setY(bounds.getMaxY());
+		Timeline showLine = new Timeline();
+		showLine.getKeyFrames()
+				.add(new KeyFrame(Duration.ZERO, new KeyValue(stageXProperty, bounds.getMaxX() - getWidth())));
+		showLine.getKeyFrames().add(new KeyFrame(Duration.ZERO, new KeyValue(stageYProperty, bounds.getMaxY())));
+		
+		showLine.getKeyFrames()
+				.add(new KeyFrame(Duration.seconds(0.3), new KeyValue(stageXProperty, visialBounds.getMaxX() - getWidth())));
+		showLine.getKeyFrames()
+				.add(new KeyFrame(Duration.seconds(0.3), new KeyValue(stageYProperty, visialBounds.getMaxY() - getHeight())));
+				
+		showLine.play();
+		
 		focusedProperty().addListener((obs) -> {
 			if (!isFocused()) {
 				closeLogger();
 			}
 		});
 	}
-
+	
 	@FXML
 	private Label runningTime;
-
+	
 	@FXML
 	private Label runningSince;
 	@FXML
 	private Label runningTimeFull;
 	@FXML
 	private Label runningTimeToday;
-
+	
 	@FXML
 	private Button startButton;
-
+	
 	@FXML
 	private Button stopButton;
-
+	
 	@FXML
 	private ComboBox<JobVo> workSelector;
-
+	
 	private JobProvider provider;
-
+	
 	private PauseTransition refreshLabels;
-
+	
+	private List<JobVo> workList = new ArrayList<>();
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		provider = JobProvider.getProvider();
@@ -105,17 +134,40 @@ public class LoggerController extends Stage implements Initializable {
 		
 		Collections.sort(allJobs, new LastWorkComparator());
 		
-		workSelector.getItems().addAll(allJobs.subList(0, allJobs.size() > 10 ? 10 : allJobs.size()));
-
-
+		workList.addAll(allJobs.subList(0, allJobs.size() > 10 ? 10 : allJobs.size()));
+		
+		workSelector.getItems().addAll(workList);
+		
+		workSelector.getEditor().textProperty().addListener((obs, oldV, newV) -> {
+			if (!newV.equals(oldV)) {
+				
+				if (!newV.trim().isEmpty()) {
+					List<JobVo> filteredJobs = new ArrayList<>();
+					for (JobVo vo : allJobs) {
+						if (vo.getName().toLowerCase().startsWith(newV.toLowerCase())) {
+							filteredJobs.add(vo);
+							if(filteredJobs.size() > 5){
+								break;
+							}
+						}
+					}
+					workSelector.getItems().setAll(filteredJobs);
+					workSelector.show();
+				} else {
+					workSelector.hide();
+					workSelector.getItems().setAll(workList);
+				}
+			}
+		});
+		
 		refreshLabels = new PauseTransition(Duration.seconds(1));
 		refreshLabels.setOnFinished((event) -> {
 			updateLabels();
 			refreshLabels.play();
 		});
-
+		
 		boolean workActive = provider.getActiveJob() != null && provider.getActiveJob().getActiveWork() != null;
-
+		
 		if (workActive) {
 			workSelector.getSelectionModel().select(provider.getActiveJob());
 			updateLabels();
@@ -130,38 +182,34 @@ public class LoggerController extends Stage implements Initializable {
 		stopButton.setDisable(!workActive);
 		workSelector.setDisable(workActive);
 	}
-
+	
 	private void updateLabels() {
 		JobVo activeJob = provider.getActiveJob();
 		if (activeJob != null && activeJob.getActiveWork() != null) {
-
+			
 			LoggedWork activeWork = activeJob.getActiveWork();
 			runningSince.setText("Gestartet um: " + activeWork.getLogDate());
-			runningTime
-					.setText("Laufzeit: "
-							+ Utils.millisToString((System.currentTimeMillis() - activeWork
-									.getLogStart())));
-			runningTimeFull.setText("Laufzeit gesamt: "
-					+ Utils.millisToString(activeJob.getFullWorkTime()));
+			runningTime.setText("Laufzeit: " + Utils.millisToString((System.currentTimeMillis() - activeWork.getLogStart())));
+			runningTimeFull.setText("Laufzeit gesamt: " + Utils.millisToString(activeJob.getFullWorkTime()));
 		}
 	}
-
+	
 	@FXML
 	private void startWork() {
 		provider.startWorkOnJob(workSelector.getEditor().getText());
 		closeLogger();
 	}
-
+	
 	@FXML
 	private void stopWork() {
 		provider.stopWork();
 		closeLogger();
 	}
-
+	
 	@FXML
 	private void closeLogger() {
 		close();
 		refreshLabels.stop();
 	}
-
+	
 }

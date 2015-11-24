@@ -67,5 +67,12 @@
 			onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="jobs" />
 	</changeSet>
 
+	<changeSet id="setup-004" author="mv">
+		    <addColumn tableName="job">
+		    	<column name="activeworkid" type="bigint"/>
+		    </addColumn>
+	</changeSet>
+
+
 
 </databaseChangeLog>

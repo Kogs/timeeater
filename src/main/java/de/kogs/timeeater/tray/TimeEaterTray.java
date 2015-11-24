@@ -9,8 +9,11 @@ import de.kogs.timeeater.controller.QuickLinkController;
 import de.kogs.timeeater.data.JobProvider;
 import de.kogs.timeeater.data.JobVo;
 import de.kogs.timeeater.data.ManagerListener;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.util.Duration;
 
+import java.awt.Image;
 import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
@@ -26,14 +29,42 @@ import javax.imageio.ImageIO;
  */
 public class TimeEaterTray extends TrayIcon implements ManagerListener {
 
+	private Image image1;
+	private Image image2;
+	private Image image3;
+	private Image image4;
+	private PauseTransition trayAnimation;
+	
 	/**
 	 * @param image
 	 * @throws IOException
 	 */
 	public TimeEaterTray() throws IOException {
-		super(ImageIO.read(TimeEaterTray.class
-				.getResourceAsStream("/images/tray.png")));
+		super(ImageIO.read(TimeEaterTray.class.getResourceAsStream("/images/tray.png")));
+		
+		image1 = ImageIO.read(TimeEaterTray.class.getResourceAsStream("/images/tray.png"));
+		image2 = ImageIO.read(TimeEaterTray.class.getResourceAsStream("/images/tray_2.png"));
+		image3 = ImageIO.read(TimeEaterTray.class.getResourceAsStream("/images/tray_3.png"));
+		image4 = ImageIO.read(TimeEaterTray.class.getResourceAsStream("/images/tray_4.png"));
+		setImage(image1);
+		
 
+		trayAnimation = new PauseTransition(Duration.seconds(0.6));
+		trayAnimation.setOnFinished((e) -> {
+			Image image = getImage();
+			if (image == image1) {
+				setImage(image2);
+			} else if (image == image2) {
+				setImage(image3);
+			} else if (image == image3) {
+				setImage(image4);
+			} else if (image == image4) {
+				setImage(image1);
+			}
+			trayAnimation.play();
+		});
+//		trayAnimation.play();
+		
 		setImageAutoSize(true);
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -103,8 +134,10 @@ public class TimeEaterTray extends TrayIcon implements ManagerListener {
 	public void activeJobChanged(JobVo activeJob) {
 		if (activeJob != null) {
 			setToolTip("Vorgang aktiv: " + activeJob.getName());
+			trayAnimation.play();
 		} else {
 			setToolTip("Keine Vorgang aktiv");
+			trayAnimation.pause();
 		}
 	}
 

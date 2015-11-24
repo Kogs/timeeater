@@ -34,6 +34,9 @@ public class Job {
 	@Column(name = "userid")
 	private Long userID;
 	
+	@Column(name = "activeworkdid")
+	private Long activeWorkID;
+	
 	public Long getId() {
 		return id;
 	}
@@ -64,6 +67,14 @@ public class Job {
 
 	public void setUserID(Long userID) {
 		this.userID = userID;
+	}
+
+	public Long getActiveWorkID() {
+		return activeWorkID;
+	}
+
+	public void setActiveWorkID(Long activeWorkID) {
+		this.activeWorkID = activeWorkID;
 	}
 	
 }

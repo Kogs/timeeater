@@ -26,8 +26,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -64,6 +66,9 @@ public class StartController extends Stage implements Initializable {
 	@FXML
 	private TabPane datasourceTabPane;
 	
+	@FXML
+	private TextField jsonFolderTxt;
+	
 	private UserDAO userDAO;
 	
 	public StartController (Runnable onStarted) {
@@ -92,8 +97,21 @@ public class StartController extends Stage implements Initializable {
 		urlTxt.setText(Settings.getProperty("url", "jdbc:postgresql://localhost:5432/timeeater"));
 		userTxt.setText(Settings.getProperty("user", "timeeater"));
 		pwTxt.setText(Settings.getProperty("password", "timeeater"));
+		datasourceTabPane.getTabs().get(0).setDisable(true);
+		datasourceTabPane.getSelectionModel().select(1);
+		jsonFolderTxt.setText(Settings.getProperty("json.folder", System.getProperty("user.dir") + "\\conf\\"));
 	}
 	
+	@FXML
+	private void searchJsonFolder() {
+		DirectoryChooser chooser = new DirectoryChooser();
+		chooser.setTitle("Select Json Save Folder");
+		chooser.setInitialDirectory(new File(jsonFolderTxt.getText()));
+		File jsonFolder = chooser.showDialog(this);
+		jsonFolderTxt.setText(jsonFolder.getPath());
+	}
+	
+
 	@FXML
 	private void start() {
 		switch (datasourceTabPane.getSelectionModel().getSelectedIndex()) {
@@ -111,6 +129,8 @@ public class StartController extends Stage implements Initializable {
 	}
 	
 	private void startWithJson() {
+		Settings.setProperty("json.folder", jsonFolderTxt.getText());
+		
 		JobProvider.initProvider(new JobManager());
 		if (onStarted != null) {
 			onStarted.run();
@@ -140,7 +160,6 @@ public class StartController extends Stage implements Initializable {
 				final AbstractApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 				context.registerShutdownHook();
 				userDAO = context.getBean(UserDAO.class);
-				
 				
 				if (Settings.booleanValue("autologin", false)) {
 					if (!realLogin(Settings.getProperty("eater.user"), Settings.getProperty("eater.password"))) {

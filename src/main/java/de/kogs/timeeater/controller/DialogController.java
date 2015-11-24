@@ -1,9 +1,5 @@
 package de.kogs.timeeater.controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +10,10 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class DialogController extends Stage implements Initializable {
 
@@ -36,7 +36,7 @@ public class DialogController extends Stage implements Initializable {
 		try {
 			Scene scene = new Scene((Parent) loader.load());
 			scene.getStylesheets().add("style.css");
-			scene.getRoot().getStyleClass().add("dialog");
+			scene.getRoot().getStyleClass().add("popupDialog");
 			setScene(scene);
 		} catch (IOException e) {
 			e.printStackTrace();

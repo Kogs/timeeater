@@ -44,8 +44,7 @@ public abstract class JobProvider {
 	
 	public abstract JobVo getActiveJob();
 	public abstract void startWorkOnJob(String jobName);
-	
-	public abstract void startWorkOnJob(JobVo job);
+
 	
 	public abstract void stopWork();
 	

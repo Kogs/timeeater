@@ -69,7 +69,6 @@ public class JobManager extends JobProvider {
 		return newJob;
 	}
 
-	@Override
 	public void startWorkOnJob(JobVo job) {
 		if (activeJob == null || activeJob.getActiveWork() == null) {
 			activeJob = job;
@@ -225,7 +224,7 @@ public class JobManager extends JobProvider {
 	}
 
 	private File getSaveFile() {
-		File folder = new File(System.getProperty("user.dir") + "\\conf\\");
+		File folder = new File(Settings.getProperty("json.folder", System.getProperty("user.dir") + "\\conf\\"));
 		folder.mkdirs();
 		File file = new File(folder, "save.xml");
 		System.out.println("File: " + file);

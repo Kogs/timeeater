@@ -4,10 +4,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView fx:id="table" layoutY="52.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <TableView fx:id="table" layoutY="52.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
         <columns>
           <TableColumn fx:id="patternColumn" prefWidth="75.0" text="Pattern" />
           <TableColumn fx:id="urlColumn" prefWidth="75.0" text="Url" />
@@ -23,5 +22,6 @@
             <Button mnemonicParsing="false" onAction="#remove" text="Remove" />
          </children>
       </HBox>
+      <Label layoutX="14.0" layoutY="14.0" text="With a Quicklink you can easly open for example Jira issues for Jobs.&#10;If the entered pattern matches an Job name. You can click on it in the Overview and in your default Borwser the Url+JobName is opened." wrapText="true" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0" />
    </children>
 </AnchorPane>

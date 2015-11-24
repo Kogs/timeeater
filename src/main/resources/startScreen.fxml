@@ -48,7 +48,28 @@
             </Tab>
             <Tab closable="false" text="Json">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <GridPane hgap="10.0" vgap="10.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Folder" />
+                        <Label text="Crypht" GridPane.rowIndex="1" />
+                        <HBox GridPane.columnIndex="1">
+                           <children>
+                              <TextField fx:id="jsonFolderTxt" HBox.hgrow="ALWAYS" />
+                              <Button mnemonicParsing="false" onAction="#searchJsonFolder" text="Search" />
+                           </children>
+                        </HBox>
+                        <CheckBox disable="true" mnemonicParsing="false" text="Enabled" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
               </content>
             </Tab>
          </tabs>

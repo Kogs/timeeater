@@ -38,6 +38,39 @@
 		</plugins>
 	</build>
 	
+	
+		<repositories>
+         <repository>
+           <id>atlassian-public</id>
+           <url>https://m2proxy.atlassian.com/repository/public</url>
+           <snapshots>
+             <enabled>true</enabled>
+             <updatePolicy>daily</updatePolicy>
+             <checksumPolicy>warn</checksumPolicy>
+           </snapshots>
+           <releases>
+             <enabled>true</enabled>
+             <checksumPolicy>warn</checksumPolicy>
+           </releases>
+		</repository>
+       </repositories>
+
+       <pluginRepositories>
+         <pluginRepository>
+           <id>atlassian-public</id>
+           <url>https://m2proxy.atlassian.com/repository/public</url>
+           <releases>
+             <enabled>true</enabled>
+             <checksumPolicy>warn</checksumPolicy>
+           </releases>
+           <snapshots>
+             <checksumPolicy>warn</checksumPolicy>
+           </snapshots>
+         </pluginRepository>
+       </pluginRepositories>
+	   
+	
+	
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -97,6 +130,16 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>1.7.2.RELEASE</version>
 		</dependency>
-			
+		
+		<!-- JIRA -->
+		<dependency>
+			<groupId>com.atlassian.jira</groupId>
+			<artifactId>jira-rest-java-client</artifactId>
+			<version>2.0.0-m2</version>
+		</dependency>
 	</dependencies>
+	
+
+
+	
 </project>
