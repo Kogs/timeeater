@@ -61,3 +61,18 @@
 	-fx-image: url('images/ic_info_black_18dp_1x.png');
 }
 
+.overview .check-box{
+	-fx-mark-color: black;
+}
+.overview .check-box .box{
+	-fx-background-color: white;
+}
+.overview .date-picker .arrow-button{
+	-fx-background-color: linear-gradient(to bottom, rgb(244,244,244) 0%,  rgb(245,245,245) 100%);
+	-fx-background-radius:  0.0;
+	-fx-text-fill: black;
+	-fx-background-insets: 0;
+}
+.overview .date-picker .label{
+	-fx-text-fill: black;
+}

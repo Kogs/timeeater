@@ -2,9 +2,11 @@ package de.kogs.timeeater.controller;
 
 import de.kogs.timeeater.data.JobProvider;
 import de.kogs.timeeater.data.JobVo;
+import de.kogs.timeeater.data.comparator.JobNameComparator;
 import de.kogs.timeeater.data.hooks.HookManager;
 import de.kogs.timeeater.data.hooks.QuickLink;
 import de.kogs.timeeater.util.Utils;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,6 +29,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,10 +38,12 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -97,13 +102,21 @@ public class OverviewController extends Stage implements Initializable {
 	@FXML
 	private Label summaryFriday;
 	
+	@FXML
+	private Label summaryWeek;
+	
+	@FXML
+	private Label clock;
+	
 	private Date monday;
 	private Date tuesday;
 	private Date wednesday;
 	private Date thursday;
 	private Date friday;
 	
-	private DateFormat weekDayFormat = new SimpleDateFormat("dd.MM.yy");;
+	private DateFormat weekDayFormat = new SimpleDateFormat("dd.MM.yy");
+	
+	private DateFormat clockFormat = new SimpleDateFormat("dd.MM.yy HH:mm:ss");
 	
 	private Date currentDate = null;
 	
@@ -121,6 +134,15 @@ public class OverviewController extends Stage implements Initializable {
 		showActive.selectedProperty().addListener((obs) -> showForDate(currentDate));
 		showForDate(new Date());
 		
+		PauseTransition clockPause = new PauseTransition(Duration.seconds(1));
+		clockPause.setOnFinished((e) -> {
+			updateClock();
+			if (isShowing()) {
+				clockPause.play();
+			}
+		});
+		clockPause.play();
+		updateClock();
 	}
 	
 	private void showForDate(Date d) {
@@ -136,31 +158,42 @@ public class OverviewController extends Stage implements Initializable {
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		monday = c.getTime();
 		mondayLabel.setText(weekDayFormat.format(monday));
-		summaryMonday.setText(millisToString(provider.getTimeForDay(monday)));
+		long summaryMondayTime = provider.getTimeForDay(monday);
+		summaryMonday.setText(millisToString(summaryMondayTime));
 		c.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
 		tuesday = c.getTime();
 		tuesdayLabel.setText(weekDayFormat.format(tuesday));
-		summaryTuesday.setText(millisToString(provider.getTimeForDay(tuesday)));
+		long summaryTuesdayTime = provider.getTimeForDay(tuesday);
+		summaryTuesday.setText(millisToString(summaryTuesdayTime));
 		c.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
 		wednesday = c.getTime();
 		wednesdayLabel.setText(weekDayFormat.format(wednesday));
-		summaryWednesday.setText(millisToString(provider.getTimeForDay(wednesday)));
+		long summaryWednesdayTime = provider.getTimeForDay(wednesday);
+		summaryWednesday.setText(millisToString(summaryWednesdayTime));
 		c.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
 		thursday = c.getTime();
 		thursdayLabel.setText(weekDayFormat.format(thursday));
-		summaryThursday.setText(millisToString(provider.getTimeForDay(thursday)));
+		long summaryThursdayTime = provider.getTimeForDay(thursday);
+		summaryThursday.setText(millisToString(summaryThursdayTime));
 		c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
 		friday = c.getTime();
 		fridayLabel.setText(weekDayFormat.format(friday));
-		summaryFriday.setText(millisToString(provider.getTimeForDay(friday)));
+		long summaryFridayTime = provider.getTimeForDay(friday);
+		summaryFriday.setText(millisToString(summaryFridayTime));
+		
+		summaryWeek.setText("= " + millisToString(
+				summaryMondayTime + summaryTuesdayTime + summaryWednesdayTime + summaryThursdayTime + summaryFridayTime));
 		
 		contentGrid.getChildren().clear();
 		contentGrid.getRowConstraints().clear();
 		
 		int i = 0;
 		
-		Collection<JobVo> jobs = showActive.isSelected() ? provider.getJobsForRange(monday, friday) : provider
-				.getKownJobs();
+		List<JobVo> jobs = new ArrayList<>(
+				showActive.isSelected() ? provider.getJobsForRange(monday, friday) : provider.getKownJobs());
+				
+		Collections.sort(jobs, new JobNameComparator());
+		
 		for (JobVo job : jobs) {
 			contentGrid.getRowConstraints().add(new RowConstraints(30));
 			
@@ -282,6 +315,10 @@ public class OverviewController extends Stage implements Initializable {
 	
 	private void showDetailsForDate(Date date) {
 		DayOverviewController overView = new DayOverviewController(date);
+	}
+	
+	private void updateClock() {
+		clock.setText(clockFormat.format(new Date()));
 	}
 	
 }
