@@ -47,9 +47,10 @@ public class TimeEater extends Application {
 	public void stop() throws Exception {
 		
 		JobProvider manager = JobProvider.getProvider();
-		manager.stopWork();
-		manager.save();
-		
+		if (manager != null) {
+			manager.stopWork();
+			manager.save();
+		}
 		if (trayIcon != null) {
 			SystemTray.getSystemTray().remove(trayIcon);
 		}

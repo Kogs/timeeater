@@ -6,12 +6,15 @@ package de.kogs.timeeater.controller;
 import de.kogs.timeeater.data.JobManager;
 import de.kogs.timeeater.data.JobProvider;
 import de.kogs.timeeater.data.Settings;
+import de.kogs.timeeater.util.Utils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TabPane;
@@ -25,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -56,6 +60,14 @@ public class StartController extends Stage implements Initializable {
 	@FXML
 	private TextField jsonFolderTxt;
 	
+	@FXML
+	private CheckBox wakeUp;
+	
+	@FXML
+	private ComboBox<Number> wakeUpInterval;
+	
+	private boolean starting = false;
+	
 //	private UserDAO userDAO;
 	
 	public StartController (Runnable onStarted) {
@@ -73,7 +85,11 @@ public class StartController extends Stage implements Initializable {
 			e.printStackTrace();
 		}
 		show();
-		setOnCloseRequest((e) -> Platform.exit());
+		setOnHidden((e) -> {
+			if (!starting) {
+				Platform.exit();
+			}
+		});
 	}
 	
 	/* (non-Javadoc)
@@ -88,6 +104,21 @@ public class StartController extends Stage implements Initializable {
 		datasourceTabPane.getTabs().get(0).setDisable(true);
 		datasourceTabPane.getSelectionModel().select(1);
 		jsonFolderTxt.setText(Settings.getProperty("json.folder", System.getProperty("user.dir") + "\\conf\\"));
+		
+		wakeUpInterval.setConverter(Utils.longToMillisConverter);
+		wakeUpInterval.getItems().add(Long.valueOf(TimeUnit.MINUTES.toMillis(1)));
+		wakeUpInterval.getItems().add(Long.valueOf(TimeUnit.MINUTES.toMillis(15)));
+		wakeUpInterval.getItems().add(Long.valueOf(TimeUnit.MINUTES.toMillis(30)));
+		wakeUpInterval.getItems().add(Long.valueOf(TimeUnit.MINUTES.toMillis(60)));
+		wakeUpInterval.getItems().add(Long.valueOf(TimeUnit.MINUTES.toMillis(90)));
+		wakeUpInterval.getItems().add(Long.valueOf(TimeUnit.MINUTES.toMillis(120)));
+		wakeUpInterval.getItems().add(Long.valueOf(TimeUnit.MINUTES.toMillis(180)));
+		wakeUpInterval.getSelectionModel()
+				.select(Long.valueOf(Settings.getProperty("wakeup.interval", String.valueOf(TimeUnit.MINUTES.toMillis(30)))));
+				
+		wakeUpInterval.disableProperty().bind(wakeUp.selectedProperty().not());
+		wakeUp.setSelected(Boolean.parseBoolean(Settings.getProperty("wakeup.active", "false")));
+		
 	}
 	
 	@FXML
@@ -99,9 +130,16 @@ public class StartController extends Stage implements Initializable {
 		jsonFolderTxt.setText(jsonFolder.getPath());
 	}
 	
-
 	@FXML
 	private void start() {
+		starting = true;
+		Settings.setProperty("wakeup.active", Boolean.toString(wakeUp.isSelected()));
+		Number wakeUpInter = wakeUpInterval.getSelectionModel().getSelectedItem();
+		Settings.setProperty("wakeup.interval", wakeUpInter.toString());
+		if (wakeUp.isSelected()) {
+			WakeUpController.showWakeUpIn(wakeUpInter.longValue());
+		}
+		
 		switch (datasourceTabPane.getSelectionModel().getSelectedIndex()) {
 			case 0 :
 				startWithDatabase();
