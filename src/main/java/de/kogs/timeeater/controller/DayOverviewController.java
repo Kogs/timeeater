@@ -11,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -20,7 +19,9 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
@@ -73,9 +74,9 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 		loader.setController(this);
 		loader.setLocation(OverviewController.class
 				.getResource("/dayOverview.fxml"));
-
+		initStyle(StageStyle.UNDECORATED);
 		try {
-			Scene scene = new Scene((Parent) loader.load());
+			Scene scene = new DecoratedScene((Region) loader.load());
 			scene.getStylesheets().add("style.css");
 			setScene(scene);
 		} catch (IOException e) {

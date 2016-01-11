@@ -10,15 +10,16 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,8 +64,9 @@ public class StartController extends Stage implements Initializable {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setController(this);
 		loader.setLocation(OverviewController.class.getResource("/startScreen.fxml"));
+		initStyle(StageStyle.UNDECORATED);
 		try {
-			Scene scene = new Scene((Parent) loader.load());
+			Scene scene = new DecoratedScene((Region) loader.load());
 			scene.getStylesheets().add("style.css");
 			setScene(scene);
 		} catch (IOException e) {

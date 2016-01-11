@@ -63,9 +63,11 @@
 
 .overview .check-box{
 	-fx-mark-color: black;
+
 }
 .overview .check-box .box{
 	-fx-background-color: white;
+	-fx-background-radius: 0px;
 }
 .overview .date-picker .arrow-button{
 	-fx-background-color: linear-gradient(to bottom, rgb(244,244,244) 0%,  rgb(245,245,245) 100%);

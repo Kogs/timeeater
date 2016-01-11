@@ -8,12 +8,13 @@ import de.kogs.timeeater.data.hooks.QuickLink;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,9 +33,9 @@ public class QuickLinkController extends Stage implements Initializable {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setController(this);
 		loader.setLocation(OverviewController.class.getResource("/quickLinks.fxml"));
-		
+		initStyle(StageStyle.UNDECORATED);
 		try {
-			Scene scene = new Scene((Parent) loader.load());
+			Scene scene = new DecoratedScene((Region) loader.load());
 			scene.getStylesheets().add("style.css");
 			scene.getStylesheets().add("overview.css");
 			setScene(scene);

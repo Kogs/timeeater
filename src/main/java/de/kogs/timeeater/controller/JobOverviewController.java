@@ -11,7 +11,6 @@ import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -24,7 +23,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
@@ -99,9 +100,9 @@ public class JobOverviewController extends Stage implements Initializable {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setController(this);
 		loader.setLocation(JobOverviewController.class.getResource("/jobOverview.fxml"));
-		
+		initStyle(StageStyle.UNDECORATED);
 		try {
-			Scene scene = new Scene((Parent) loader.load());
+			Scene scene = new DecoratedScene((Region) loader.load());
 			scene.getStylesheets().add("style.css");
 			setScene(scene);
 		} catch (IOException e) {

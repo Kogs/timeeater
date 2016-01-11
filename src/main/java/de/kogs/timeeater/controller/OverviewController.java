@@ -13,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -26,9 +25,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -50,13 +51,15 @@ import java.util.ResourceBundle;
 public class OverviewController extends Stage implements Initializable {
 	public OverviewController () {
 		setTitle("Overview Window");
+		initStyle(StageStyle.UNDECORATED);
 		
 		FXMLLoader loader = new FXMLLoader();
 		loader.setController(this);
 		loader.setLocation(OverviewController.class.getResource("/overview.fxml"));
-		
+		setMinHeight(162);
+		setMinWidth(620);
 		try {
-			Scene scene = new Scene((Parent) loader.load());
+			Scene scene = new DecoratedScene((Region) loader.load());
 			scene.getStylesheets().add("style.css");
 			scene.getStylesheets().add("overview.css");
 			setScene(scene);
