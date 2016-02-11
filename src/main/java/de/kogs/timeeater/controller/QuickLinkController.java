@@ -3,6 +3,7 @@
  */
 package de.kogs.timeeater.controller;
 
+import de.kogs.javafx.decoratedScene.DecoratedScene;
 import de.kogs.timeeater.data.hooks.HookManager;
 import de.kogs.timeeater.data.hooks.QuickLink;
 import javafx.fxml.FXML;

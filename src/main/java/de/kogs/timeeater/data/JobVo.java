@@ -40,6 +40,15 @@ public class JobVo {
 	}
 	
 	@JsonIgnore
+	public Date getLastActiveDate() {
+		LoggedWork lastWork = getLastWork();
+		if (lastWork != null) {
+			return lastWork.getLogDate();
+		}
+		return null;
+	}
+	
+	@JsonIgnore
 	public long getFullWorkTime() {
 		return countWorkTime(works);
 	}

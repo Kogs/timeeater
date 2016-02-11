@@ -1,9 +1,8 @@
 package de.kogs.timeeater.chart;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import de.kogs.timeeater.data.JobVo;
+import de.kogs.timeeater.data.LoggedWork;
+import de.kogs.timeeater.util.Utils;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,9 +15,10 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import de.kogs.timeeater.data.JobVo;
-import de.kogs.timeeater.data.LoggedWork;
-import de.kogs.timeeater.util.Utils;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class TimeChart extends XYChart<Number, String> {
 	
@@ -27,13 +27,14 @@ public class TimeChart extends XYChart<Number, String> {
 		public long length;
 		private LoggedWork work;
 		private JobVo job;
+		private boolean active;
 		
-		public ExtraData (long lengthMs, JobVo job, LoggedWork work) {
+		public ExtraData (long lengthMs, JobVo job, LoggedWork work, boolean active) {
 			super();
-			this.length = lengthMs;
+			length = lengthMs;
 			this.job = job;
 			this.work = work;
-			
+			this.active = active;
 		}
 		
 		public long getLength() {
@@ -58,6 +59,14 @@ public class TimeChart extends XYChart<Number, String> {
 		
 		public void setJob(JobVo job) {
 			this.job = job;
+		}
+
+		public boolean isActive() {
+			return active;
+		}
+
+		public void setActive(boolean active) {
+			this.active = active;
 		}
 		
 	}
@@ -187,7 +196,8 @@ public class TimeChart extends XYChart<Number, String> {
 		
 		if (container == null) {
 			ExtraData extraData = (ExtraData) item.getExtraValue();
-			container = new ChartBar(extraData.getJob(), extraData.getWork(),this,reloadChartListener,item);
+			container = new ChartBar(extraData.getJob(), extraData.getWork(), this, reloadChartListener, item,
+					!extraData.isActive());
 			item.setNode(container);
 		}
 		return container;

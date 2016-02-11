@@ -3,6 +3,7 @@
  */
 package de.kogs.timeeater.tray;
 
+import de.kogs.timeeater.controller.JobsController;
 import de.kogs.timeeater.controller.LoggerController;
 import de.kogs.timeeater.controller.OverviewController;
 import de.kogs.timeeater.controller.QuickLinkController;
@@ -98,6 +99,9 @@ public class TimeEaterTray extends TrayIcon implements ManagerListener {
 		hooks.add(quickLinks);
 		quickLinks.addActionListener(e -> Platform.runLater(() -> new QuickLinkController()));
 		
+		MenuItem jobs = new MenuItem("Jobs");
+		jobs.addActionListener(e -> Platform.runLater(() -> new JobsController()));
+		
 		MenuItem overview = new MenuItem("Overview");
 		overview.addActionListener(e -> Platform.runLater(()->new OverviewController()));
 
@@ -113,6 +117,7 @@ public class TimeEaterTray extends TrayIcon implements ManagerListener {
 		popup.add(wakeUp);
 		popup.addSeparator();
 		popup.add(hooks);
+		popup.add(jobs);
 		popup.add(overview);
 		popup.addSeparator();
 		popup.add(save);

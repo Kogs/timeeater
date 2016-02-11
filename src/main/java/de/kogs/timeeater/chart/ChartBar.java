@@ -38,14 +38,16 @@ public class ChartBar extends StackPane {
 	private ReloadChartListener reloadChartListener;
 	private TimeChart chart;
 	private Data<Number, String> data;
+	private boolean endMovable;
 	
 	public ChartBar (JobVo job, LoggedWork work, TimeChart chart, ReloadChartListener reloadChartListener,
-			Data<Number, String> data) {
+			Data<Number, String> data, boolean endMovable) {
 		this.job = job;
 		this.work = work;
 		this.chart = chart;
 		this.reloadChartListener = reloadChartListener;
 		this.data = data;
+		this.endMovable = endMovable;
 		
 		getStyleClass().add("time-bar");
 		
@@ -92,6 +94,7 @@ public class ChartBar extends StackPane {
 		MenuItem item1 = new MenuItem("Anfang verschieben");
 		item1.setOnAction(e -> startResizeStart());
 		MenuItem item2 = new MenuItem("Ende verschieben");
+		item2.setDisable(!endMovable);
 		item2.setOnAction(e -> startResizeEnd());
 		MenuItem item3 = new MenuItem("Teilen");
 		item3.setOnAction(e -> split());

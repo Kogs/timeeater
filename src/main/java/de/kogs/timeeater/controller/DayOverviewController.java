@@ -1,5 +1,6 @@
 package de.kogs.timeeater.controller;
 
+import de.kogs.javafx.decoratedScene.DecoratedScene;
 import de.kogs.timeeater.chart.ReloadChartListener;
 import de.kogs.timeeater.chart.TimeChart;
 import de.kogs.timeeater.chart.TimeChart.ExtraData;
@@ -34,46 +35,45 @@ import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 public class DayOverviewController extends Stage implements Initializable, ReloadChartListener {
-
+	
 	private StringConverter<Number> xAxisStringConverter = new StringConverter<Number>() {
-
+		
 		@Override
 		public String toString(Number object) {
 			return Utils.timeToString(object.longValue());
 		}
-
+		
 		@Override
 		public Number fromString(String string) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 	};
-
+	
 	private Date day;
-
+	
 	@FXML
 	private AnchorPane chartContainer;
-
+	
 	@FXML
 	private Label dateLabel;
-
+	
 	@FXML
 	private ComboBox<JobVo> jobSelector;
 	
 	private CategoryAxis yAxis;
-
+	
 	private NumberAxis xAxis;
-
+	
 	private TimeChart chart;
-
-	public DayOverviewController(Date day) {
+	
+	public DayOverviewController (Date day) {
 		this.day = day;
 		setTitle("Day Overview Window");
-
+		
 		FXMLLoader loader = new FXMLLoader();
 		loader.setController(this);
-		loader.setLocation(OverviewController.class
-				.getResource("/dayOverview.fxml"));
+		loader.setLocation(OverviewController.class.getResource("/dayOverview.fxml"));
 		initStyle(StageStyle.UNDECORATED);
 		try {
 			Scene scene = new DecoratedScene((Region) loader.load());
@@ -83,40 +83,40 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 			e.printStackTrace();
 		}
 		show();
-
+		
 	}
-
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		
 		dateLabel.setText(new SimpleDateFormat("EEEE dd.MM.yyyy").format(day));
-
+		
 		yAxis = new CategoryAxis();
-		xAxis = new NumberAxis(getFirstTimeOfDay(),
-				getLastTimeOfDay(), TimeUnit.MINUTES.toMillis(30));
-
+		xAxis = new NumberAxis(getFirstTimeOfDay(), getLastTimeOfDay(), TimeUnit.MINUTES.toMillis(30));
+		
 		xAxis.setTickLabelFormatter(xAxisStringConverter);
-
-		chart = new TimeChart(xAxis, yAxis,this);
+		
+		chart = new TimeChart(xAxis, yAxis, this);
 		chart.setData(FXCollections.observableArrayList());
 		AnchorPane.setTopAnchor(chart, 0d);
 		AnchorPane.setLeftAnchor(chart, 0d);
 		AnchorPane.setBottomAnchor(chart, 0d);
 		AnchorPane.setRightAnchor(chart, 0d);
 		chartContainer.getChildren().add(chart);
-
+		
 		reload();
 	}
-
+	
 	@Override
 	public void reload() {
 		loadData();
 		reloadJobSelector();
 	}
-	private void reloadJobSelector(){
+	
+	private void reloadJobSelector() {
 		jobSelector.getItems().clear();
 		for (JobVo job : JobProvider.getProvider().getKownJobs()) {
-			if(job.getWorkForDay(day).isEmpty()){
+			if (job.getWorkForDay(day).isEmpty()) {
 				jobSelector.getItems().add(job);
 			}
 		}
@@ -124,34 +124,37 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 	
 	private void loadData() {
 		JobProvider provider = JobProvider.getProvider();
-		;
-
+		
 		yAxis.getCategories().clear();
 		chart.getData().clear();
 		
 		for (JobVo job : provider.getKownJobs()) {
 			yAxis.getCategories().add(job.getName());
 		}
-
+		
 		for (JobVo job : provider.getKownJobs()) {
-
+			
 			Series<Number, String> jobSeries = new Series<>();
 			chart.getData().add(jobSeries);
 			for (LoggedWork work : job.getWorkForDay(day)) {
 				long end = System.currentTimeMillis();
+				boolean active = job.equals(provider.getActiveJob()) && work.equals(job.getActiveWork());
 				if (work.getLogEnd() != null) {
 					end = work.getLogEnd();
 				}
-				Data<Number, String> aData = new Data<Number, String>(
-						work.getLogStart(), job.getName(), new ExtraData(end
-								- work.getLogStart(), job, work));
-
+				Data<Number, String> aData = new Data<Number, String>(work.getLogStart(), job.getName(),
+						new ExtraData(end - work.getLogStart(), job, work, active));
+						
 				jobSeries.getData().add(aData);
+				if (active) {
+					aData.getNode().getStyleClass().add("time-bar-active");
+				}
+				
 			}
-
+			
 		}
 	}
-
+	
 	@FXML
 	private void addWork() {
 		JobVo selectedJob = jobSelector.getSelectionModel().getSelectedItem();
@@ -165,19 +168,19 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 		JobProvider.getProvider().save();
 		reload();
 	}
-
+	
 	private long getFirstTimeOfDay() {
-
+		
 		Calendar cal = GregorianCalendar.getInstance();
 		cal.setTime(day);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		cal.set(Calendar.HOUR_OF_DAY, 7);
-
+		
 		return cal.getTime().getTime();
 	}
-
+	
 	private long getLastTimeOfDay() {
 		Calendar cal = GregorianCalendar.getInstance();
 		cal.setTime(day);
@@ -185,8 +188,8 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		cal.set(Calendar.HOUR_OF_DAY, 19);
-
+		
 		return cal.getTime().getTime();
 	}
-
+	
 }

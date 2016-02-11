@@ -12,12 +12,14 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.awt.SystemTray;
+import java.util.concurrent.TimeUnit;
 
 /**
  */
 public class TimeEater extends Application {
 	
 	private TimeEaterTray trayIcon;
+	private WorkTimeReminder reminder;
 	
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -34,6 +36,9 @@ public class TimeEater extends Application {
 			try {
 				trayIcon = new TimeEaterTray();
 				SystemTray.getSystemTray().add(trayIcon);
+				
+				reminder = new WorkTimeReminder(TimeUnit.MINUTES, 5, trayIcon);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

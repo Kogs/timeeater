@@ -59,6 +59,9 @@
 .time-bar:hover{
 	-fx-background-color: rgb(112,151,191);
 }
+.time-bar-active{
+	-fx-background-color: rgb(024,028,205);
+}
 
 
 .jobOverview .text-field:viewing{
@@ -82,4 +85,29 @@
 	-fx-content-display:  graphic-only;
 	-fx-graphic: url('images/ic_save_black_18dp_1x.png');
 }
+
+.jobsTableView {
+	-fx-background-color: transparent;
+}
+.jobsTableView .table-row-cell{
+  -fx-background-color: rgb(25,25,25);
+}
+.jobsTableView .table-row-cell:odd{
+  -fx-background-color: rgb(50,50,50);
+}
+.jobsTableView .table-row-cell:selected{
+  -fx-background-color: rgb(112,151,191);
+}
+.jobsTableView .table-cell{
+  -fx-text-fill: white;
+  -fx-padding: 5px;
+}
+.jobsTableView .column-header-background{
+ -fx-background-color: rgb(80,80,80);
+ -fx-text-fill: rgb(150,150,150);
+}
+.jobsTableView .column-header{
+ -fx-background-color: transparent;
+}
+
 

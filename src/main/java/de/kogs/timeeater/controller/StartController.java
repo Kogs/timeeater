@@ -3,6 +3,7 @@
  */
 package de.kogs.timeeater.controller;
 
+import de.kogs.javafx.decoratedScene.DecoratedScene;
 import de.kogs.timeeater.data.JobManager;
 import de.kogs.timeeater.data.JobProvider;
 import de.kogs.timeeater.data.Settings;
