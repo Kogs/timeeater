@@ -1,5 +1,7 @@
 package de.kogs.timeeater.controller;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import de.kogs.javafx.decoratedScene.DecoratedScene;
 import de.kogs.timeeater.data.JobProvider;
 import de.kogs.timeeater.data.JobVo;
@@ -323,6 +325,11 @@ public class OverviewController extends Stage implements Initializable {
 	
 	private void updateClock() {
 		clock.setText(clockFormat.format(new Date()));
+		
+		if (DateUtils.isSameDay(currentDate, new Date())) {
+			showForDate(currentDate);
+		}
+		
 	}
 	
 }

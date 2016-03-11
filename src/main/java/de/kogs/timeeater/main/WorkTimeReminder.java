@@ -53,7 +53,6 @@ public class WorkTimeReminder {
 					lastShow = System.currentTimeMillis();
 				}
 			}
-
 		}
 	}
 	
@@ -111,11 +110,5 @@ public class WorkTimeReminder {
 		return time;
 		
 	}
-	
-	public static void main(String[] args) {
 		
-		System.out.println(60 % 30);
-		
-	}
-	
 }
