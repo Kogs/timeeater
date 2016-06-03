@@ -34,6 +34,7 @@ public class TimeEater extends Application {
 		
 		StartController startController = new StartController(() -> {
 			try {
+				
 				trayIcon = new TimeEaterTray();
 				SystemTray.getSystemTray().add(trayIcon);
 				

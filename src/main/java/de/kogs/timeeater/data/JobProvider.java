@@ -61,4 +61,7 @@ public abstract class JobProvider {
 	public abstract void removeJob(JobVo j);
 	
 	public abstract void save();
+	
+	public abstract void backup();
+	
 }

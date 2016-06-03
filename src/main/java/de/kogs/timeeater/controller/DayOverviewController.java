@@ -45,7 +45,6 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 		
 		@Override
 		public Number fromString(String string) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 	};

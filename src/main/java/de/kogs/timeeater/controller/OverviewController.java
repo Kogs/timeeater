@@ -18,7 +18,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -81,9 +80,7 @@ public class OverviewController extends Stage implements Initializable {
 	@FXML
 	private Label rangeLabel;
 	
-	@FXML
-	private CheckBox showActive;
-	
+
 	private JobProvider provider;
 	
 	@FXML
@@ -114,6 +111,9 @@ public class OverviewController extends Stage implements Initializable {
 	@FXML
 	private Label clock;
 	
+	@FXML
+	private Label noDataLabel;
+	
 	private Date monday;
 	private Date tuesday;
 	private Date wednesday;
@@ -137,7 +137,6 @@ public class OverviewController extends Stage implements Initializable {
 			Date res = Date.from(instant);
 			showForDate(res);
 		});
-		showActive.selectedProperty().addListener((obs) -> showForDate(currentDate));
 		showForDate(new Date());
 		
 		PauseTransition clockPause = new PauseTransition(Duration.seconds(1));
@@ -196,8 +195,10 @@ public class OverviewController extends Stage implements Initializable {
 		int i = 0;
 		
 		List<JobVo> jobs = new ArrayList<>(
-				showActive.isSelected() ? provider.getJobsForRange(monday, friday) : provider.getKownJobs());
-				
+				provider.getJobsForRange(monday, friday));
+		
+		noDataLabel.setVisible(jobs.isEmpty());
+		
 		Collections.sort(jobs, new JobNameComparator());
 		
 		for (JobVo job : jobs) {

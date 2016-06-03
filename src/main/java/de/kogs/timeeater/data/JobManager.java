@@ -34,14 +34,9 @@ import java.util.zip.GZIPOutputStream;
  */
 public class JobManager extends JobProvider {
 
-	
-
 	private JobVo activeJob;
 
-
-	
 	private Map<String, JobVo> kownJobs = new HashMap<>();
-
 
 	public JobManager() {
 		load();
@@ -144,7 +139,7 @@ public class JobManager extends JobProvider {
 	
 	@Override
 	public void save() {
-		backup();
+
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -156,8 +151,9 @@ public class JobManager extends JobProvider {
 		
 //		hookInstance().save();
 	}
-
-	private void backup() {
+	
+	@Override
+	public void backup() {
 		
 		File backupFile = getBackupFile();
 		if (backupFile.exists()) {

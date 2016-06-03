@@ -197,7 +197,7 @@ public class TimeChart extends XYChart<Number, String> {
 		if (container == null) {
 			ExtraData extraData = (ExtraData) item.getExtraValue();
 			container = new ChartBar(extraData.getJob(), extraData.getWork(), this, reloadChartListener, item,
-					!extraData.isActive());
+					extraData.isActive());
 			item.setNode(container);
 		}
 		return container;
