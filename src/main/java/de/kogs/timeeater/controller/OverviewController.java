@@ -34,6 +34,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -42,6 +45,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -80,7 +84,6 @@ public class OverviewController extends Stage implements Initializable {
 	@FXML
 	private Label rangeLabel;
 	
-
 	private JobProvider provider;
 	
 	@FXML
@@ -194,8 +197,7 @@ public class OverviewController extends Stage implements Initializable {
 		
 		int i = 0;
 		
-		List<JobVo> jobs = new ArrayList<>(
-				provider.getJobsForRange(monday, friday));
+		List<JobVo> jobs = new ArrayList<>(provider.getJobsForRange(monday, friday));
 		
 		noDataLabel.setVisible(jobs.isEmpty());
 		
@@ -236,7 +238,7 @@ public class OverviewController extends Stage implements Initializable {
 					new Label(millisToString(job.getWorkTime(tuesday))), new Label(millisToString(job.getWorkTime(wednesday))),
 					new Label(millisToString(job.getWorkTime(thursday))), new Label(millisToString(job.getWorkTime(friday))),
 					createJobControls(job));
-					
+			
 			contentGrid.getRowConstraints().add(new RowConstraints(1));
 			Pane seperator = new Pane();
 			seperator.getStyleClass().add("seperator");
@@ -260,13 +262,12 @@ public class OverviewController extends Stage implements Initializable {
 	}
 	
 	private Node createJobControls(JobVo j) {
-		Button delete = new Button("NoAction");
-//		delete.setOnAction((event) -> {
-//			manager.removeJob(j);
-//			showForDate(currentDate);
-//		});
+		Button copy = new Button("Copy");
+		copy.setOnAction((event) -> {
+			copy(Arrays.asList(j));
+		});
 		
-		return delete;
+		return copy;
 	}
 	
 	@FXML
@@ -318,6 +319,39 @@ public class OverviewController extends Stage implements Initializable {
 	@FXML
 	private void showFriday() {
 		showDetailsForDate(friday);
+	}
+	
+	@FXML
+	private void copyData() {
+		List<JobVo> jobs = new ArrayList<>(provider.getJobsForRange(monday, friday));
+		copy(jobs);
+	}
+	
+
+	private void copy(List<JobVo> jobs) {
+		Collections.sort(jobs, new JobNameComparator());
+		
+		StringBuilder builder = new StringBuilder();
+		
+		for (JobVo job : jobs) {
+			builder.append(Utils.millisToHours(job.getWorkTime(monday)));
+			builder.append("	");
+			builder.append(Utils.millisToHours(job.getWorkTime(tuesday)));
+			builder.append("	");
+			builder.append(Utils.millisToHours(job.getWorkTime(wednesday)));
+			builder.append("	");
+			builder.append(Utils.millisToHours(job.getWorkTime(thursday)));
+			builder.append("	");
+			builder.append(Utils.millisToHours(job.getWorkTime(friday)));
+			builder.append("\n");
+		}
+		
+		StringSelection selection = new StringSelection(builder.toString());
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(selection, selection);
+		
+		DialogController dialogController = new DialogController("Data Copied",
+				jobs.size() + " Jobs where copied to your Clipboard");
 	}
 	
 	private void showDetailsForDate(Date date) {

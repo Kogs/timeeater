@@ -1,11 +1,12 @@
 package de.kogs.timeeater.util;
 
+import javafx.util.StringConverter;
+
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
-
-import javafx.util.StringConverter;
 
 public class Utils {
 
@@ -27,6 +28,16 @@ public class Utils {
 
 		return String.format("%02d:%02d", cal.get(Calendar.HOUR_OF_DAY),
 				cal.get(Calendar.MINUTE));
+	}
+	
+	public static String millisToHours(long millis) {
+		if (millis == 0) {
+			return "";
+		}
+		double seconds = millis / 1000;
+		double hours = seconds / 3600;
+		DecimalFormat df = new DecimalFormat("#0.00");
+		return df.format(hours);
 	}
 
 	public static boolean isSameDay(Date d1, Date d2) {
