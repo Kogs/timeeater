@@ -4,6 +4,7 @@
 package de.kogs.timeeater.data;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 import de.kogs.timeeater.controller.DialogController;
 import javafx.application.Platform;
@@ -38,7 +39,10 @@ public class JobManager extends JobProvider {
 
 	private Map<String, JobVo> kownJobs = new HashMap<>();
 
+	private ObjectMapper mapper = new ObjectMapper();
+
 	public JobManager() {
+		mapper.setSerializationInclusion(Inclusion.NON_NULL);
 		load();
 	}
 
@@ -91,11 +95,14 @@ public class JobManager extends JobProvider {
 	}
 
 
+
 	@Override
 	public Collection<JobVo> getKownJobs() {
 		return kownJobs.values();
 	}
 
+
+	
 	@Override
 	public Collection<JobVo> getJobsForDay(Date day) {
 		List<JobVo> jobsForDay = new ArrayList<>();
@@ -140,8 +147,7 @@ public class JobManager extends JobProvider {
 	@Override
 	public void save() {
 
-		
-		ObjectMapper mapper = new ObjectMapper();
+
 		try {
 			mapper.writeValue(getSaveFileJson(), new ArrayList<>(getKownJobs()));
 			Platform.runLater(() -> new DialogController("Speichern", "Daten wurden gespeichert"));
@@ -195,8 +201,6 @@ public class JobManager extends JobProvider {
 				e.printStackTrace();
 			}
 		}
-		
-		ObjectMapper mapper = new ObjectMapper();
 		
 		try {
 			JobVo[] jobsArray = mapper.readValue(getSaveFileJson(), JobVo[].class);

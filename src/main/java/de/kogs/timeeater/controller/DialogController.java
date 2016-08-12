@@ -1,5 +1,6 @@
 package de.kogs.timeeater.controller;
 
+import de.kogs.timeeater.main.TimeEater;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +42,7 @@ public class DialogController extends Stage implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		getIcons().add(TimeEater.STAGE_ICON);
 
 	}
 

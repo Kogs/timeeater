@@ -8,6 +8,7 @@ import de.kogs.timeeater.data.JobVo;
 import de.kogs.timeeater.data.comparator.JobNameComparator;
 import de.kogs.timeeater.data.hooks.HookManager;
 import de.kogs.timeeater.data.hooks.QuickLink;
+import de.kogs.timeeater.main.TimeEater;
 import de.kogs.timeeater.util.Utils;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
@@ -72,6 +73,7 @@ public class OverviewController extends Stage implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		getIcons().add(TimeEater.STAGE_ICON);
 		show();
 	}
 	
@@ -351,7 +353,7 @@ public class OverviewController extends Stage implements Initializable {
 		clipboard.setContents(selection, selection);
 		
 		DialogController dialogController = new DialogController("Data Copied",
-				jobs.size() + " Jobs where copied to your Clipboard");
+				jobs.size() + " Jobs was copied to your Clipboard");
 	}
 	
 	private void showDetailsForDate(Date date) {

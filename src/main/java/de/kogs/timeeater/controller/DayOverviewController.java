@@ -7,6 +7,7 @@ import de.kogs.timeeater.chart.TimeChart.ExtraData;
 import de.kogs.timeeater.data.JobProvider;
 import de.kogs.timeeater.data.JobVo;
 import de.kogs.timeeater.data.LoggedWork;
+import de.kogs.timeeater.main.TimeEater;
 import de.kogs.timeeater.util.Utils;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -81,8 +82,10 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		getIcons().add(TimeEater.STAGE_ICON);
 		show();
 		
+
 	}
 	
 	@Override

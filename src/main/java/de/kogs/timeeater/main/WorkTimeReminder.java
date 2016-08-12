@@ -73,7 +73,12 @@ public class WorkTimeReminder {
 			timeForWeek *= -1;
 		}
 		
+		
+		long leaveTime = System.currentTimeMillis() +timeForToday;
+		
+		
 		String msg = "Today left: " + (todayNegativ ? "-" : "") + Utils.millisToString(timeForToday);
+		msg += "\nGo home at: " + Utils.timeToString(leaveTime);
 		msg += "\nWeek Left: " + (weekyNegativ ? "-" : "") + Utils.millisToString(timeForWeek);
 		return msg;
 	}

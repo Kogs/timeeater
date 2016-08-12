@@ -3,6 +3,7 @@
  */
 package de.kogs.timeeater.tray;
 
+import de.kogs.timeeater.controller.DialogController;
 import de.kogs.timeeater.controller.JobsController;
 import de.kogs.timeeater.controller.LoggerController;
 import de.kogs.timeeater.controller.OverviewController;
@@ -15,6 +16,7 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.util.Duration;
 
+import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.Menu;
 import java.awt.MenuItem;
@@ -23,6 +25,8 @@ import java.awt.TrayIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 
@@ -92,6 +96,8 @@ public class TimeEaterTray extends TrayIcon implements ManagerListener {
 		final PopupMenu popup = new PopupMenu();
 		MenuItem aboutItem = new MenuItem("About");
 		
+		aboutItem.addActionListener(e -> Platform.runLater(this::about));
+		
 		MenuItem wakeUp = new MenuItem("WakeUp");
 		wakeUp.addActionListener(e -> Platform.runLater(() -> new WakeUpController()));
 		Menu hooks = new Menu("Hooks");
@@ -136,6 +142,20 @@ public class TimeEaterTray extends TrayIcon implements ManagerListener {
 	// Popup popup = new Popup();
 	// popup.get
 	// }
+	
+	private void about() {
+		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+			try {
+				Desktop.getDesktop().browse(new URI("http://www.thehardcoders.de/#/projects/project/2"));
+			} catch (IOException | URISyntaxException e) {
+				e.printStackTrace();
+			}
+		} else {
+			DialogController dialog = new DialogController("TimeEater About",
+					"TimeEater by Marcel Vogel all Rights reserved");
+			dialog.show();
+		}
+	}
 	
 	private void click() {
 		Platform.runLater(() -> {

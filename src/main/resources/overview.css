@@ -78,3 +78,6 @@
 .overview .date-picker .label{
 	-fx-text-fill: black;
 }
+.overview .summaryBackground{
+	-fx-background-color: linear-gradient(to bottom,  rgb(65,65,65) 0%,   rgb(45,45,45) 100%);
+}
