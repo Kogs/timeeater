@@ -78,7 +78,7 @@ public class WorkTimeReminder {
 		
 		
 		String msg = "Today left: " + (todayNegativ ? "-" : "") + Utils.millisToString(timeForToday);
-		msg += "\nGo home at: " + Utils.timeToString(leaveTime);
+		msg += "\nGo home at: " + (!todayNegativ ? Utils.timeToString(leaveTime) : "now");
 		msg += "\nWeek Left: " + (weekyNegativ ? "-" : "") + Utils.millisToString(timeForWeek);
 		return msg;
 	}
