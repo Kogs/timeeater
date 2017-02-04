@@ -9,6 +9,7 @@ import de.kogs.timeeater.data.JobProvider;
 import de.kogs.timeeater.tray.TimeEaterTray;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.awt.SystemTray;
@@ -17,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 /**
  */
 public class TimeEater extends Application {
+	
+	public static Image STAGE_ICON = new Image("images/tray.png");
 	
 	private TimeEaterTray trayIcon;
 	private WorkTimeReminder reminder;
@@ -34,10 +37,11 @@ public class TimeEater extends Application {
 		
 		StartController startController = new StartController(() -> {
 			try {
+				
 				trayIcon = new TimeEaterTray();
 				SystemTray.getSystemTray().add(trayIcon);
 				
-				reminder = new WorkTimeReminder(TimeUnit.MINUTES, 5, trayIcon);
+				reminder = new WorkTimeReminder(TimeUnit.MINUTES, 1, trayIcon);
 				
 			} catch (Exception e) {
 				e.printStackTrace();

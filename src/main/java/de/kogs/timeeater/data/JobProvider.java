@@ -50,6 +50,7 @@ public abstract class JobProvider {
 	
 	public abstract Collection<JobVo> getKownJobs();
 	
+
 	public abstract Collection<JobVo> getJobsForDay(Date day);
 	
 	public abstract long getTimeForDay(Date day);
@@ -61,4 +62,7 @@ public abstract class JobProvider {
 	public abstract void removeJob(JobVo j);
 	
 	public abstract void save();
+	
+	public abstract void backup();
+	
 }

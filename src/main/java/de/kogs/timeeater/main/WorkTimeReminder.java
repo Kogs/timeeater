@@ -46,7 +46,8 @@ public class WorkTimeReminder {
 			long timeForWeek = TimeUnit.HOURS.toMillis(40) - getTimeForWeek(provider);
 			
 			long todayHoursLeft = TimeUnit.MILLISECONDS.toHours(timeForToday);
-
+			tray.updateTimeLeft(buildMsg(timeForToday, timeForWeek));
+			
 			if (todayHoursLeft < 4) {
 				if (timeForToday <= 0 || System.currentTimeMillis() - lastShow > TimeUnit.MINUTES.toMillis(30)) {
 					showTrayInfo(timeForToday, timeForWeek);
@@ -57,6 +58,10 @@ public class WorkTimeReminder {
 	}
 	
 	private void showTrayInfo(long timeForToday, long timeForWeek) {
+		tray.displayMessage("Timeeater Reminder", buildMsg(timeForToday, timeForWeek), MessageType.INFO);
+	}
+	
+	private String buildMsg(long timeForToday, long timeForWeek) {
 		boolean todayNegativ = false;
 		if (timeForToday < 0) {
 			todayNegativ = true;
@@ -68,18 +73,16 @@ public class WorkTimeReminder {
 			timeForWeek *= -1;
 		}
 		
+		
+		long leaveTime = System.currentTimeMillis() +timeForToday;
+		
+		
 		String msg = "Today left: " + (todayNegativ ? "-" : "") + Utils.millisToString(timeForToday);
+		msg += "\nGo home at: " + (!todayNegativ ? Utils.timeToString(leaveTime) : "now");
 		msg += "\nWeek Left: " + (weekyNegativ ? "-" : "") + Utils.millisToString(timeForWeek);
-		
-		tray.displayMessage("Timeeater Reminder", msg, MessageType.INFO);
-		
+		return msg;
 	}
-	
-	private boolean isEndofWeek() {
-		Calendar cal = new GregorianCalendar();
-		cal.setTime(new Date());
-		return cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY;
-	}
+
 	
 	private long getTimeForWeek(JobProvider provider) {
 		long time = 0;

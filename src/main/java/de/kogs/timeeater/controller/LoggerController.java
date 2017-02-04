@@ -7,6 +7,7 @@ import de.kogs.timeeater.data.JobProvider;
 import de.kogs.timeeater.data.JobVo;
 import de.kogs.timeeater.data.LoggedWork;
 import de.kogs.timeeater.data.comparator.LastWorkComparator;
+import de.kogs.timeeater.main.TimeEater;
 import de.kogs.timeeater.util.Utils;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -94,6 +95,7 @@ public class LoggerController extends Stage implements Initializable {
 				closeLogger();
 			}
 		});
+		getIcons().add(TimeEater.STAGE_ICON);
 	}
 	
 	@FXML

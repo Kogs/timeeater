@@ -20,6 +20,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -38,16 +39,17 @@ public class ChartBar extends StackPane {
 	private ReloadChartListener reloadChartListener;
 	private TimeChart chart;
 	private Data<Number, String> data;
-	private boolean endMovable;
+	private boolean active;
+	private boolean snapToMinutes = false;
 	
 	public ChartBar (JobVo job, LoggedWork work, TimeChart chart, ReloadChartListener reloadChartListener,
-			Data<Number, String> data, boolean endMovable) {
+			Data<Number, String> data, boolean active) {
 		this.job = job;
 		this.work = work;
 		this.chart = chart;
 		this.reloadChartListener = reloadChartListener;
 		this.data = data;
-		this.endMovable = endMovable;
+		this.active = active;
 		
 		getStyleClass().add("time-bar");
 		
@@ -89,25 +91,46 @@ public class ChartBar extends StackPane {
 	private void initContextMenu() {
 		contextMenu = new ContextMenu();
 		
-		MenuItem item0 = new MenuItem("Verschieben");
+		MenuItem item0 = new MenuItem("Move");
 		item0.setOnAction(e -> move());
-		MenuItem item1 = new MenuItem("Anfang verschieben");
+		item0.setDisable(active);
+		MenuItem item1 = new MenuItem("Move Start");
 		item1.setOnAction(e -> startResizeStart());
-		MenuItem item2 = new MenuItem("Ende verschieben");
-		item2.setDisable(!endMovable);
+		MenuItem item2 = new MenuItem("Move End");
+		item2.setDisable(active);
 		item2.setOnAction(e -> startResizeEnd());
-		MenuItem item3 = new MenuItem("Teilen");
+		MenuItem item3 = new MenuItem("Split");
 		item3.setOnAction(e -> split());
-		MenuItem item4 = new MenuItem("Mit Vorherigen zusammen f�hren");
+		item3.setDisable(active);
+		MenuItem item4 = new MenuItem("Merge with previous");
 		item4.setOnAction(e -> connectPrevs());
-		MenuItem item5 = new MenuItem("Mit Nachfolger zusammen f�hren");
+		item4.setDisable(active);
+		MenuItem item5 = new MenuItem("Merge with next");
 		item5.setOnAction(e -> connectNext());
+		item5.setDisable(active);
 		
-		MenuItem item6 = new MenuItem("L�schen");
+		MenuItem item6 = new MenuItem("Delete");
 		item6.setOnAction(e -> delete());
+		item6.setDisable(active);
 		
 		contextMenu.getItems().addAll(item0, item1, item2, new SeparatorMenuItem(), item3, item4, item5,
 				new SeparatorMenuItem(), item6);
+	}
+	
+	public long snapValue(long value) {
+		if (snapToMinutes) {
+			
+			Date whateverDateYouWant = new Date(value);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(whateverDateYouWant);
+			
+			int unroundedMinutes = calendar.get(Calendar.MINUTE);
+			int mod = unroundedMinutes % 5;
+			calendar.add(Calendar.MINUTE, mod < 8 ? -mod : (15 - mod));
+			return calendar.getTimeInMillis();
+		}
+		return value;
+		
 	}
 	
 	private void connectPrevs() {
@@ -128,14 +151,15 @@ public class ChartBar extends StackPane {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void move() {
 		new ModifyAction() {
 			@Override
 			protected void update(Number xValue, ExtraData extra) {
 				long halfLength = extra.getLength() / 2;
 				
-				long start = xValue.longValue() - halfLength;
-				long end = xValue.longValue() + halfLength;
+				long start = snapValue(xValue.longValue() - halfLength);
+				long end = snapValue(xValue.longValue() + halfLength);
 				
 				boolean moveAllow = true;
 				// Move is allowed anywhere
@@ -165,6 +189,7 @@ public class ChartBar extends StackPane {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private void startResizeEnd() {
 		
 		new ModifyAction() {
@@ -172,10 +197,10 @@ public class ChartBar extends StackPane {
 			@Override
 			protected void update(Number xValue, ExtraData extra) {
 				long end = xValue.longValue();
-				end = Math.max(end, work.getLogStart());
+				end = snapValue(Math.max(end, work.getLogStart()));
 				LoggedWork nextWork = job.getNextWork(work);
 				if (nextWork != null) {
-					end = Math.min(end, nextWork.getLogStart());
+					end = snapValue(Math.min(end, nextWork.getLogStart()));
 				}
 				long length = end - work.getLogStart();
 				
@@ -191,16 +216,18 @@ public class ChartBar extends StackPane {
 		};
 	}
 	
+	@SuppressWarnings("unused")
 	private void startResizeStart() {
 		new ModifyAction() {
 			
 			@Override
 			protected void update(Number xValue, ExtraData extra) {
 				Long start = xValue.longValue();
-				start = Math.min(start, work.getLogEnd());
+				start = snapValue(Math.min(start, work.getLogEnd()));
+				
 				LoggedWork prevWork = job.getPreviousWork(work);
 				if (prevWork != null) {
-					start = Math.max(start, prevWork.getLogEnd());
+					start = snapValue(Math.max(start, prevWork.getLogEnd()));
 				}
 				
 				chart.showHelpLine(start);
@@ -226,7 +253,7 @@ public class ChartBar extends StackPane {
 		
 		LoggedWork newWork = new LoggedWork();
 		newWork.setLogStart(work.getLogStart() + duration);
-		newWork.setLogDate(new Date());
+		newWork.setLogDate(new Date(work.getLogStart() + duration));
 		newWork.setLogEnd(work.getLogEnd());
 		job.getWorks().add(newWork);
 		

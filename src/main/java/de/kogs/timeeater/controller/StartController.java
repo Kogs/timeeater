@@ -7,6 +7,7 @@ import de.kogs.javafx.decoratedScene.DecoratedScene;
 import de.kogs.timeeater.data.JobManager;
 import de.kogs.timeeater.data.JobProvider;
 import de.kogs.timeeater.data.Settings;
+import de.kogs.timeeater.main.TimeEater;
 import de.kogs.timeeater.util.Utils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -85,6 +86,7 @@ public class StartController extends Stage implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		getIcons().add(TimeEater.STAGE_ICON);
 		show();
 		setOnHidden((e) -> {
 			if (!starting) {

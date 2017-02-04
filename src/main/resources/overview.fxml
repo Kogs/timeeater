@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="720.0" styleClass="overview" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="720.0" styleClass="overview" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<GridPane layoutX="14.0" layoutY="82.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
 			<columnConstraints>
@@ -22,7 +31,7 @@
 			<rowConstraints>
 				<RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" valignment="CENTER" vgrow="SOMETIMES" />
 				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" />
 			</rowConstraints>
 			<children>
 				<VBox alignment="CENTER" onMouseClicked="#showMonday" styleClass="dayButton" GridPane.columnIndex="1">
@@ -95,68 +104,122 @@
 						<Cursor fx:constant="HAND" />
 					</cursor>
 				</VBox>
-				<ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
+				<ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
 					<content>
-						<GridPane fx:id="contentGrid" gridLinesVisible="true" styleClass="weekView">
-							<columnConstraints>
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-							</columnConstraints>
-							<rowConstraints>
-								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-							</rowConstraints>
-<padding>
-<Insets bottom="30.0" />
-</padding>
-						</GridPane>
+						<StackPane>
+							<children>
+								<GridPane fx:id="contentGrid" gridLinesVisible="true" styleClass="weekView">
+									<columnConstraints>
+										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+									</columnConstraints>
+									<rowConstraints>
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+									</rowConstraints>
+									<padding>
+										<Insets bottom="30.0" />
+									</padding>
+								</GridPane>
+								<Label fx:id="noDataLabel" text="Nothing logged in this Week" visible="false" />
+							</children>
+						</StackPane>
 					</content>
-<GridPane.margin>
-<Insets />
-</GridPane.margin>
+					<GridPane.margin>
+						<Insets />
+					</GridPane.margin>
 				</ScrollPane>
-
-				<Label text="Summary" GridPane.columnIndex="0" GridPane.rowIndex="2">
-					<font>
-						<Font name="System Bold" size="12.0" />
-					</font>
-				</Label>
-				<Label fx:id="summaryMonday" GridPane.columnIndex="1" GridPane.rowIndex="2">
-					<font>
-						<Font name="System Bold" size="12.0" />
-					</font>
-				</Label>
-				<Label fx:id="summaryTuesday" GridPane.columnIndex="2" GridPane.rowIndex="2">
-					<font>
-						<Font name="System Bold" size="12.0" />
-					</font>
-				</Label>
-				<Label fx:id="summaryWednesday" GridPane.columnIndex="3" GridPane.rowIndex="2">
-					<font>
-						<Font name="System Bold" size="12.0" />
-					</font>
-				</Label>
-				<Label fx:id="summaryThursday" GridPane.columnIndex="4" GridPane.rowIndex="2">
-					<font>
-						<Font name="System Bold" size="12.0" />
-					</font>
-				</Label>
-				<Label fx:id="summaryFriday" GridPane.columnIndex="5" GridPane.rowIndex="2">
-					<font>
-						<Font name="System Bold" size="12.0" />
-					</font>
-				</Label>
-				<Label fx:id="summaryWeek" layoutX="560.0" layoutY="351.0" text=":" GridPane.columnIndex="6" GridPane.rowIndex="2">
-					<font>
-						<Font name="System Bold" size="12.0" />
-					</font>
-				</Label>
+            <StackPane styleClass="summaryBackground" GridPane.rowIndex="2">
+               <children>
+      
+      				<Label text="Summary">
+      					<font>
+      						<Font name="System Bold" size="12.0" />
+      					</font>
+      				</Label>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="1.0" />
+               </GridPane.margin>
+            </StackPane>
+            <StackPane styleClass="summaryBackground" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+      				<Label fx:id="summaryMonday">
+      					<font>
+      						<Font name="System Bold" size="12.0" />
+      					</font>
+      				</Label>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="1.0" />
+               </GridPane.margin>
+            </StackPane>
+            <StackPane styleClass="summaryBackground" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+      				<Label fx:id="summaryTuesday">
+      					<font>
+      						<Font name="System Bold" size="12.0" />
+      					</font>
+      				</Label>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="1.0" />
+               </GridPane.margin>
+            </StackPane>
+            <StackPane styleClass="summaryBackground" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <children>
+      				<Label fx:id="summaryWednesday">
+      					<font>
+      						<Font name="System Bold" size="12.0" />
+      					</font>
+      				</Label>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="1.0" />
+               </GridPane.margin>
+            </StackPane>
+            <StackPane styleClass="summaryBackground" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <children>
+      				<Label fx:id="summaryThursday">
+      					<font>
+      						<Font name="System Bold" size="12.0" />
+      					</font>
+      				</Label>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="1.0" />
+               </GridPane.margin>
+            </StackPane>
+            <StackPane styleClass="summaryBackground" GridPane.columnIndex="5" GridPane.rowIndex="2">
+               <children>
+      				<Label fx:id="summaryFriday">
+      					<font>
+      						<Font name="System Bold" size="12.0" />
+      					</font>
+      				</Label>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="1.0" />
+               </GridPane.margin>
+            </StackPane>
+            <StackPane styleClass="summaryBackground" GridPane.columnIndex="6" GridPane.rowIndex="2">
+               <children>
+      				<Label fx:id="summaryWeek" text=":">
+      					<font>
+      						<Font name="System Bold" size="12.0" />
+      					</font>
+      				</Label>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="1.0" right="15.0" />
+               </GridPane.margin>
+            </StackPane>
 
 			</children>
 		</GridPane>
@@ -185,8 +248,7 @@
 							</font>
 						</Label>
 					</children>
-				</StackPane>
-				<CheckBox fx:id="showActive" mnemonicParsing="false" selected="true" text="Zeige nur aktive " />
+				</StackPane><Button mnemonicParsing="false" onAction="#copyData" text="Copy" /><Region prefWidth="15.0" />
 			</children>
 		</HBox>
 	</children>

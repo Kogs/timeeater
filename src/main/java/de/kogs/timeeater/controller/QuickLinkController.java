@@ -6,6 +6,7 @@ package de.kogs.timeeater.controller;
 import de.kogs.javafx.decoratedScene.DecoratedScene;
 import de.kogs.timeeater.data.hooks.HookManager;
 import de.kogs.timeeater.data.hooks.QuickLink;
+import de.kogs.timeeater.main.TimeEater;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,6 +44,7 @@ public class QuickLinkController extends Stage implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		getIcons().add(TimeEater.STAGE_ICON);
 		show();
 	}
 	

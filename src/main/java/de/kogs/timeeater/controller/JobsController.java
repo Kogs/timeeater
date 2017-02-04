@@ -8,6 +8,7 @@ import de.kogs.timeeater.cells.InfoCell;
 import de.kogs.timeeater.cells.StringConverterCell;
 import de.kogs.timeeater.data.JobProvider;
 import de.kogs.timeeater.data.JobVo;
+import de.kogs.timeeater.main.TimeEater;
 import de.kogs.timeeater.util.Utils;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
@@ -49,6 +50,7 @@ public class JobsController extends Stage implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		getIcons().add(TimeEater.STAGE_ICON);
 		show();
 		
 
