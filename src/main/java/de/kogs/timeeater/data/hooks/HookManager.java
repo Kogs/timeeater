@@ -36,15 +36,6 @@ public class HookManager {
 
 	private List<QuickLink> quickLinks = new ArrayList<>();
 	
-	public static void main(String[] args) {
-//		HookManager manager = instance();
-//		DefaultHook defHook = new DefaultHook();
-//		defHook.setHookClass(QuickLinkHook.class.getName());
-//		defHook.setRegex("^(SPBL|FDAQA)*");
-//		defHook.getProperties().put("link", "https://issues.proemion.com/browse/");
-//		manager.defaults.add(defHook);
-//		manager.save();
-	}
 	
 	public HookManager () {
 		load();
@@ -54,9 +45,7 @@ public class HookManager {
 	
 	public QuickLink getQuickLinkForJob(JobVo job) {
 		for (QuickLink link : quickLinks) {
-			System.out.println("Link: " + link + " job: " + job);
 			if (Pattern.matches(link.getPattern(), job.getName())) {
-				System.out.println("Matches");
 				return link;
 			}
 			

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="720.0" styleClass="overview" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="843.0" styleClass="overview" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<GridPane layoutX="14.0" layoutY="82.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
 			<columnConstraints>
@@ -27,6 +27,9 @@
 				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+				<ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
 			</columnConstraints>
 			<rowConstraints>
 				<RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" valignment="CENTER" vgrow="SOMETIMES" />
@@ -104,12 +107,40 @@
 						<Cursor fx:constant="HAND" />
 					</cursor>
 				</VBox>
+				<VBox alignment="CENTER" onMouseClicked="#showSaturday" styleClass="dayButton" GridPane.columnIndex="6">
+					<children>
+						<Label text="Samstag">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+						<Label fx:id="saturdayLabel" text="datum" GridPane.columnIndex="5" />
+					</children>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</VBox>
+				<VBox alignment="CENTER" onMouseClicked="#showSunday" styleClass="dayButton" GridPane.columnIndex="7">
+					<children>
+						<Label text="Sonntag">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+						<Label fx:id="sundayLabel" text="datum" GridPane.columnIndex="5" />
+					</children>
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</VBox>
 				<ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
 					<content>
 						<StackPane>
 							<children>
 								<GridPane fx:id="contentGrid" gridLinesVisible="true" styleClass="weekView">
 									<columnConstraints>
+										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -135,91 +166,116 @@
 						<Insets />
 					</GridPane.margin>
 				</ScrollPane>
-            <StackPane styleClass="summaryBackground" GridPane.rowIndex="2">
-               <children>
-      
-      				<Label text="Summary">
-      					<font>
-      						<Font name="System Bold" size="12.0" />
-      					</font>
-      				</Label>
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="1.0" left="1.0" />
-               </GridPane.margin>
-            </StackPane>
-            <StackPane styleClass="summaryBackground" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-      				<Label fx:id="summaryMonday">
-      					<font>
-      						<Font name="System Bold" size="12.0" />
-      					</font>
-      				</Label>
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="1.0" />
-               </GridPane.margin>
-            </StackPane>
-            <StackPane styleClass="summaryBackground" GridPane.columnIndex="2" GridPane.rowIndex="2">
-               <children>
-      				<Label fx:id="summaryTuesday">
-      					<font>
-      						<Font name="System Bold" size="12.0" />
-      					</font>
-      				</Label>
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="1.0" />
-               </GridPane.margin>
-            </StackPane>
-            <StackPane styleClass="summaryBackground" GridPane.columnIndex="3" GridPane.rowIndex="2">
-               <children>
-      				<Label fx:id="summaryWednesday">
-      					<font>
-      						<Font name="System Bold" size="12.0" />
-      					</font>
-      				</Label>
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="1.0" />
-               </GridPane.margin>
-            </StackPane>
-            <StackPane styleClass="summaryBackground" GridPane.columnIndex="4" GridPane.rowIndex="2">
-               <children>
-      				<Label fx:id="summaryThursday">
-      					<font>
-      						<Font name="System Bold" size="12.0" />
-      					</font>
-      				</Label>
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="1.0" />
-               </GridPane.margin>
-            </StackPane>
-            <StackPane styleClass="summaryBackground" GridPane.columnIndex="5" GridPane.rowIndex="2">
-               <children>
-      				<Label fx:id="summaryFriday">
-      					<font>
-      						<Font name="System Bold" size="12.0" />
-      					</font>
-      				</Label>
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="1.0" />
-               </GridPane.margin>
-            </StackPane>
-            <StackPane styleClass="summaryBackground" GridPane.columnIndex="6" GridPane.rowIndex="2">
-               <children>
-      				<Label fx:id="summaryWeek" text=":">
-      					<font>
-      						<Font name="System Bold" size="12.0" />
-      					</font>
-      				</Label>
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="1.0" right="15.0" />
-               </GridPane.margin>
-            </StackPane>
+				<StackPane styleClass="summaryBackground" GridPane.rowIndex="2">
+					<children>
+
+						<Label text="Summary">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+					</children>
+					<GridPane.margin>
+						<Insets bottom="1.0" left="1.0" />
+					</GridPane.margin>
+				</StackPane>
+				<StackPane styleClass="summaryBackground" GridPane.columnIndex="1" GridPane.rowIndex="2">
+					<children>
+						<Label fx:id="summaryMonday">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+					</children>
+					<GridPane.margin>
+						<Insets bottom="1.0" />
+					</GridPane.margin>
+				</StackPane>
+				<StackPane styleClass="summaryBackground" GridPane.columnIndex="2" GridPane.rowIndex="2">
+					<children>
+						<Label fx:id="summaryTuesday">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+					</children>
+					<GridPane.margin>
+						<Insets bottom="1.0" />
+					</GridPane.margin>
+				</StackPane>
+				<StackPane styleClass="summaryBackground" GridPane.columnIndex="3" GridPane.rowIndex="2">
+					<children>
+						<Label fx:id="summaryWednesday">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+					</children>
+					<GridPane.margin>
+						<Insets bottom="1.0" />
+					</GridPane.margin>
+				</StackPane>
+				<StackPane styleClass="summaryBackground" GridPane.columnIndex="4" GridPane.rowIndex="2">
+					<children>
+						<Label fx:id="summaryThursday">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+					</children>
+					<GridPane.margin>
+						<Insets bottom="1.0" />
+					</GridPane.margin>
+				</StackPane>
+				<StackPane styleClass="summaryBackground" GridPane.columnIndex="5" GridPane.rowIndex="2">
+					<children>
+						<Label fx:id="summaryFriday">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+					</children>
+					<GridPane.margin>
+						<Insets bottom="1.0" />
+					</GridPane.margin>
+				</StackPane>
+				<StackPane styleClass="summaryBackground" GridPane.columnIndex="6" GridPane.rowIndex="2">
+					<children>
+						<Label fx:id="summarySaturday">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+					</children>
+					<GridPane.margin>
+						<Insets bottom="1.0" />
+					</GridPane.margin>
+				</StackPane>
+					<StackPane prefHeight="29.0" prefWidth="74.0" styleClass="summaryBackground" GridPane.columnIndex="7" GridPane.rowIndex="2">
+					<children>
+						<Label fx:id="summarySunday">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+					</children>
+					<GridPane.margin>
+						<Insets bottom="1.0" />
+					</GridPane.margin>
+				</StackPane>
+				<StackPane styleClass="summaryBackground" GridPane.columnIndex="8" GridPane.rowIndex="2">
+					<children>
+						<Label fx:id="summaryWeek" text=":">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+					</children>
+					<GridPane.margin>
+						<Insets bottom="1.0" />
+					</GridPane.margin>
+				</StackPane>
+				
 
 			</children>
 		</GridPane>
@@ -248,7 +304,9 @@
 							</font>
 						</Label>
 					</children>
-				</StackPane><Button mnemonicParsing="false" onAction="#copyData" text="Copy" /><Region prefWidth="15.0" />
+				</StackPane>
+				<Button mnemonicParsing="false" onAction="#copyData" text="Copy" />
+				<Region prefWidth="15.0" />
 			</children>
 		</HBox>
 	</children>

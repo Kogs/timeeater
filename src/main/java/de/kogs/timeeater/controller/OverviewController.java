@@ -98,6 +98,10 @@ public class OverviewController extends Stage implements Initializable {
 	private Label thursdayLabel;
 	@FXML
 	private Label fridayLabel;
+	@FXML
+	private Label saturdayLabel;
+	@FXML
+	private Label sundayLabel;
 	
 	@FXML
 	private Label summaryMonday;
@@ -109,6 +113,11 @@ public class OverviewController extends Stage implements Initializable {
 	private Label summaryThursday;
 	@FXML
 	private Label summaryFriday;
+	@FXML
+	private Label summarySaturday;
+	@FXML
+	private Label summarySunday;
+	
 	
 	@FXML
 	private Label summaryWeek;
@@ -124,6 +133,8 @@ public class OverviewController extends Stage implements Initializable {
 	private Date wednesday;
 	private Date thursday;
 	private Date friday;
+	private Date saturday;
+	private Date sunday;
 	
 	private DateFormat weekDayFormat = new SimpleDateFormat("dd.MM.yy");
 	
@@ -190,9 +201,19 @@ public class OverviewController extends Stage implements Initializable {
 		fridayLabel.setText(weekDayFormat.format(friday));
 		long summaryFridayTime = provider.getTimeForDay(friday);
 		summaryFriday.setText(millisToString(summaryFridayTime));
+		c.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+		saturday = c.getTime();
+		saturdayLabel.setText(weekDayFormat.format(saturday));
+		long summarySaturdayTime = provider.getTimeForDay(saturday);
+		summarySaturday.setText(millisToString(summarySaturdayTime));
+		c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		sunday = c.getTime();
+		sundayLabel.setText(weekDayFormat.format(sunday));
+		long summarySundayTime = provider.getTimeForDay(sunday);
+		summarySunday.setText(millisToString(summarySundayTime));
 		
-		summaryWeek.setText("= " + millisToString(
-				summaryMondayTime + summaryTuesdayTime + summaryWednesdayTime + summaryThursdayTime + summaryFridayTime));
+		summaryWeek.setText("= " + millisToString(summaryMondayTime + summaryTuesdayTime + summaryWednesdayTime
+				+ summaryThursdayTime + summaryFridayTime + summarySaturdayTime + summarySundayTime));
 		
 		contentGrid.getChildren().clear();
 		contentGrid.getRowConstraints().clear();
@@ -236,15 +257,20 @@ public class OverviewController extends Stage implements Initializable {
 			labelBox.setAlignment(Pos.CENTER_LEFT);
 			HBox.setHgrow(labelStack, Priority.ALWAYS);
 			
-			contentGrid.addRow(i, labelBox, new Label(millisToString(job.getWorkTime(monday))),
-					new Label(millisToString(job.getWorkTime(tuesday))), new Label(millisToString(job.getWorkTime(wednesday))),
-					new Label(millisToString(job.getWorkTime(thursday))), new Label(millisToString(job.getWorkTime(friday))),
+			contentGrid.addRow(i, labelBox, 
+					new Label(millisToString(job.getWorkTime(monday))),
+					new Label(millisToString(job.getWorkTime(tuesday))), 
+					new Label(millisToString(job.getWorkTime(wednesday))),
+					new Label(millisToString(job.getWorkTime(thursday))), 
+					new Label(millisToString(job.getWorkTime(friday))), 
+					new Label(millisToString(job.getWorkTime(saturday))),
+					new Label(millisToString(job.getWorkTime(sunday))),
 					createJobControls(job));
 			
 			contentGrid.getRowConstraints().add(new RowConstraints(1));
 			Pane seperator = new Pane();
 			seperator.getStyleClass().add("seperator");
-			contentGrid.add(seperator, 0, i + 1, 7, 1);
+			contentGrid.add(seperator, 0, i + 1, 9, 1);
 			
 			i += 2;
 			
@@ -324,6 +350,16 @@ public class OverviewController extends Stage implements Initializable {
 	}
 	
 	@FXML
+	private void showSaturday(){
+		showDetailsForDate(saturday);
+	}
+	
+	@FXML
+	private void showSunday(){
+		showDetailsForDate(sunday);
+	}
+	
+	@FXML
 	private void copyData() {
 		List<JobVo> jobs = new ArrayList<>(provider.getJobsForRange(monday, friday));
 		copy(jobs);
@@ -345,6 +381,10 @@ public class OverviewController extends Stage implements Initializable {
 			builder.append(Utils.millisToHours(job.getWorkTime(thursday)));
 			builder.append("	");
 			builder.append(Utils.millisToHours(job.getWorkTime(friday)));
+			builder.append("	");
+			builder.append(Utils.millisToHours(job.getWorkTime(saturday)));
+			builder.append("	");
+			builder.append(Utils.millisToHours(job.getWorkTime(sunday)));
 			builder.append("\n");
 		}
 		
