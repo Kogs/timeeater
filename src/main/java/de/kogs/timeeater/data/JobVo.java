@@ -36,7 +36,10 @@ public class JobVo {
 	@JsonIgnore
 	public LoggedWork getLastWork() {
 		works.sort(new WorkComparator());
-		return works.get(works.size() - 1);
+		if (!works.isEmpty()) {
+			return works.get(works.size() - 1);
+		}
+		return null;
 	}
 	
 	@JsonIgnore
