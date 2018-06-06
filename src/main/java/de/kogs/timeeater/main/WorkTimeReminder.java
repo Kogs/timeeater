@@ -49,7 +49,7 @@ public class WorkTimeReminder {
 			tray.updateTimeLeft(buildMsg(timeForToday, timeForWeek));
 			
 			if (todayHoursLeft < 4) {
-				if (timeForToday <= 0 || System.currentTimeMillis() - lastShow > TimeUnit.MINUTES.toMillis(30)) {
+				if (System.currentTimeMillis() - lastShow > TimeUnit.MINUTES.toMillis(60)) {
 					showTrayInfo(timeForToday, timeForWeek);
 					lastShow = System.currentTimeMillis();
 				}
