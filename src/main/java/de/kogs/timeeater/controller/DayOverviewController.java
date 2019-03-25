@@ -7,6 +7,7 @@ import de.kogs.timeeater.chart.TimeChart.ExtraData;
 import de.kogs.timeeater.data.JobProvider;
 import de.kogs.timeeater.data.JobVo;
 import de.kogs.timeeater.data.LoggedWork;
+import de.kogs.timeeater.data.comparator.JobNameComparator;
 import de.kogs.timeeater.main.TimeEater;
 import de.kogs.timeeater.util.Utils;
 import javafx.collections.FXCollections;
@@ -122,6 +123,7 @@ public class DayOverviewController extends Stage implements Initializable, Reloa
 				jobSelector.getItems().add(job);
 			}
 		}
+		jobSelector.getItems().sort(new JobNameComparator());
 	}
 	
 	private void loadData() {
