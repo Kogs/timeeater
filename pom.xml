@@ -73,13 +73,6 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>de.kogs.javafx</groupId>
-			<artifactId>DecoratedScene</artifactId>
-			<version>0.1</version>
-		</dependency>
-	
-	
-		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 			<version>1.1</version>
@@ -95,17 +88,12 @@
 			<version>1.9.13</version>
 		</dependency>
 		
-		
-
 		<!-- JIRA -->
 		<dependency>
 			<groupId>com.atlassian.jira</groupId>
 			<artifactId>jira-rest-java-client</artifactId>
 			<version>2.0.0-m2</version>
 		</dependency>
-		
-		
-		
 	</dependencies>
 	
 
