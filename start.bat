@@ -1,1 +1,1 @@
-java -cp "target/lib/*" de.kogs.timeeater.main.TimeEater
+java -cp "target/lib/*" -module-path ./lib --add-modules javafx.controls,javafx.fxml de.kogs.timeeater.main.TimeEater

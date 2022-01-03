@@ -7,8 +7,7 @@
 	<name>Time Eater</name>
 	
 	<properties>
-		<spring.framework.version>4.1.4.RELEASE</spring.framework.version>
-		<spring-data-jpa.version>1.7.1.RELEASE</spring-data-jpa.version>
+		<javafx.version>17.0.1</javafx.version>
 	</properties>
 		
 	<build>
@@ -19,6 +18,14 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-maven-plugin</artifactId>
+				<version>0.0.8</version>
+				<configuration>
+					<mainClass>de.kogs.timeeater.main.TimeEater</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -38,40 +45,20 @@
 		</plugins>
 	</build>
 	
-	
-		<repositories>
-         <repository>
-           <id>atlassian-public</id>
-           <url>https://m2proxy.atlassian.com/repository/public</url>
-           <snapshots>
-             <enabled>true</enabled>
-             <updatePolicy>daily</updatePolicy>
-             <checksumPolicy>warn</checksumPolicy>
-           </snapshots>
-           <releases>
-             <enabled>true</enabled>
-             <checksumPolicy>warn</checksumPolicy>
-           </releases>
-		</repository>
-       </repositories>
 
-       <pluginRepositories>
-         <pluginRepository>
-           <id>atlassian-public</id>
-           <url>https://m2proxy.atlassian.com/repository/public</url>
-           <releases>
-             <enabled>true</enabled>
-             <checksumPolicy>warn</checksumPolicy>
-           </releases>
-           <snapshots>
-             <checksumPolicy>warn</checksumPolicy>
-           </snapshots>
-         </pluginRepository>
-       </pluginRepositories>
-	   
-		
-	
 	<dependencies>
+
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
@@ -87,15 +74,15 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-		
-		<!-- JIRA -->
 		<dependency>
-			<groupId>com.atlassian.jira</groupId>
-			<artifactId>jira-rest-java-client</artifactId>
-			<version>2.0.0-m2</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
 		</dependency>
+		
 	</dependencies>
-	
+
+
 
 
 	

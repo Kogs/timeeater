@@ -13,6 +13,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
@@ -153,8 +154,10 @@ public class LoggerController extends Stage implements Initializable {
 							}
 						}
 					}
-					workSelector.getItems().setAll(filteredJobs);
-					workSelector.show();
+					Platform.runLater(()-> {
+						workSelector.getItems().setAll(filteredJobs);
+						workSelector.show();
+					});
 				} else {
 					workSelector.hide();
 					workSelector.getItems().setAll(workList);
