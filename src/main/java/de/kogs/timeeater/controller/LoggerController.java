@@ -25,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -36,8 +37,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
@@ -116,13 +121,16 @@ public class LoggerController extends Stage implements Initializable {
 	private Button stopButton;
 	
 	@FXML
-	private ComboBox<JobVo> workSelector;
+	private ComboBox<String> workSelector;
+
+	@FXML
+	private TextField workSelectorField;
 	
 	private JobProvider provider;
 	
 	private PauseTransition refreshLabels;
 	
-	private List<JobVo> workList = new ArrayList<>();
+	private List<String> workList = new ArrayList<>();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -134,35 +142,33 @@ public class LoggerController extends Stage implements Initializable {
 		cal.add(Calendar.DAY_OF_MONTH, -7);
 		
 		List<JobVo> allJobs = new ArrayList<>(provider.getKownJobs());
-		
 		Collections.sort(allJobs, new LastWorkComparator());
-		
-		workList.addAll(allJobs.subList(0, allJobs.size() > 10 ? 10 : allJobs.size()));
-		
+	
+		workList.addAll(allJobs.stream().limit(10).map(Objects::toString).collect(Collectors.toList()));
 		workSelector.getItems().addAll(workList);
 		
-		workSelector.getEditor().textProperty().addListener((obs, oldV, newV) -> {
-			if (!newV.equals(oldV)) {
-				
-				if (!newV.trim().isEmpty()) {
-					List<JobVo> filteredJobs = new ArrayList<>();
-					for (JobVo vo : allJobs) {
-						if (vo.getName().toLowerCase().startsWith(newV.toLowerCase())) {
-							filteredJobs.add(vo);
-							if(filteredJobs.size() > 5){
-								break;
-							}
+		workSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV)-> {
+			if (newV != null) {
+				workSelectorField.setText(newV);
+			}
+		});
+		workSelectorField.textProperty().addListener((obs, oldV ,newV)-> {
+			if (!newV.trim().isEmpty()) {
+				Set<String> filteredJobs = new HashSet<>();
+				for (JobVo vo : allJobs) {
+					if (vo.getName().toLowerCase().startsWith(newV.toLowerCase())) {
+						filteredJobs.add(vo.getName());
+						if(filteredJobs.size() > 5){
+							break;
 						}
 					}
-					Platform.runLater(()-> {
-						workSelector.getItems().setAll(filteredJobs);
-						workSelector.show();
-					});
-				} else {
-					workSelector.hide();
-					workSelector.getItems().setAll(workList);
 				}
-			}
+				workSelector.getItems().setAll(filteredJobs);
+				workSelector.show();
+			} else {
+				workSelector.hide();
+				workSelector.getItems().setAll(workList);
+			}	
 		});
 		
 		refreshLabels = new PauseTransition(Duration.seconds(1));
@@ -174,7 +180,7 @@ public class LoggerController extends Stage implements Initializable {
 		boolean workActive = provider.getActiveJob() != null && provider.getActiveJob().getActiveWork() != null;
 		
 		if (workActive) {
-			workSelector.getSelectionModel().select(provider.getActiveJob());
+			workSelectorField.setText(provider.getActiveJob().getName());
 			updateLabels();
 			refreshLabels.play();
 		} else {
@@ -182,10 +188,12 @@ public class LoggerController extends Stage implements Initializable {
 			runningTime.setText("");
 			runningTimeFull.setText("");
 			runningTimeToday.setText("");
+			Platform.runLater(() -> workSelectorField.requestFocus());
 		}
 		startButton.setDisable(workActive);
 		stopButton.setDisable(!workActive);
 		workSelector.setDisable(workActive);
+		workSelectorField.setDisable(workActive);
 	}
 	
 	private void updateLabels() {
@@ -201,7 +209,11 @@ public class LoggerController extends Stage implements Initializable {
 	
 	@FXML
 	private void startWork() {
-		provider.startWorkOnJob(workSelector.getEditor().getText());
+		final String job = workSelectorField.getText();
+		if (job.trim().isEmpty()){
+			return;
+		}
+		provider.startWorkOnJob(job);
 		closeLogger();
 	}
 	

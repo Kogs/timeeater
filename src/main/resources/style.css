@@ -52,6 +52,10 @@
 .logger .combo-box .arrow-button:pressed{
 	-fx-background-color: rgb(105.0,161.0,24.0);
 }
+.logger .text-field {
+	-fx-background-color: white;
+	-fx-background-radius:  0.0;
+}
 
 .time-bar{
 	-fx-background-color: rgb(068,061,103);

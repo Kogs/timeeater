@@ -12,10 +12,11 @@
 				<Font name="System Bold" size="18.0" />
 			</font>
 		</Label>
-		<ComboBox fx:id="workSelector" editable="true" layoutX="8.0" layoutY="45.5" prefWidth="150.0" promptText="aufgabe" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0" />
-		<Button fx:id="startButton" layoutX="363.1875" layoutY="304.0" mnemonicParsing="false" onAction="#startWork" text="Forschritt starten" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="10.0" />
-		<Button fx:id="stopButton" layoutX="10.1875" layoutY="303.0" mnemonicParsing="false" onAction="#stopWork" text="Fortschritt stoppen" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" />
-		<VBox layoutX="10.0" layoutY="80.0" spacing="5.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="80.0">
+		<ComboBox fx:id="workSelector" editable="false" prefWidth="150.0" promptText="" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0" />
+		<TextField fx:id="workSelectorField" prefWidth="150.0" promptText="job name" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="45.0"/>
+		<Button fx:id="startButton" mnemonicParsing="false" onAction="#startWork" text="Forschritt starten" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="10.0" />
+		<Button fx:id="stopButton" mnemonicParsing="false" onAction="#stopWork" text="Fortschritt stoppen" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" />
+		<VBox spacing="5.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="80.0">
 			<children>
 				<Label fx:id="runningSince" layoutX="14.0048828125" layoutY="80.5" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0" />
 				<Label fx:id="runningTime" />
@@ -23,6 +24,6 @@
 				<Label fx:id="runningTimeToday" text="Laufzeit heute:" />
 			</children>
 		</VBox>
-		<Button layoutX="288.1875" layoutY="1.5" mnemonicParsing="false" onAction="#closeLogger" styleClass="closeButton" text="X" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+		<Button mnemonicParsing="false" onAction="#closeLogger" styleClass="closeButton" text="X" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 	</children>
 </AnchorPane>
