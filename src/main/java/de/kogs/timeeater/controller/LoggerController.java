@@ -181,6 +181,7 @@ public class LoggerController extends Stage implements Initializable {
 		
 		if (workActive) {
 			workSelectorField.setText(provider.getActiveJob().getName());
+			workSelector.hide();
 			updateLabels();
 			refreshLabels.play();
 		} else {
