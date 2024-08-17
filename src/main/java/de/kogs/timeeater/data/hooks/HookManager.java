@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  */
 public class HookManager {
 	

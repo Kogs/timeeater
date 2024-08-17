@@ -10,7 +10,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.image.ImageView;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  */
 public class InfoCell extends TableCell<JobVo, JobVo> {
 	

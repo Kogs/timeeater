@@ -18,7 +18,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  */
 public class WorkTimeReminder {
 	

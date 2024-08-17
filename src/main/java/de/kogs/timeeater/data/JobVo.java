@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  *
  */
 public class JobVo {

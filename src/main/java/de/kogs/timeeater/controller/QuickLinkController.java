@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  */
 public class QuickLinkController extends Stage implements Initializable {
 	public QuickLinkController () {

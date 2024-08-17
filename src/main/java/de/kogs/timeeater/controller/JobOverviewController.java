@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  */
 public class JobOverviewController extends Stage implements Initializable {
 	

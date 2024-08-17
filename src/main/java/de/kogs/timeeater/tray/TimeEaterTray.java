@@ -31,7 +31,7 @@ import java.net.URISyntaxException;
 import javax.imageio.ImageIO;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  */
 public class TimeEaterTray extends TrayIcon implements ManagerListener {
 	

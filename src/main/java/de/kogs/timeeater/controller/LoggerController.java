@@ -45,7 +45,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  */
 public class LoggerController extends Stage implements Initializable {
 	

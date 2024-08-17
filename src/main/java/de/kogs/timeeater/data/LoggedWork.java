@@ -6,7 +6,7 @@ package de.kogs.timeeater.data;
 import java.util.Date;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  *
  */
 public class LoggedWork {

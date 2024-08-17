@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  */
 public class QuickLink {
 	private String pattern;

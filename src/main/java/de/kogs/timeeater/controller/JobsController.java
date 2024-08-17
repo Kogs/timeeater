@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  */
 public class JobsController extends Stage implements Initializable {
 	

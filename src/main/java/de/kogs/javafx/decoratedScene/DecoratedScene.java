@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  */
 public class DecoratedScene extends Scene {
 	

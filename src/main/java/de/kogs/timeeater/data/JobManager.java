@@ -29,10 +29,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
 
-/**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
- *
- */
 public class JobManager extends JobProvider {
 
 	private JobVo activeJob;

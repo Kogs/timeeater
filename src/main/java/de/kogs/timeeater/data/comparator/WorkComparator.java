@@ -7,10 +7,6 @@ import de.kogs.timeeater.data.LoggedWork;
 
 import java.util.Comparator;
 
-/**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
- *
- */
 public class WorkComparator implements Comparator<LoggedWork> {
 	
 	/* (non-Javadoc)

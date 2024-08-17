@@ -13,7 +13,7 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  *
  */
 public class Settings {

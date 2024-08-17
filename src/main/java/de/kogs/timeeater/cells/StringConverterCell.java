@@ -7,7 +7,7 @@ import javafx.scene.control.TableCell;
 import javafx.util.StringConverter;
 
 /**
- * @author <a href="mailto:marcel.vogel@proemion.com">mv1015</a>
+ * 
  */
 public class StringConverterCell<S, T> extends TableCell<S, T> {
 	
